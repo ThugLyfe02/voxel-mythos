@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2.1). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 and v2 saves load in v2.1 unchanged (same storage keys; new v2.1 data is stored alongside).
+A living voxel sandbox (v2.2 “The Living Story”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1, v2 and v2.1 saves load in v2.2 unchanged (same storage keys; new v2.2 data is stored alongside).
 
 ## Play
 
@@ -39,9 +39,11 @@ Most keys can be rebound in **Esc → Settings → Accessibility → Key binding
 - **Left click (hold)** mine / attack · **Right click** place · eat · use · talk · tame · ride
 - **1–9 / wheel** hotbar · **0** cast your bound Light/Dark path power (duel bolt in a duel) · **-** Crossroads / Light panel
 - **E** inventory & crafting · **M** market · **F** talk · **T or /** chat & commands · **Q** cast spell · **G** map & factions
-- **R** mount / dismount / land · **V** thermal vision · **X** weapon ability · **B** armory · **N** tech tree · **J** creature codex
+- **R** mount / dismount / land · **V** thermal vision · **X** weapon ability · **B** armory · **N** tech tree · **J** Story Journal (Shift+J creature codex)
 - **O** Living Codex (Shift+O party) · **U** trophies · **Y** gallery · **H** Hearth claim view (airship camera on a ship)
-- **L** spellbook · **I** journal · **Z** blueprints · **K** save now · **Esc** pause
+- **L** spellbook · **I** journal · **Z** blueprints · **K** save now · **Esc** pause · **F3** performance overlay
+- **E** while facing a villager, worker, mage or caravan: Kindred talk menu
+- **Bard's Lute** in hand: **1–9** play notes
 
 ## Controls — phones & tablets
 
@@ -75,11 +77,25 @@ New in v2.1: `/stamina` `/beast [start|calm|cure]` `/duel <name>|accept|decline`
 
 `/codex [stats|creatures|<name>|all (creative)]` `/mentor off|quiet|helpful|tip|tts`
 
+New in v2.2: `/story [sim N]` `/chronicler [on|off|persona <name>|cap N|fewer]`
+
+`/music [on|off|status|motif|mutate|stinger|density|visual|credits]` `/kindred [status|who|rumors|gossip|talk]`
+
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
 
-## What's new in v2.1
+## What's new in v2.2 — The Living Story
 
-**Esc → "✨ New in v2.1"** lists all of this in game.
+**Esc → "✨ New in v2.2"** lists all of this in game.
+
+- 📜 **The Chronicler:** an AI storyteller paces your world in chapters (calm → rising tension → climax → breather), drawing from a deck of event cards — caravans, strangers, wizard duels, golden hours, buried things — for you and your friends, and it eases off when you are struggling. Pick its persona when you create a world (the Bard, the Tyrant, the Weaver's Echo and more); **J** opens the Story Journal with every chapter so far. Settings → Chronicler: on/off, intensity cap, "fewer events". **F3** shows the per-system timing overlay.
+- 🎼 **The Living Score:** music composed live from where you are, what you face and how tense the story is. Each dimension has its own mode, tempo follows danger, stingers land on the beat. You have your own five-note leitmotif that changes a little at each milestone; bosses and legends have themes too (hear them on the Music Box).
+- 🪕 **Bard's Lute** (3 planks + 1 iron): hold it and press **1–9** — every note snaps to the current scale, and friends within 40 blocks hear you. On touch, using the lute opens a fretboard.
+- 💬 **Kindred Memory:** every villager, worker, mage, witch, caravan and goblin warren remembers what you did — gifts, rescues, harm, trades, help building, trampled crops, broken or kept promises. Face someone and press **E** to greet, gift what you hold, ask for rumors, request help, apologize, compliment their home, return a lost item, or (as a confidant) hear a personal request. A glyph over their head shows how they feel (😠 😒 🙂 😊 💖). Memories fade (small things in ~10 days, big ones in ~60) and personalities matter (kind, greedy, honest, brave). Gifts count for at most +25 a day and the same gift again is worth half as much.
+- 🗣 **Gossip:** people trade stories each in-game hour — up to three people away, weaker each retelling, and sometimes wildly exaggerated. Read what is being said in Codex (**O**) → Rumors.
+- 💖 Friends give discounts, morning gifts, hints and help in a fight; workers' morale follows their opinion of you; goblins learn to avoid the home of someone who caught their thieves. Villages pick a mayor from the best-liked.
+- 🕯 Apprentices inherit their mentor's strongest memories. When someone dies, their friends carry what they knew; place a Memorial Stone (3 cobble + 1 red flower) to honor them.
+
+## What's new in v2.1
 
 - 🏠 **Hearth Guard:** craft a Hearthstone (4 cobble, 1 gold, 1 Ember Shard; Ember Shard = 2 coal + 1 iron) and place it to claim a 32×32 home (expandable to 128). Friends get trust tiers (Co-builder / Guest / Stranger): strangers can look but not touch, containers, machines and mounts are protected, and the host enforces it. Every block change in a claim is recorded, so griefing can be rewound (`/hearth rewind 10`), and repeat griefers are frozen automatically. **H** shows claim borders.
 - 🦉 **Mentor & Living Codex (O):** an encyclopedia of 630 pages in 12 categories that fills itself in as you see, mine, craft, tame and fight things, each with a rotating 3D model, lore, stats, links and when/where you found it. Search, filters, "What next?" suggestions, and share pages with friends (they see a silhouette until they find it). The Mentor owl offers short lessons only for things you haven't shown you can do, at most one tip per 5 minutes, with Off / Quiet / Helpful modes and optional read-aloud. Hosts can switch on "Mentor for my guests".
@@ -89,6 +105,8 @@ Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/wea
 - ✨ Companion evolutions now visibly change your pet (Ascended, Dawnkin, Umbral looks).
 - 🌗 Hosts save each friend's Light/Dark road by player id, so it is restored when they rejoin.
 - Phones: clearer touch tutorial. Third person: crosshair offset/hidden and the held item hidden.
+
+**Esc → "✨ New in v2.1"** lists all of this in game.
 
 ## What's new in v2
 
@@ -119,7 +137,9 @@ Autosave every 30 s, on dimension change, and when you close or hide the tab ("s
 
 ## Playing with friends (peer-to-peer, free, no accounts)
 
-v2 and v2.1 play together (v2.1-only features such as claims, duels and Codex sharing switch off for v2 players). v1 can't join v2/v2.1 games (or host for them): the game refuses politely and explains who should update.
+v2, v2.1 and v2.2 play together. Story, score and Kindred talk turn on when the host runs v2.2 (a v2.2 guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2/v2.1/v2.2 games (or host for them): the game refuses politely and explains who should update.
+
+Kindred memories, the Chronicler and the music are run by the host and saved in the host's world.
 
 ### Host (you)
 
