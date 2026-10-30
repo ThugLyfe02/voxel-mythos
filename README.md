@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 saves load in v2 unchanged (same storage keys).
+A living voxel sandbox (v2.1). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 and v2 saves load in v2.1 unchanged (same storage keys; new v2.1 data is stored alongside).
 
 ## Play
 
@@ -29,7 +29,7 @@ Most keys can be rebound in **Esc → Settings → Accessibility → Key binding
 ### Moving
 
 - **W A S D** move (diagonals are normalised — same speed in every direction)
-- **Shift (hold)** sprint, ~1.6× speed with a FOV kick (also double-tap W; "Toggle sprint" option in Accessibility). Sprint also works on mounts. Shift descends while flying.
+- **Shift (hold)** sprint, ~1.6× speed with a FOV kick; uses stamina (green bar above the hotbar) (also double-tap W; "Toggle sprint" option in Accessibility). Sprint also works on mounts. Shift descends while flying.
 - **Space** jump / swim up / fly up
 - **C** descend while flying
 - Walking into a 1-block ledge steps up onto it smoothly (setting "Step-up onto ledges").
@@ -37,10 +37,11 @@ Most keys can be rebound in **Esc → Settings → Accessibility → Key binding
 ### Acting
 
 - **Left click (hold)** mine / attack · **Right click** place · eat · use · talk · tame · ride
-- **1–9 / wheel** hotbar · **0** cast your bound Light/Dark path power · **-** Crossroads / Light panel
+- **1–9 / wheel** hotbar · **0** cast your bound Light/Dark path power (duel bolt in a duel) · **-** Crossroads / Light panel
 - **E** inventory & crafting · **M** market · **F** talk · **T or /** chat & commands · **Q** cast spell · **G** map & factions
 - **R** mount / dismount / land · **V** thermal vision · **X** weapon ability · **B** armory · **N** tech tree · **J** creature codex
-- **O** party · **U** trophies · **Y** gallery · **H** airship camera · **L** spellbook · **I** journal · **Z** blueprints · **K** save now · **Esc** pause
+- **O** Living Codex (Shift+O party) · **U** trophies · **Y** gallery · **H** Hearth claim view (airship camera on a ship)
+- **L** spellbook · **I** journal · **Z** blueprints · **K** save now · **Esc** pause
 
 ## Controls — phones & tablets
 
@@ -66,9 +67,28 @@ Mouse sensitivity, Invert Y, Toggle sprint (Accessibility), FOV, Quality: Auto /
 
 `/path [status|open|choose light|dark|cast N|trial|apex|step|legion|fuse|twilight|sim N]` `/magic` `/arts` `/way` `/bp`
 
-`/weapon` `/enchant` `/armory` `/era` `/tech` `/codex` `/tame` `/pet` `/season` `/festival` `/storm` `/tornado` `/ship` `/gallery` `/cinema`
+`/weapon` `/enchant` `/armory` `/era` `/tech` `/tame` `/pet` `/season` `/festival` `/storm` `/tornado` `/ship` `/gallery` `/cinema`
+
+New in v2.1: `/stamina` `/beast [start|calm|cure]` `/duel <name>|accept|decline` `/path guests` (host)
+
+`/hearth [view|list|rewind <minutes> [uid]|trust <name> <co|guest|stranger>]` (also `/claim`)
+
+`/codex [stats|creatures|<name>|all (creative)]` `/mentor off|quiet|helpful|tip|tts`
 
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
+
+## What's new in v2.1
+
+**Esc → "✨ New in v2.1"** lists all of this in game.
+
+- 🏠 **Hearth Guard:** craft a Hearthstone (4 cobble, 1 gold, 1 Ember Shard; Ember Shard = 2 coal + 1 iron) and place it to claim a 32×32 home (expandable to 128). Friends get trust tiers (Co-builder / Guest / Stranger): strangers can look but not touch, containers, machines and mounts are protected, and the host enforces it. Every block change in a claim is recorded, so griefing can be rewound (`/hearth rewind 10`), and repeat griefers are frozen automatically. **H** shows claim borders.
+- 🦉 **Mentor & Living Codex (O):** an encyclopedia of 630 pages in 12 categories that fills itself in as you see, mine, craft, tame and fight things, each with a rotating 3D model, lore, stats, links and when/where you found it. Search, filters, "What next?" suggestions, and share pages with friends (they see a silhouette until they find it). The Mentor owl offers short lessons only for things you haven't shown you can do, at most one tip per 5 minutes, with Off / Quiet / Helpful modes and optional read-aloud. Hosts can switch on "Mentor for my guests".
+- 💨 **Stamina:** sprinting costs stamina (HUD bar), it regenerates when you slow down, and a good meal makes it last.
+- ⚔ **Light vs Dark duels** (multiplayer, opt-in): challenge a player on the opposite road, away from villages. Duels are non-lethal (first to 0 duel-HP yields), consent-based, and never touch villagers. Turn challenges off in Settings.
+- 🩺 **Infected beasts:** a real quest to weaken, cleanse (Cleansing Salve) and free a blighted beast — a Radiant Deed.
+- ✨ Companion evolutions now visibly change your pet (Ascended, Dawnkin, Umbral looks).
+- 🌗 Hosts save each friend's Light/Dark road by player id, so it is restored when they rejoin.
+- Phones: clearer touch tutorial. Third person: crosshair offset/hidden and the held item hidden.
 
 ## What's new in v2
 
@@ -99,7 +119,7 @@ Autosave every 30 s, on dimension change, and when you close or hide the tab ("s
 
 ## Playing with friends (peer-to-peer, free, no accounts)
 
-Everyone needs the **same version (v2)**. If versions differ, the game refuses politely and explains who should update.
+v2 and v2.1 play together (v2.1-only features such as claims, duels and Codex sharing switch off for v2 players). v1 can't join v2/v2.1 games (or host for them): the game refuses politely and explains who should update.
 
 ### Host (you)
 
