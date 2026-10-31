@@ -1,11 +1,12 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.6 “Elements and Engineering”)
-=======================================================================
+VOXEL MYTHOS — a living voxel sandbox (v2.7 “Realms and Ruins”)
+===============================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.5 saves load in v2.6 unchanged (same storage keys;
-v2.6 only adds new sections for water levels, structures and the bucket). A v2.6 world still opens in v2.5 and older: water
-shows at its old full height, and the new v2.6 blocks (fluids, water machines, iron beams, Weaver Silk, sensors) appear as
-a familiar stand-in such as water, cobble, planks or obsidian instead of disappearing.
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.6 saves load in v2.7 unchanged (same storage keys;
+v2.7 only adds new sections for the realm, banners and the dig record). Existing worlds keep their land: ruins and the
+Strata layers appear only in chunks generated after the update. A v2.7 world still opens in v2.6 and older: the realm
+and dig record are kept but ignored, and the new v2.7 blocks (deepstone, ores, ancient bricks, plinths) appear as a
+familiar stand-in such as stone, bricks, cobble or dirt instead of disappearing.
 
 FIRST STEPS: click the game view ("🖱 Click to play") to capture the mouse, then move the mouse to look around.
 Esc releases the mouse and pauses; click again to carry on.
@@ -19,7 +20,7 @@ CONTROLS — desktop (most keys can be rebound in Esc → Settings → Accessibi
     F5 ............... camera view: first person → third person behind → third person front (also /view)
     F9 ............... free orbit camera     P photo mode (1-6 filters, Enter snapshot, H hides UI)
   Moving
-    W A S D .......... move (diagonals are normalised — same speed in every direction)
+    W A S D .......... move (diagonals are normalized — same speed in every direction)
     Shift (hold) ..... sprint, ~1.6× speed with a FOV kick; uses stamina (green bar above the hotbar) (also double-tap W; "Toggle sprint" option in Accessibility)
                        Sprint also works on mounts. Shift descends while flying.
     Space ............ jump / swim up / fly up        C descend while flying
@@ -27,9 +28,9 @@ CONTROLS — desktop (most keys can be rebound in Esc → Settings → Accessibi
   Acting
     Left click (hold)  mine / attack      Right click  place · eat · use · talk · tame · ride
     1-9 / wheel ...... hotbar             0  cast your bound Light/Dark path power (duel bolt in a duel)     -  Crossroads / Light panel
-    E inventory & crafting   M market (Shift+M living Market)   , (comma) quest board & journal   F talk   T or / chat & commands   Q cast spell   G map & factions
+    E inventory & crafting   M market (Shift+M living Market)   , (comma) quest board & journal   F talk   T or / chat & commands   Q cast spell   G map & realm
     R mount / dismount / land   V thermal vision (Stress View while holding the Engineer's Hammer)   X weapon ability   B armory   N tech tree   J Story Journal (Shift+J creature codex)
-    O Living Codex (Shift+O party)   U trophies   Y gallery   H Hearth claim view (airship camera on a ship)
+    O Living Codex (Shift+O party)   U Field Journal (Shift+U trophies)   Y gallery   H Hearth claim view (airship camera on a ship)
     .  (period) Celestial Almanac — while looking up at the night sky it toggles star & planet labels instead
     L spellbook   I journal   Z blueprints   K save now   Esc pause   F3 performance overlay
     E while facing a villager, worker, mage or caravan: Kindred talk menu    Bard's Lute in hand: 1-9 play notes
@@ -60,7 +61,47 @@ USEFUL COMMANDS (T or /)
     /music [on|off|status|motif|mutate|stinger|density|visual|credits]  /kindred [status|who|rumors|gossip|talk]
   New in v2.5: /eco [stats|rewild|days N (creative)]  /sky [next|labels|goto <event> (creative)]
   New in v2.6: /bucket [level N|all|empty]  /ww [stats|settle (creative)|on|off]  /ls [view|physics on|off (creative)]
+  New in v2.7: /realm [council|vote N|found <name>|stance <choice>]  /banner (Banner tab)  /strata (Field Journal)  /friends (where your friends are)
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.7 — REALMS AND RUINS
+  🚩 BANNERS OF THE REALM: five fictional factions now hold regions of the world, each with a capital, borders, values and a
+    leader who remembers what you did. They trade, sign treaties, quarrel over borders, lay sieges and make peace. The Map
+    (G) has a realm overlay and Diplomacy, Council and Banner tabs (/realm).
+    Your own banner: any group of friends (1 or more) can raise a banner and design its crest (/banner). Regions where
+    members hold a Hearth claim become banner land. Factions treat banners as peers: envoys, treaty offers carried by
+    Wayfarer couriers, trade pacts (15 % off at their towns, a small banner tax on sales) and rivalries. An offline
+    banner is frozen and is never besieged.
+    The Grand Council meets every 7 days at a neutral site. Factions and eligible players (standing 25+, or a landed
+    banner) vote on one of three edicts: bridge-building, free trade, a truce, an arcane ban in Verdant lands, or
+    scholarship. An edict lasts 7 days and really changes quest rewards, prices, raids, magic and research.
+    Reputation: relieve a siege, mediate one, carry word as an envoy or help an exiled people return, and your standing
+    rises; break a treaty and gossip spreads. Questforge, the living Market, the Chronicler and Kindred gossip all follow
+    the politics.
+  🪨 STRATA: the deep world has layers. Deepstone starts below about y 18 and Primeval rock lies near the bottom, with
+    three new finds: Orichalcum, Amber and Fossils.
+  🏺 ANCIENT RUINS: each world has a seeded history of 3-6 lost cultures across 20,000 years, each with its own name, god,
+    building style and script. They left buried cities, temples, observatories, tombs and battlefields. Some peek out
+    at the surface; the rest wait under the ground.
+  🖌 ARCHAEOLOGY: craft an Archaeologist's Brush (stick + copper) or a Trowel (stick + iron). Three careful brush strokes keep a
+    Buried Find intact; a trowel is quicker but rougher; a pickaxe or an explosion breaks it. Restore finds, show them on
+    Museum Plinths (4 cobble + 2 planks) and earn Lore and boons: ancient building styles, old weapon patterns and
+    faster deciphering.
+  🔣 LOST SCRIPTS: every inscription you read reveals glyphs of that culture's script; at 60 % the meaning shows. Observatories
+    still count the nights to the Almanac's next comet, and one inscription remembers the Sundering of Light and Dark.
+  📔 FIELD JOURNAL (U): sites, finds, scripts, a timeline of the deep past running up to the Present Age of your own Living
+    Mythos, and your museum. Trophies moved to Shift+U (also a button at the top of the journal). Curious villagers
+    sometimes tell legends that point to a ruin, the quest board offers excavations, and dungeons name the culture that
+    built them.
+  🧱 STURDIER BUILDING (refinements): plank decks fail from the free end, wave by wave, instead of all at once; falling
+    debris is textured; the Stress View turns red only past breaking point; old stone grows moss; settled water lies
+    level; /build shapes and blueprints are checked for load when placed (they brace themselves with short props).
+  👥 FRIENDS ON THE MAP: other players show on the minimap and the big map (G) as colored arrows with their names. When a
+    friend is out of range the arrow waits at the edge, points the way and shows the distance. /friends lists everyone's
+    distance and direction. It uses the player positions the host already sends, so it adds no network traffic.
+  🔗 MULTIPLAYER: a v2.7 host shares the realm and the dig record with every v2.7 player. Logic Core settings, crate orders,
+    taming requests and potions now sync between players (an old bug).
+  Esc → "🏺 New in v2.7" lists all of this in game, and Esc → "❔ Help & Controls" has a "Realm & ruins" section.
 
 WHAT'S NEW IN v2.6 — ELEMENTS AND ENGINEERING
   💧 WATERWORKS: water, lava and four new fluids (mud, honey, mana-essence and void-tar) now have real levels from 1 to 15.
@@ -109,7 +150,7 @@ WHAT'S NEW IN v2.5 — WILD SKIES
     taming and farming all change the numbers, and the animals that spawn around you come from what really lives there.
     The simulation is kept in bounds (a full in-game year was tested with no runaway or vanished species).
   🐺 Keystones & Sanctuaries: each biome has a keystone species. Lose the wolves of a forest and it slowly withers, its
-    colours fading. Plant saplings, dig ponds, place Nest Boxes (3 planks + 1 stick) and release companions to bring life
+    colors fading. Plant saplings, dig ponds, place Nest Boxes (3 planks + 1 stick) and release companions to bring life
     back. A patch rich and balanced for three days becomes a Sanctuary: legendary creatures appear only there, and once
     a season it gives you a Heartseed, which completes one Ascension step for a companion.
   🧬 Evolving wildlife: animals hunted hard grow faster, smaller and warier over many days; those in cold land grow paler
@@ -150,7 +191,7 @@ WHAT'S NEW IN v2.4 — QUESTS AND COIN
     and track 3 on the HUD, which shows direction arrows and soft light beacons. Comma (,) or Pause → Quest board opens
     the board, journal and echoes.
   🪙 THE LIVING MARKET (Shift+M, or the link in the M market): 83 goods priced by supply and demand across your village,
-    19 trading towns, the four dimension bazaars and travelling caravans. Production, consumption, spoilage, local
+    19 trading towns, the four dimension bazaars and traveling caravans. Production, consumption, spoilage, local
     industries, shocks (mine collapses, blights, fairs), festivals and the seasons move stock and prices, and the
     Ledger shows each good's price history. One deal can take at most 25 % of a market's stock, and dumping
     lowers the price you get, so prices can't be cornered.
@@ -190,7 +231,7 @@ WHAT'S NEW IN v2.3 — LIVING CREATURES
   ✨ Ability effects come from the body: breath jets from the mouth, spit and gaze bursts, shimmering hex shields that
     ripple when hit and shatter, healing helixes, quake rings, gust vortices, ink clouds, blink flashes, dash streaks,
     burrow spray and landing dust.
-  ⚔ Combat feedback: hits spark where they land (steel/blue sparks on armour and shields), the creature flashes, and
+  ⚔ Combat feedback: hits spark where they land (steel/blue sparks on armor and shields), the creature flashes, and
     optional floating damage numbers rise from the wound (gold for big hits, blue when shielded).
   📖 The Living Codex (O) turntable shows each creature's animated rig (silhouette until discovered).
   ⚙ Performance: full detail up close, a lighter body at mid range, and shared instanced impostors far away; the rig
@@ -260,7 +301,10 @@ SAVING
   Esc → Worlds & backups: 4 named world slots + the Daily slot, Export (.json backup file), Import, rename, delete.
 
 PLAYING WITH FRIENDS (peer-to-peer, free, no accounts)
-  v2.1 through v2.6 play together (v2 still connects too). In a v2.6 game the host runs the water and decides what
+  v2.1 through v2.7 play together (v2 still connects too). The realm and the dig record need a v2.7 host; v2.7 players
+  at the same host see the same ruins (computed from the seed) and the same politics. v2.6 and older guests join a v2.7
+  game and just don't see these features (new blocks they meet appear as stand-ins; the v2.7-only realm and dig data are left out of what they receive); a v2.7 guest at an older host is
+  told that world has no Strata. In a v2.6+ game the host runs the water and decides what
   collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes
   it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new
   v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host
@@ -269,8 +313,8 @@ PLAYING WITH FRIENDS (peer-to-peer, free, no accounts)
   friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full
   reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an
   older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players.
-  v1 can't join v2–v2.6 games (or host for them): the game refuses politely and explains who should update.
-  Kindred memories, the Chronicler, quests, the market, the ecology, water, structures and the music are run by the host and saved in the host's world.
+  v1 can't join v2–v2.7 games (or host for them): the game refuses politely and explains who should update.
+  Kindred memories, the Chronicler, quests, the market, the ecology, water, structures, the realm, the dig record and the music are run by the host and saved in the host's world.
   Host (you):
     1. Open voxel-sandbox.html, load or create a world.
     2. Press Esc → "🌐 Host for friends" → "Host & get a room code".
@@ -296,10 +340,15 @@ TECH NOTES
   hour) and saves compactly (about 70 KB). Market deals are host-authoritative with escrow and idempotent transaction ids. v2.5's ecology is a
   Lotka-Volterra-style model per 64 × 64 cell (20 overworld species plus dimension food webs) stepped hourly on the host;
   the almanac is a pure function of seed and time (eclipse contacts found by bisection), costing about 0.01 ms a frame.
-  v2.6 water is a levelled-cell simulation with a capped active set (40,000 cells), a fixed per-tick cell budget and
+  v2.6 water is a leveled-cell simulation with a capped active set (40,000 cells), a fixed per-tick cell budget and
   an adaptive radius (32-128 blocks). It is sent to v2.6 guests as per-chunk run-length diffs 5 times a second and
   smoothed at 20 Hz on screen. Erosion scoring runs in a Web Worker. Load and Stone solves only the connected structure
   around an edit, using typed arrays and capped at 4,096 blocks; blocks past the cap count as anchored. Typical edits
   take well under 1 ms, and a solid 16×16×16 cube takes about 12-20 ms. Falling debris is one instanced mesh of up to
   300 blocks, stepped with fixed 1/60 s physics from a shared seed.
+  v2.7's realm steps once per in-game day on the host (about 0.3 ms at the 95th percentile) and saves in about 9.5 KB (240 simulated days). The
+  deep history is a pure function of the seed (a 200-century simulation on a 32 × 32 grid, 5-35 ms once per world); Strata
+  and ruins add about 10 % to chunk generation. Guests get the realm and dig record as small host snapshots.
+  Frame rate vs v2.6 on the same machine and seeds (3 alternating runs): idle 106 %, crowd 110 %, night sky 105 %,
+  flooding water 96 %, deep-layer room 103 %. Friends on the map cost about 0.03 ms per minimap draw and add no network traffic.
   Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites).

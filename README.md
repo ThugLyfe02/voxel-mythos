@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2.6 “Elements and Engineering”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.5 saves load in v2.6 unchanged (same storage keys; v2.6 only adds new sections for water levels, structures and the bucket). A v2.6 world still opens in v2.5 and older: water shows at its old full height, and the new v2.6 blocks appear as a familiar stand-in such as water, cobble, planks or obsidian instead of disappearing.
+A living voxel sandbox (v2.7 “Realms and Ruins”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.6 saves load in v2.7 unchanged (same storage keys; v2.7 only adds new sections for the realm, banners and the dig record). Existing worlds keep their land: ruins and the Strata layers appear only in chunks generated after the update. A v2.7 world still opens in v2.6 and older: the realm and dig record are kept but ignored, and the new v2.7 blocks appear as a familiar stand-in such as stone, bricks, cobble or dirt instead of disappearing.
 
 ## Play
 
@@ -38,9 +38,9 @@ Most keys can be rebound in **Esc → Settings → Accessibility → Key binding
 
 - **Left click (hold)** mine / attack · **Right click** place · eat · use · talk · tame · ride
 - **1–9 / wheel** hotbar · **0** cast your bound Light/Dark path power (duel bolt in a duel) · **-** Crossroads / Light panel
-- **E** inventory & crafting · **M** market (Shift+M living Market) · **,** quest board & journal · **F** talk · **T or /** chat & commands · **Q** cast spell · **G** map & factions
+- **E** inventory & crafting · **M** market (Shift+M living Market) · **,** quest board & journal · **F** talk · **T or /** chat & commands · **Q** cast spell · **G** map & realm
 - **R** mount / dismount / land · **V** thermal vision (Stress View while holding the Engineer's Hammer) · **X** weapon ability · **B** armory · **N** tech tree · **J** Story Journal (Shift+J creature codex)
-- **O** Living Codex (Shift+O party) · **U** trophies · **Y** gallery · **H** Hearth claim view (airship camera on a ship)
+- **O** Living Codex (Shift+O party) · **U** Field Journal (Shift+U trophies) · **Y** gallery · **H** Hearth claim view (airship camera on a ship)
 - **.** (period) Celestial Almanac — while looking up at the night sky it toggles star and planet labels instead
 - **L** spellbook · **I** journal · **Z** blueprints · **K** save now · **Esc** pause · **F3** performance overlay
 - **E** while facing a villager, worker, mage or caravan: Kindred talk menu
@@ -88,7 +88,20 @@ New in v2.5: `/eco [stats|rewild|days N (creative)]` `/sky [next|labels|goto <ev
 
 New in v2.6: `/bucket [level N|all|empty]` `/ww [stats|settle (creative)|on|off]` `/ls [view|physics on|off (creative)]`
 
+New in v2.7: `/realm [council|vote N|found <name>|stance <choice>]` `/banner` `/strata` `/friends`
+
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
+
+## What's new in v2.7 — Realms and Ruins
+
+**Esc → "🏺 New in v2.7"** lists all of this in game. Esc → "❔ Help & Controls" has a "Realm & ruins" section.
+
+Saves from v1 through v2.6 still load. v2 through v2.6 players can still play together with v2.7 players. The realm and the dig record need a v2.7 host; older guests join and simply do not see those features.
+
+- 🚩 **Banners of the Realm:** five fictional factions hold regions of the world, each with a capital, borders, and a leader who remembers what you did. They trade, quarrel over borders, lay sieges, and make peace. **G** opens the realm map, with Diplomacy, Council, and Banner tabs (`/realm`). Any group of friends can raise a banner and design its crest (`/banner`). The Grand Council meets every 7 days and votes on an edict that changes quest rewards, prices, raids, magic, and research.
+- 🪨 **Strata:** deepstone and primeval rock hold Orichalcum, Amber, and Fossils. Each world has a seeded history of 3–6 lost cultures and their buried cities, temples, tombs, and battlefields. Brush a Buried Find to keep it intact, decipher inscriptions, and show artifacts on Museum Plinths. **U** opens the Field Journal; trophies moved to **Shift+U**.
+- 👥 **Friends on the map:** other players show on the minimap and the world map (**G**) as colored arrows with their names. When a friend is out of range, the arrow waits at the edge, points the way, and shows the distance. `/friends` lists everyone's distance and direction.
+- Refinements: plank decks fail from the free end, wave by wave, instead of all at once; falling debris is textured; Stress View turns red only past the breaking point; old stone grows moss; settled water lies level. Game text uses US spelling throughout.
 
 ## What's new in v2.6 — Elements and Engineering
 
@@ -184,9 +197,9 @@ Autosave every 30 s, on dimension change, and when you close or hide the tab ("s
 
 ## Playing with friends (peer-to-peer, free, no accounts)
 
-v2.1 through v2.6 play together (v2 still connects too). In a v2.6 game the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.6 games (or host for them): the game refuses politely and explains who should update.
+v2.1 through v2.7 play together (v2 still connects too). The realm and the dig record need a v2.7 host; v2.7 players at the same host see the same ruins and the same politics. v2.6 and older guests join a v2.7 game and just don't see these features. A v2.7 guest at an older host is told that world has no Strata. In a v2.6+ game the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.7 games (or host for them): the game refuses politely and explains who should update.
 
-Kindred memories, the Chronicler, quests, the market, the ecology, water, structures and the music are run by the host and saved in the host's world.
+Kindred memories, the Chronicler, quests, the market, the ecology, water, structures, the realm, the dig record and the music are run by the host and saved in the host's world.
 
 ### Host (you)
 
