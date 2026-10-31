@@ -842,6 +842,11 @@ function meshCore(J, K) {
     s = Math.max(s, sky0(x + 1, y, z) * 0.82, sky0(x - 1, y, z) * 0.82, sky0(x, y, z + 1) * 0.82, sky0(x, y, z - 1) * 0.82); if (s >= 0.82) return s;
     return Math.max(s, sky0(x + 2, y, z) * 0.64, sky0(x - 2, y, z) * 0.64, sky0(x, y, z + 2) * 0.64, sky0(x, y, z - 2) * 0.64, sky0(x + 1, y, z + 1) * 0.7, sky0(x - 1, y, z - 1) * 0.7, sky0(x + 1, y, z - 1) * 0.7, sky0(x - 1, y, z + 1) * 0.7); };
   const OPQ = K.opaque, CRS = K.cross, EMI = K.emit, SOL = K.solid, TL = K.tiles, UV = K.uvs, SW = K.sway, FACES = K.FACES, AO_CURVE = K.AO_CURVE, UVQ = K.UVQ, WATER = K.WATER;
+  // v2.6 Waterworks: partial fluid levels (J.fls = 3x3 Maps of local index -> level 1..14) give lowered, corner-smoothed surfaces
+  const LQ = K.liq || null, FLS = J.fls || null; let hasFl = false; if (FLS && LQ) for (let q = 0; q < 9; q++) if (FLS[q]) hasFl = true;
+  const lvAt = (x, y, z) => { let ci = 4; if (x < 0) { x += 16; ci -= 1; } else if (x > 15) { x -= 16; ci += 1; } if (z < 0) { z += 16; ci -= 3; } else if (z > 15) { z -= 16; ci += 3; } const m = FLS[ci]; if (!m) return 15; const v = m.get(x + (z << 4) + (y << 8)); return v === undefined ? 15 : v; };
+  const cellH = (x, y, z, b) => { if (get(x, y + 1, z) === b) return 1; const L = hasFl ? lvAt(x, y, z) : 15; return L >= 15 ? 0.88 : Math.max(0.07, 0.88 * L / 15); };
+  const cornerH = (x, y, z, b, cx, cz) => { if (!hasFl) return 0.88; let s = 0, n = 0; for (let a = 0; a < 2; a++) for (let c = 0; c < 2; c++) { const xx = x + cx - 1 + a, zz = z + cz - 1 + c; if (get(xx, y, zz) !== b) continue; const h = cellH(xx, y, zz, b); if (h >= 1) return 1; s += h; n++; } return n ? s / n : cellH(x, y, z, b); };
   const isOp = id => id > 0 && OPQ[id] === 1;
   const O = { p: [], u: [], l: [], i: [] }, W = { p: [], u: [], l: [], i: [] };
   const d = N[4]; const top = Math.min(WHk - 1, J.maxY + 1);
@@ -862,10 +867,10 @@ function meshCore(J, K) {
     const isW = b === WATER; const T = isW ? W : O; const swayK = SW[b] ? 2 : 0;
     for (let f = 0; f < 6; f++) {
       const F = FACES[f]; const nx = x + F.n[0], ny = y + F.n[1], nz = z + F.n[2];
-      const nb = get(nx, ny, nz);
+      const nb = get(nx, ny, nz); let sideFrom = 0;
       if (nb) {
         if (OPQ[nb] === 1) continue;
-        if (nb === b) continue;
+        if (nb === b) { if (!(hasFl && LQ[b] && F.n[1] === 0 && get(x, y + 1, z) !== b)) continue; const nh = cellH(nx, ny, nz, b); const mh = cellH(x, y, z, b); if (nh >= mh - 0.01) continue; sideFrom = nh; }
         if (isW && !CRS[nb] && SOL[nb]) continue;
         if (!isW && SW[b] && SW[nb]) continue;
       }
@@ -881,9 +886,9 @@ function meshCore(J, K) {
         ao[k] = (s1 && s2) ? 0 : 3 - (s1 + s2 + co);
       }
       const base = T.p.length / 3;
-      const wtop = isW && f !== 3 && get(x, y + 1, z) !== WATER;
+      const wtop = (isW || (LQ && LQ[b])) && F.n[1] !== -1 && get(x, y + 1, z) !== b;
       for (let k = 0; k < 4; k++) {
-        const cr = F.c[k]; let py = y + cr[1]; if (wtop && cr[1] === 1) py -= 0.12;
+        const cr = F.c[k]; let py = y + cr[1]; if (wtop && cr[1] === 1) py = y + cornerH(x, y, z, b, cr[0], cr[2]); else if (sideFrom && cr[1] === 0) py = y + sideFrom;
         T.p.push(wx + cr[0], py, wz + cr[2]);
         T.u.push(UVQ[k][0] ? u1 : u0, UVQ[k][1] ? v1 : v0);
         T.l.push(F.s * AO_CURVE[ao[k]] + swayK, sk, emit);
@@ -898,10 +903,10 @@ function meshCore(J, K) {
 let MESH_K = null;
 function meshConsts() {
   if (MESH_K && MESH_K.n === BLOCKS.length) return MESH_K;
-  const n = 256, opaque = new Uint8Array(n), cross = new Uint8Array(n), solid = new Uint8Array(n), sway = new Uint8Array(n), emit = new Float32Array(n), tiles = new Int16Array(n * 3);
-  for (let i = 0; i < n; i++) { const bd = BLOCKS[i]; if (!bd) continue; opaque[i] = bd.opaque ? 1 : 0; cross[i] = bd.cross ? (bd.short ? 2 : 1) : 0; solid[i] = bd.solid ? 1 : 0; emit[i] = bd.emit || 0; sway[i] = bd.sway || i === B.LEAVES || i === B.SPRUCE_LEAVES ? 1 : 0; for (let k = 0; k < 3; k++) tiles[i * 3 + k] = bd.tiles[k]; }
+  const n = 256, opaque = new Uint8Array(n), cross = new Uint8Array(n), solid = new Uint8Array(n), sway = new Uint8Array(n), emit = new Float32Array(n), tiles = new Int16Array(n * 3), liq = new Uint8Array(n);
+  for (let i = 0; i < n; i++) { const bd = BLOCKS[i]; if (!bd) continue; opaque[i] = bd.opaque ? 1 : 0; liq[i] = bd.liquid ? 1 : 0; cross[i] = bd.cross ? (bd.short ? 2 : 1) : 0; solid[i] = bd.solid ? 1 : 0; emit[i] = bd.emit || 0; sway[i] = bd.sway || i === B.LEAVES || i === B.SPRUCE_LEAVES ? 1 : 0; for (let k = 0; k < 3; k++) tiles[i * 3 + k] = bd.tiles[k]; }
   const uvs = new Float32Array(TILE_UVS.length * 4); TILE_UVS.forEach((u, t) => uvs.set(u, t * 4));
-  MESH_K = { n: BLOCKS.length, WH, BEDROCK: B.BEDROCK, WATER: B.WATER, opaque, cross, solid, sway, emit, tiles, uvs, FACES: FACES.map(f => ({ n: f.n, c: f.c, s: f.s, t: f.t, ao: f.ao })), AO_CURVE, UVQ };
+  MESH_K = { n: BLOCKS.length, WH, BEDROCK: B.BEDROCK, WATER: B.WATER, opaque, cross, solid, sway, emit, tiles, uvs, FACES: FACES.map(f => ({ n: f.n, c: f.c, s: f.s, t: f.t, ao: f.ao })), AO_CURVE, UVQ, liq };
   return MESH_K;
 }
 function meshJob(world, c) {
@@ -909,7 +914,8 @@ function meshJob(world, c) {
   for (let dz = -1; dz <= 1; dz++) for (let dx = -1; dx <= 1; dx++) { const n = world.getChunk(c.cx + dx, c.cz + dz); if (!n) return null; datas.push(n.data); hms.push(n.hm); }
   const bx = c.cx * 16, bz = c.cz * 16;
   for (let dz = -1; dz <= 1; dz++) for (let dx = -1; dx <= 1; dx++) { const n = world.getChunk(c.cx + dx, c.cz + dz); const L = world.getLamps(n); for (let i = 0; i < L.length; i += 4) { const lx = L[i], lz = L[i + 2]; if (lx > bx - 9 && lx < bx + 25 && lz > bz - 9 && lz < bz + 25) lamps.push(L[i], L[i + 1], L[i + 2], L[i + 3]); if (lamps.length > 4 * 48) break; } }
-  return { datas, hms, maxY: c.maxY, cx: c.cx, cz: c.cz, lamps };
+  let fls = null; if (G.wwMeshLv) { for (let dz = -1, q = 0; dz <= 1; dz++) for (let dx = -1; dx <= 1; dx++, q++) { const m = G.wwMeshLv(c.cx + dx, c.cz + dz); if (m) { if (!fls) fls = [null, null, null, null, null, null, null, null, null]; fls[q] = m; } } }
+  return { datas, hms, maxY: c.maxY, cx: c.cx, cz: c.cz, lamps, fls };
 }
 function geomFrom(T) {
   if (!T) return null; const g = new THREE.BufferGeometry();
@@ -4076,7 +4082,7 @@ G.hook('worldMade', () => { if (G.aurora) { G.scene.remove(G.aurora); G.aurora =
 })();
 
 // ==== 13_net.js
-const NET_VER = 'vm2', NET_VER_LABEL = 'v2.5', NET_FEAT = '2.5'; // v2.1, v2.2, v2.3, v2.4 and v2.5 keep the vm2 wire protocol (v2 <-> v2.1 compatible); NET_FEAT gates v2.1-only features
+const NET_VER = 'vm2', NET_VER_LABEL = 'v2.6', NET_FEAT = '2.6'; // v2.1 … v2.6 keep the vm2 wire protocol (v2 <-> v2.1 compatible); NET_FEAT gates v2.1-only features
 G.NET_FEAT = NET_FEAT; G.mpUid = function () { try { let u = localStorage.getItem('vm_uid'); if (!u || !/^[a-z0-9]{6,24}$/.test(u)) { u = (Math.random().toString(36).slice(2) + Math.random().toString(36).slice(2)).slice(0, 16); localStorage.setItem('vm_uid', u); } return u; } catch (e) { return 'anon' + Math.floor(Math.random() * 1e9).toString(36); } };
 // ================= 13: Multiplayer (PeerJS P2P + manual WebRTC fallback, host-authoritative) =================
 const NET_CHUNK = 15000, NET_PREFIX = 'vxm-', NET_ALPHA = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
@@ -4142,9 +4148,14 @@ G.hook('worldMade', () => {
   N.avatars.clear(); N.proxies.clear(); const w = G.world; if (!w || w._netWrapped) return; w._netWrapped = true; const orig = w.onChange;
   w.onChange = function (x, y, z, old, id) { const r = orig ? orig.apply(this, arguments) : undefined; if (N.active && !G.applyingRemote && !N.loadingWorld) N.outSets.push(x, y, z, id, w.placed.has(x + ',' + y + ',' + z) ? 1 : 0); return r; };
 });
+// block fallbacks per peer version: an id introduced in version V is swapped for its fallback only for peers older than V (v2.5 knows 140/141; v2.6 adds 142+)
+const fbIntro = id => (id >= 142 ? 2.6 : 2.5);
+const fbPeer = fv => !(parseFloat(fv) >= 2.6) && !!G.blockFallback;
+function fbSets(a, fv) { const F = G.blockFallback, v = parseFloat(fv) || 0, b = a.slice(); for (let i = 3; i < b.length; i += 5) if (F[b[i]] !== undefined && v < fbIntro(b[i])) b[i] = F[b[i]]; return b; }
 function flushSets() {
   if (!N.outSets.length) return; const a = N.outSets; N.outSets = [];
-  if (N.role === 'host') broadcast({ t: 'sets', a }); else if (N.host) N.host.send({ t: 'sets', a });
+  // v2.6: peers older than v2.5 do not know Nest Box / Star-metal and would drop them, so they get the fallback block instead
+  if (N.role === 'host') { const bv = {}; for (const L of N.links) if (L.pid) { const c = parseFloat(L.fv) >= 2.5 ? 'a' : 'b'; L.send({ t: 'sets', a: fbPeer(L.fv) ? (bv[c] || (bv[c] = fbSets(a, L.fv))) : a }); } } else if (N.host) N.host.send({ t: 'sets', a: fbPeer(N.hostFv) ? fbSets(a, N.hostFv) : a });
 }
 function applySets(a) { for (let i = 0; i + 4 < a.length + 0 && i + 4 <= a.length - 1; i += 5) applySet(a[i] | 0, a[i + 1] | 0, a[i + 2] | 0, a[i + 3] | 0, a[i + 4]); }
 
@@ -6281,6 +6292,9 @@ const LTYPE = {}; for (const [id, key, name, type, tiles, o] of LDEF) { defBlock
 for (const [id, key, name, , , o] of LDEF) if (!o || o.drop === undefined) defItem(key, name, { value: 8, place: id, desc: 'Logic component — right-click to configure' });
 LTYPE[B.LEVER] = 'lever'; LTYPE[B.LEVER_ON] = 'lever'; LTYPE[B.PLATE] = 'plate';
 G.LTYPE = LTYPE; G.LG = LG;
+// v2.6: extension points so later modules (Waterworks machines) can add component types without touching the core switch
+G.logicExt = { src: {}, cons: {} };
+G.logicRegister = (id, type, o) => { LTYPE[id] = type; LG[BLOCKS[id].key] = id; if (o && o.omni) OMNI.add(type); if (o && o.faced) FACED.add(type); LS.dirty = true; };
 const DIRS = [[1, 0, 0], [0, 0, 1], [-1, 0, 0], [0, 0, -1], [0, 1, 0], [0, -1, 0]]; const DN = ['E', 'S', 'W', 'N', 'U', 'D']; const OPP = [2, 3, 0, 1, 5, 4];
 const OMNI = new Set(['lever', 'plate', 'button', 'clock', 'sprox', 'sday', 'srain', 'gauge', 'rx']); const DIRL = new Set(['and', 'or', 'not', 'xor', 'latch', 'counter']);
 const FACED = new Set(['and', 'or', 'not', 'xor', 'latch', 'counter', 'conveyor', 'hopper', 'sorter', 'autocrafter', 'piston', 'drill']);
@@ -6331,7 +6345,7 @@ function buildNets() { LS.netOf.clear(); const nets = []; for (const c of LS.com
 function emitsTo(c, dir) { const t = c.type; if (OMNI.has(t)) return LS.out.get(c.k) || 0; if (DIRL.has(t)) return cfg(c.k).f === dir ? (LS.out.get(c.k) || 0) : 0; if (t === 'core') { const o = cfg(c.k).outs; return o ? (o[dir] || 0) : 0; } return 0; }
 function inputFrom(c, d) { const nk = key(c.x + DIRS[d][0], c.y + DIRS[d][1], c.z + DIRS[d][2]); const n = LS.comps.get(nk); if (!n) return null; if (n.type === 'wire') { const net = LS.netOf.get(nk); return net ? net.p : 0; } if (OMNI.has(n.type) || DIRL.has(n.type) || n.type === 'core') return emitsTo(n, OPP[d]); return null; }
 function powered(c) { let v = 0; for (let d = 0; d < 6; d++) { const i = inputFrom(c, d); if (i) v = Math.max(v, i); } return v; }
-function motorNear(c) { for (let d = 0; d < 6; d++) { const n = LS.comps.get(key(c.x + DIRS[d][0], c.y + DIRS[d][1], c.z + DIRS[d][2])); if (n && n.type === 'motor' && LS.run.has(n.k)) return true; } return false; }
+function motorNear(c) { for (let d = 0; d < 6; d++) { const n = LS.comps.get(key(c.x + DIRS[d][0], c.y + DIRS[d][1], c.z + DIRS[d][2])); if (n && (n.type === 'motor' || n.type === 'wheel') && LS.run.has(n.k)) return true; } return false; }
 G.logicPowered = k => { const c = LS.comps.get(k); return c ? powered(c) : 0; };
 // ---------- simulation ----------
 const plateDown = (x, y, z) => { const on = (px, py, pz) => Math.floor(px) === x && Math.floor(pz) === z && Math.abs(py - (y + 1)) < 0.35; const p = G.S.player; if (on(p.x, p.y, p.z)) return true; for (const e of ENTS) if ((e.kind === 'mob' || e.kind === 'avatar' || e.kind === 'pet' || e.kind === 'npc') && on(e.pos.x, e.pos.y, e.pos.z)) return true; return false; };
@@ -6369,20 +6383,22 @@ function tick() {
       case 'latch': { const f = C.f | 0; const L = (f + 1) % 4, R = (f + 3) % 4, Bk = OPP[f]; const s = (inputFrom(c, L) || 0) > 0, r = (inputFrom(c, R) || 0) > 0, tg = (inputFrom(c, Bk) || 0) > 0; if (tg && !C.lt) C.m = C.m ? 0 : 1; C.lt = tg; if (s) C.m = 1; if (r) C.m = 0; o = C.m ? 1 : 0; break; }
       case 'counter': { const f = C.f | 0; const Bk = OPP[f]; const L = (f + 1) % 4, R = (f + 3) % 4; const pulse = (inputFrom(c, Bk) || 0) > 0; if (pulse && !C.lt) C.cnt = (C.cnt | 0) + 1; C.lt = pulse; if ((inputFrom(c, L) || 0) > 0 || (inputFrom(c, R) || 0) > 0) C.cnt = 0; o = (C.cnt | 0) >= (C.n || 1) ? C.cnt : 0; LS.disp.set(c.k, C.cnt | 0); break; }
       case 'core': runCore(c, C); o = 0; break;
+      default: if (G.logicExt.src[t]) o = G.logicExt.src[t](c, C) || 0;
     }
     if (o) nOut.set(c.k, o);
   }
   // motors first, then belts: a belt line runs if any belt in it is powered or touches a running motor
-  for (const c of LS.comps.values()) if (c.type === 'motor' && (cfg(c.k).always || powered(c))) nRun.add(c.k);
+  for (const c of LS.comps.values()) if ((c.type === 'motor' && (cfg(c.k).always || powered(c))) || (c.type === 'wheel' && nOut.get(c.k))) nRun.add(c.k);
   { const prevRun = LS.run; LS.run = nRun; const Q = []; for (const c of LS.comps.values()) if (c.type === 'conveyor' && (powered(c) || motorNear(c))) { nRun.add(c.k); Q.push(c); } while (Q.length) { const c = Q.pop(); for (let d = 0; d < 4; d++) { const n = LS.comps.get(key(c.x + DIRS[d][0], c.y, c.z + DIRS[d][2])); if (n && n.type === 'conveyor' && !nRun.has(n.k)) { nRun.add(n.k); Q.push(n); } } } LS.run = prevRun; }
   // consumers
   for (const c of LS.comps.values()) { const t = c.type, C = cfg(c.k); const pw = ['lamp', 'display', 'conveyor', 'piston', 'drill', 'hopper', 'autocrafter', 'motor', 'sorter', 'clock'].includes(t) ? powered(c) : 0;
     if (t === 'lamp') { const want = pw ? LG.logic_lamp_on : LG.logic_lamp; if (c.id !== want) G.world.set(c.x, c.y, c.z, want, { placed: true }); }
     else if (t === 'display') { let v = pw; for (let d = 0; d < 6; d++) { const n = LS.comps.get(key(c.x + DIRS[d][0], c.y + DIRS[d][1], c.z + DIRS[d][2])); if (n && (n.type === 'counter' || n.type === 'core') && LS.disp.has(n.k)) v = LS.disp.get(n.k); } LS.disp.set(c.k, v); }
     else if (t === 'piston') pistonTick(c, C, pw > 0);
-    else if (t === 'drill') { const on = pw || [0, 1, 2, 3, 4, 5].some(d => { const n = LS.comps.get(key(c.x + DIRS[d][0], c.y + DIRS[d][1], c.z + DIRS[d][2])); return n && n.type === 'motor' && nRun.has(n.k); }); if (on && LS.tick % 12 === 0) drillTick(c, C); if (on) nRun.add(c.k); }
+    else if (t === 'drill') { const on = pw || [0, 1, 2, 3, 4, 5].some(d => { const n = LS.comps.get(key(c.x + DIRS[d][0], c.y + DIRS[d][1], c.z + DIRS[d][2])); return n && (n.type === 'motor' || n.type === 'wheel') && nRun.has(n.k); }); if (on && LS.tick % 12 === 0) drillTick(c, C); if (on) nRun.add(c.k); }
     else if (t === 'hopper') { if (!pw && LS.tick % 4 === 0) hopperTick(c, C); }
     else if (t === 'sorter') { if (!pw && LS.tick % 4 === 0) sorterTick(c, C); }
+    else if (G.logicExt.cons[t]) safe('lgExt', () => G.logicExt.cons[t](c, C, powered(c), nRun));
     else if (t === 'autocrafter') { const edge = pw && !C.lt; C.lt = !!pw; if (edge || (pw && C.auto && LS.tick % 20 === 0)) autoCraft(c, C); }
   }
   LS.out = nOut; LS.run = nRun; packetsStep();
@@ -14221,8 +14237,12 @@ const GOODS_DEF = {
   gear: ['lamp', 'gear', 'steam_core', 'hoe', 'cauldron', 'anvil', 'balloon', 'engine', 'tide_lantern', 'hearth_ember', 'crate'],
   reagents: ['moonpetal', 'emberroot', 'frostmoss', 'glowcap', 'shadeleaf', 'sunthistle', 'nightshade', 'dreamroot', 'brineweed', 'voidbloom', 'skyfern', 'emberlily', 'essence', 'rune_earth', 'rune_air', 'rune_water']
 };
-const GOODS = [], GCLS = [], GI = {}; let BASE = null, EL = null;
+// v2.6: goods added after v2.5 sit AFTER the v2.5 list (index >= NB). Saves and net snapshots keep the exact v2.5 layout for the
+// first NB goods and carry the extras in separate fields, so v2.4/v2.5 builds still read every array (they just never see the extras).
+const GOODS_X = [['hide', 'creature']];
+const GOODS = [], GCLS = [], GI = {}; let BASE = null, EL = null, NB = 0;
 function buildGoods() { if (GOODS.length) return; for (const c of CLS) for (const k of GOODS_DEF[c]) if (ITEMS[k] && !(k in GI)) { GI[k] = GOODS.length; GOODS.push(k); GCLS.push(c); }
+  NB = GOODS.length; for (const [k, c] of GOODS_X) if (ITEMS[k] && !(k in GI)) { GI[k] = GOODS.length; GOODS.push(k); GCLS.push(c); }
   BASE = new Float32Array(GOODS.length); EL = new Float32Array(GOODS.length); GOODS.forEach((k, i) => { BASE[i] = Math.max(0.5, +ITEMS[k].value || 1); EL[i] = CLASSES[GCLS[i]][2]; }); }
 const LUX = new Set(['gems', 'gear']);
 
@@ -14243,7 +14263,7 @@ const TOWNS = [
 const DIM_IND = { void: ['starforge', 'herbalist'], ember: ['mine', 'starforge'], canopy: ['herbalist', 'lumber'], tidal: ['fishery', 'gemworks'] };
 const BAND_IND = { saltwind: ['fishery'], ember: ['smithy'], moth: ['ranch'], glasswing: ['gemworks'], thornstep: ['herbalist'], starwell: ['starforge'] };
 let NODES = [];
-function buildNodes() { if (NODES.length) return; NODES.push({ id: 'home', kind: 'village', pop: 14, ind0: ['farm', 'lumber', 'smithy'], tilt: 'gems', days: 0 });
+function buildNodes() { if (NODES.length) return; NODES.push({ id: 'home', kind: 'village', pop: 20, ind0: ['farm', 'lumber', 'smithy'], tilt: 'gems', days: 0 });
   for (const b of ['saltwind', 'ember', 'moth', 'glasswing', 'thornstep', 'starwell']) NODES.push({ id: 'cv_' + b, kind: 'caravan', band: b, pop: 6, ind0: BAND_IND[b], tilt: 'food', days: 0 });
   for (const d of ['void', 'ember', 'canopy', 'tidal']) NODES.push({ id: 'bz_' + d, kind: 'bazaar', dim: d, pop: 8, ind0: DIM_IND[d], tilt: 'gear', days: 0 });
   for (const t of TOWNS) NODES.push({ id: t[0], kind: 'town', name: t[1], days: t[2], pop: t[3], ind0: t[4], tilt: t[5] });
@@ -14272,7 +14292,11 @@ const qRatio = r => Math.max(0, Math.min(255, Math.round((Math.log(Math.max(0.2,
 const dqRatio = q => Math.exp(q / 255 * 2 * LN5 - LN5);
 function nInCls(c) { let n = 0; for (const x of GCLS) if (x === c) n++; return n || 1; }
 const NCLS = {};
-function indOf(n) { const m = MS(); const id = NODES[n].id; let I = m.ind[id]; if (!I || typeof I !== 'object') { I = m.ind[id] = {}; for (const k of NODES[n].ind0 || []) I[k] = 1; } return I; }
+function indOf(n) { const m = MS(); const id = NODES[n].id; let I = m.ind[id]; if (!I || typeof I !== 'object') { I = m.ind[id] = {}; for (const k of NODES[n].ind0 || []) I[k] = 1; }
+  // v2.6 thicker village market: the home village gains ranches (creature goods, hide) and herb gardens, plus a small mine, once per world
+  if (n === 0 && !m.v26v) { m.v26v = 1; if (!('ranch' in I)) I.ranch = 0.6; if (!('herbalist' in I)) I.herbalist = 0.6; if (!('mine' in I)) I.mine = 0.4; G._mkDirty = true; }
+  return I; }
+const indCap = n => n === 0 ? 8 : 5; // the home village can keep up to 8 industries (towns 5)
 function computeRates() { const N = NODES.length, NG = GOODS.length; for (const c of CLS) NCLS[c] = nInCls(c);
   for (let n = 0; n < N; n++) { const nd = NODES[n]; const I = indOf(n); for (let g = 0; g < NG; g++) { const i = n * NG + g, c = GCLS[g], sb = Math.sqrt(BASE[g]); const w = 0.55 + ((hstr(nd.id + GOODS[g]) % 1000) / 1000) * 0.9;
       let p = 0; for (const k in I) { const iw = IND[k] && IND[k][c]; if (iw) p += iw * Math.max(0, Math.min(3, +I[k] || 0)); }
@@ -14280,18 +14304,26 @@ function computeRates() { const N = NODES.length, NG = GOODS.length; for (const 
       MK.pr[i] = pr; MK.cs[i] = cs; MK.tg[i] = Math.max(4, 2.5 * cs + 1.2 * pr); } } }
 function initModel() { buildGoods(); buildNodes(); const m = MS(); const N = NODES.length, NG = GOODS.length;
   MK = { N, NG, st: new Float32Array(N * NG), tg: new Float32Array(N * NG), pr: new Float32Array(N * NG), cs: new Float32Array(N * NG), pm: new Float32Array(N * CLS.length).fill(1), dm: new Float32Array(N * CLS.length).fill(1), hist: new Uint8Array(N * NG * HN), sig: '' };
-  computeRates(); const u = b64d(m.st); let ok = u.length === N * NG * 2;
-  if (ok) { const v = new Uint16Array(u.buffer, u.byteOffset, N * NG); for (let i = 0; i < N * NG; i++) MK.st[i] = v[i] / 4; }
+  computeRates(); const NX = NG - NB; const u = b64d(m.st); let ok = u.length === N * NB * 2;
+  if (ok) { const v = new Uint16Array(u.buffer, u.byteOffset, N * NB); for (let n = 0; n < N; n++) for (let g = 0; g < NB; g++) MK.st[n * NG + g] = v[n * NB + g] / 4;
+    // extras (v2.6 hide): restored from stX when it matches; otherwise (a v2.4/v2.5 save) they open at a settled target level
+    const ux = b64d(m.stX); const okx = NX && m.gX === GOODS.slice(NB).join(',') && ux.length === N * NX * 2; const vx = okx ? new Uint16Array(ux.buffer, ux.byteOffset, N * NX) : null;
+    for (let n = 0; n < N; n++) for (let g = NB; g < NG; g++) { const i = n * NG + g; MK.st[i] = vx ? vx[n * NX + g - NB] / 4 : Math.round(MK.tg[i] * (MK.pr[i] > MK.cs[i] * 1.1 ? 1.3 : 1) * 4) / 4; } }
   else { if (!m.seed) m.seed = (hstr((G.S.seed || 1) + ':mk2') || 1) >>> 0; const r = rng(m.seed); for (let i = 0; i < N * NG; i++) { const sur = MK.pr[i] > MK.cs[i] * 1.1 ? 1.5 : MK.pr[i] < MK.cs[i] * 0.6 ? 0.55 : 1; MK.st[i] = Math.round(MK.tg[i] * sur * (0.8 + r() * 0.4) * 4) / 4; } 
     // v2.5: a new world's market is settled for 10 quiet days before the player arrives, so the opening week no longer swings
     // goods value by 15-30 % (that swing, not the player, was most of the early governor lag). Deterministic from the world seed.
     const r2 = rng((m.seed ^ 0x5e771e) >>> 0 || 1); const t0 = performance.now(); for (let k = 0; k < 480; k++) { hourStep(r2); if (k % 24 === 23) industryDay(); } for (let i = 0; i < N * NG; i++) MK.st[i] = Math.round(MK.st[i] * 4) / 4; m.pre = 1; MK.preMs = Math.round(performance.now() - t0); }
-  const h = b64d(m.h); if (h.length === MK.hist.length) MK.hist.set(h); else for (let i = 0; i < N * NG; i++) MK.hist.fill(qRatio(ratioI(i)), i * HN, i * HN + HN);
+  for (let i = 0; i < N * NG; i++) MK.hist.fill(qRatio(ratioI(i)), i * HN, i * HN + HN);
+  const h = b64d(m.h); if (h.length === N * NB * HN) for (let n = 0; n < N; n++) for (let g = 0; g < NB; g++) MK.hist.set(h.subarray((n * NB + g) * HN, (n * NB + g + 1) * HN), (n * NG + g) * HN);
+  const hx = b64d(m.hX); if (NX && m.gX === GOODS.slice(NB).join(',') && hx.length === N * NX * HN) for (let n = 0; n < N; n++) for (let g = NB; g < NG; g++) MK.hist.set(hx.subarray((n * NX + g - NB) * HN, (n * NX + g - NB + 1) * HN), (n * NG + g) * HN);
   if (m.hr < 0) m.hr = Math.floor(now() * 24); applyShocks(); MK.seedOk = 1; }
 const ready = () => { if (!G.S || !G.S.v2 || isGuest() || G.state !== 'play') return false; if (!MK) { try { initModel(); } catch (e) { logErr('mk2 init', e); MK = null; return false; } } return true; };
 function ratioI(i) { return Math.max(0.2, Math.min(5, Math.pow(MK.tg[i] / Math.max(MK.st[i], 1), EL[i % MK.NG]))); }
 function priceI(i) { return BASE[i % MK.NG] * ratioI(i); }
-function saveModel() { if (!MK || isGuest() || !G.S || !G.S.v2) return; const m = MS(); const N = MK.N * MK.NG; const v = new Uint16Array(N); for (let i = 0; i < N; i++) v[i] = Math.max(0, Math.min(65535, Math.round(MK.st[i] * 4))); m.st = b64e(new Uint8Array(v.buffer)); m.h = b64e(MK.hist); }
+const q4 = x => Math.max(0, Math.min(65535, Math.round(x * 4)));
+function saveModel() { if (!MK || isGuest() || !G.S || !G.S.v2) return; const m = MS(); const N = MK.N, NG = MK.NG, NX = NG - NB; const v = new Uint16Array(N * NB), vx = new Uint16Array(N * NX); const h = new Uint8Array(N * NB * HN), hx = new Uint8Array(N * NX * HN);
+  for (let n = 0; n < N; n++) for (let g = 0; g < NG; g++) { const i = n * NG + g; if (g < NB) { v[n * NB + g] = q4(MK.st[i]); h.set(MK.hist.subarray(i * HN, i * HN + HN), (n * NB + g) * HN); } else { vx[n * NX + g - NB] = q4(MK.st[i]); hx.set(MK.hist.subarray(i * HN, i * HN + HN), (n * NX + g - NB) * HN); } }
+  m.st = b64e(new Uint8Array(v.buffer)); m.h = b64e(h); if (NX) { m.stX = b64e(new Uint8Array(vx.buffer)); m.hX = b64e(hx); m.gX = GOODS.slice(NB).join(','); } }
 
 // ---------- shocks (Chronicler cards + daily town events) ----------
 function applyShocks() { const m = MS(); const t = now(); MK.pm.fill(1); MK.dm.fill(1); m.sh = m.sh.filter(s => s.until > t);
@@ -14338,7 +14370,7 @@ function industryDay() { const m = MS(); const NG = MK.NG; let changed = false;
     const mem = m.ind['_' + nd.id] = obj(m.ind['_' + nd.id]);
     for (const c of CLS) { const avg = Math.exp(cr[c][0] / Math.max(1, cr[c][1])); mem[c] = avg > 1.8 ? (mem[c] | 0) + 1 : avg < 0.45 ? (mem[c] | 0) - 1 : Math.trunc((mem[c] | 0) * 0.5); }
     const hot = CLS.filter(c => mem[c] >= 3).sort((a, b) => mem[b] - mem[a])[0];
-    if (hot && Object.keys(I).length < 5) { const k = Object.keys(IND).find(k => IND[k][hot] >= 0.8 && !(k in I)); if (k) { I[k] = 0.5; mem[hot] = 0; changed = true; news('🏗', nodeName(n) + ' opened ' + IND_NAME[k] + ' — ' + CLASSES[hot][1].toLowerCase() + ' had been dear there for days'); } else { const j = Object.keys(I).find(k => IND[k][hot]); if (j && I[j] < 2) { I[j] = Math.min(2, I[j] + 0.25); mem[hot] = 0; changed = true; } } }
+    if (hot && Object.keys(I).length < indCap(n)) { const k = Object.keys(IND).find(k => IND[k][hot] >= 0.8 && !(k in I)); if (k) { I[k] = 0.5; mem[hot] = 0; changed = true; news('🏗', nodeName(n) + ' opened ' + IND_NAME[k] + ' — ' + CLASSES[hot][1].toLowerCase() + ' had been dear there for days'); } else { const j = Object.keys(I).find(k => IND[k][hot]); if (j && I[j] < 2) { I[j] = Math.min(2, I[j] + 0.25); mem[hot] = 0; changed = true; } } }
     for (const k of Object.keys(I)) { const main = Object.keys(IND[k] || {}).sort((a, b) => IND[k][b] - IND[k][a])[0]; if (main && mem[main] <= -5) { I[k] = Math.round((I[k] - 0.25) * 100) / 100; mem[main] = 0; changed = true; if (I[k] < 0.3) { delete I[k]; news('🏚', nodeName(n) + ' closed ' + IND_NAME[k] + ' — the market there was glutted'); } } } }
   if (changed) computeRates(); }
 
@@ -14350,9 +14382,13 @@ const PURSE = 2000; // coins held by villagers and NPC traders (keeps the ratio 
 // Integral controller on the measured coin flow (2-day average, expressed as weekly growth). v2.5: warm-up gain (KI 0.4 for
 // the first 5 days of history, inflation side only) so a hoarder's opening week is caught early, then KI 0.25 (less late-game hunting when coin
 // flows dwarf the stock). Tuned on 8 seeds x normal / hoarder / spender profiles (build/probes/gov25.js).
+const GOV_EMA = 0.5, GOV_DB = 0, GOV_KIL = 0.18, GOV_LATE = 21; // v2.6 R4 tuned with build/probes/gov26.js (3 profiles x 8 seeds x 100 days)
 function govStep(day, M, Gd) { const gv = MS().gov; gv.hist.push([day, Math.round(M), Math.round(Gd)]); if (gv.hist.length > 14) gv.hist.shift(); const h = gv.hist, n = h.length;
   if (n >= 2) { const W = Math.min(n - 1, G._govW || 2); const a = h[n - 1], c = h[n - 1 - W]; const gc = (a[1] - c[1]) / W, gg = ((a[2] - c[2]) / W) / Math.max(1, a[2]);
-    const err = 7 * gc / (a[1] + PURSE) - 7 * gg; gv.d = Math.round(err * 1000) / 1000; const ki = n < (G._govWarm != null ? G._govWarm : 5) && (err > (G._govThr != null ? G._govThr : 0) || G._govAsym === false) ? (G._govKi0 || 0.4) : (G._govKiL || 0.25); gv.lvl = Math.max(-1, Math.min(G._govLmax || 1, gv.lvl + ki * Math.max(-1.5, Math.min(1.5, err)))); gv.p = Math.round(Math.max(-1, Math.min(1, (G._govKp != null ? G._govKp : 0) * err)) * 1000) / 1000; }
+    const raw = 7 * gc / (a[1] + PURSE) - 7 * gg; gv.d = Math.round(raw * 1000) / 1000;
+    // v2.6 R4: past the warm-up the error is low-passed (EMA) and a small dead-band stops the lever chasing day-to-day noise (the hoarder wobble)
+    gv.k = (gv.k == null ? (n >= 14 ? 99 : n - 1) : gv.k | 0) + 1; /* worlds upgraded from v2.5 with a full history count as settled */ const late = gv.k > (G._govLate != null ? G._govLate : GOV_LATE); const ea = G._govEma != null ? G._govEma : GOV_EMA, db = G._govDb != null ? G._govDb : GOV_DB;
+    gv.e = late && Number.isFinite(gv.e) ? gv.e + ea * (raw - gv.e) : raw; const ef = late ? gv.e : raw; const err = late ? Math.sign(ef) * Math.max(0, Math.abs(ef) - db) : raw; const ki = n < (G._govWarm != null ? G._govWarm : 5) && (err > (G._govThr != null ? G._govThr : 0) || G._govAsym === false) ? (G._govKi0 || 0.4) : (G._govKiL || (late ? GOV_KIL : 0.25)); gv.lvl = Math.max(-1, Math.min(G._govLmax || 1, gv.lvl + ki * Math.max(-1.5, Math.min(1.5, err)))); gv.p = Math.round(Math.max(-1, Math.min(1, (G._govKp != null ? G._govKp : 0) * err)) * 1000) / 1000; }
   gv.lvl = Math.round(gv.lvl * 1000) / 1000; applyGov(); }
 // levers (gradual, both directions): sales tax / spread / stall + shipping fees (sinks) and quest + contract purses (faucets)
 function applyGov() { const gv0 = MS().gov; const l = Math.max(-1, Math.min(1.4, gv0.lvl + (+gv0.p || 0))); G.mk2Sink = Math.max(0.25, Math.min(2.6, 1 + 1.6 * l)); G.mk2Spread = Math.max(0.03, Math.min(0.16, 0.06 * (1 + 1.6 * l))); G._mk2Rw = Math.max(G._govRwMin || 0.4, Math.min(1.6, 1 - 0.6 * l)); G._mk2Int = 0.01 * Math.max(0.2, Math.min(1.6, 1 - 0.8 * l)); }
@@ -14568,8 +14604,8 @@ function meOf(uid) { const a = bankAcct(uid); const k = obj(MS().car[uid]); retu
 function packSt() { const m = MS(); const t = now(); return { con: m.con.filter(c => c.st === 'o' || t - (c.dn || 0) < 1), stall: m.stall, news: m.news.slice(-10), wg: m.wg || null, gov: { lvl: m.gov.lvl, d: m.gov.d || 0, sink: G.mk2Sink || 1, sp: spread(), rw: G._mk2Rw || 1, i: G._mk2Int || 0.01 }, ship: m.ship.slice(-24).map(s => ({ id: s.id, u: s.u, nm: s.nm, f: s.f, to: s.to, k: s.k, q: s.q, m: s.m, arr: s.arr, st: s.st, got: s.got })), sh: m.sh.map(s => ({ n: s.n, c: s.c, x: s.t, until: s.until })), fleet: hasFleet() ? 1 : 0, ng: MK.NG }; }
 let pxRot = 0;
 function packPx(all) { const NG = MK.NG; const ids = all ? NODES.map((n, i) => i) : NODES.map((n, i) => i).filter(i => NODES[i].kind !== 'town').concat([0, 1, 2, 3].map(j => 11 + ((pxRot + j) % TOWNS.length))); if (!all) pxRot = (pxRot + 4) % TOWNS.length;
-  const u = new Uint8Array(ids.length * NG); ids.forEach((n, j) => { for (let g = 0; g < NG; g++) u[j * NG + g] = qRatio(ratioI(n * NG + g)); }); return { f: ids.map(i => NODES[i].id), d: b64e(u), ng: NG, hr: MS().hr }; }
-function packHist(n) { const NG = MK.NG; const m = MS(); const u = new Uint8Array(NG * HN); for (let g = 0; g < NG; g++) for (let k = 0; k < HN; k++) u[g * HN + k] = MK.hist[(n * NG + g) * HN + ((m.hN + k) % HN)]; return { n: NODES[n].id, d: b64e(u), ng: NG }; }
+  const NX = NG - NB, L = ids.length; const u = new Uint8Array(L * NG); ids.forEach((n, j) => { for (let g = 0; g < NG; g++) u[g < NB ? j * NB + g : L * NB + j * NX + g - NB] = qRatio(ratioI(n * NG + g)); }); return { f: ids.map(i => NODES[i].id), d: b64e(u), ng: NB, ngx: NX, hr: MS().hr }; }
+function packHist(n) { const NG = MK.NG; const m = MS(); const u = new Uint8Array(NG * HN); for (let g = 0; g < NG; g++) for (let k = 0; k < HN; k++) u[g * HN + k] = MK.hist[(n * NG + g) * HN + ((m.hN + k) % HN)]; return { n: NODES[n].id, d: b64e(u), ng: NB, ngx: NG - NB }; } /* goods are in index order, so the extras simply trail the v2.5 block */
 let stT = 0, pxT = 0;
 G.hook('frame', () => { if (!online() || isGuest() || !MK || !G.S || !G.S.v2) return; const t = performance.now();
   if (G._mkDirty && t - stT > 1200) { stT = t; G._mkDirty = false; G.v2Send('mk2', { op: 'st', s: packSt() }); }
@@ -14578,8 +14614,8 @@ G.v2Handlers = G.v2Handlers || {};
 G.v2Handlers.mk2 = (m, pl) => { if (!m || typeof m !== 'object') return; buildGoods(); buildNodes();
   if (isGuest()) { const V = G._mkView = G._mkView || { px: {}, h: {}, s: null };
     if (m.op === 'st' && m.s && typeof m.s === 'object') { V.s = m.s; softRef(); }
-    else if (m.op === 'px' && Array.isArray(m.f) && (m.ng | 0) === GOODS.length) { const u = b64d(m.d); m.f.forEach((id, j) => { if (NI(id) >= 0) V.px[id] = u.slice(j * GOODS.length, (j + 1) * GOODS.length); }); V.hr = m.hr; softRef(); }
-    else if (m.op === 'pxH' && typeof m.n === 'string' && (m.ng | 0) === GOODS.length) { V.h[m.n] = b64d(m.d); softRef(); }
+    else if (m.op === 'px' && Array.isArray(m.f) && pxShape(m)) { const nb = m.ng | 0, nx = Math.min(m.ngx | 0, GOODS.length - nb), sx = m.ngx | 0, L = m.f.length; const u = b64d(m.d); m.f.forEach((id, j) => { if (NI(id) < 0) return; const o = new Uint8Array(GOODS.length).fill(qRatio(1)); o.set(u.subarray(j * nb, (j + 1) * nb)); for (let x = 0; x < nx; x++) o[nb + x] = u[L * nb + j * sx + x]; V.px[id] = o; }); V.hr = m.hr; V.ngx = nx; softRef(); }
+    else if (m.op === 'pxH' && typeof m.n === 'string' && pxShape(m)) { const u = b64d(m.d); const o = new Uint8Array(GOODS.length * HN).fill(qRatio(1)); o.set(u.subarray(0, Math.min(u.length, o.length))); V.h[m.n] = o; softRef(); }
     else if (m.op === 'r' && typeof m.id === 'string') guestReply(m);
     else if (m.op === 'me' && m.me) { G._mkMe = m.me; softRef(); }
     else if (m.op === 'pay' && typeof m.id === 'string') { const D = arr(lsGet(LS_D, [])); if (!D.includes(m.id)) { D.push(m.id); lsSet(LS_D, D.slice(-200)); give(m.g); if (m.w) toast(String(m.w).slice(0, 140), 'gold'); G.audio && G.audio.coin && G.audio.coin(); } G.v2Send('mk2', { op: 'ack', id: m.id }); }
@@ -14599,6 +14635,9 @@ G.v2Handlers.mk2 = (m, pl) => { if (!m || typeof m !== 'object') return; buildGo
 G.hook('netJoin', () => { if (!isGuest()) { G._mkDirty = true; pxDirty = true; return; } G._mkView = null; let n = 0; const ask = () => { if (!isGuest()) return; if (parseFloat(G.net.hostFv) >= 2.4) { G.v2Send('mk2', { op: 'hi' }); const E = obj(lsGet(LS_T, {})); for (const id in E) G.v2Send('mk2', { op: 'trd', w: 'q', id }); } else if (++n < 10) setTimeout(ask, 900); }; setTimeout(ask, 700); });
 
 // ---------- views (host reads live arrays, guests read the last snapshot) ----------
+// a v2.4/v2.5 host sends ng = all its goods (= our NB) and no extras; a v2.6 host sends ng = NB plus ngx extras
+function pxShape(m) { return (m.ng | 0) === NB && (m.ngx | 0) >= 0 && (m.ngx | 0) <= 64; }
+const hasGood = g => !isGuest() || g < NB || ((G._mkView && G._mkView.ngx) | 0) > g - NB;
 function viewRatio(n, g) { if (g === undefined || n < 0) return 1; if (!isGuest()) return ready() ? ratioI(n * MK.NG + g) : 1; const V = G._mkView; const u = V && V.px[NODES[n].id]; return u && u.length > g ? dqRatio(u[g]) : 1; }
 const viewPrice = (n, g) => BASE[g] * viewRatio(n, g);
 function viewHist(n, g) { if (!isGuest()) return ready() ? histOf(n * MK.NG + g) : []; const V = G._mkView; const u = V && V.h[NODES[n].id]; if (!u) return []; const o = []; for (let k = 0; k < HN; k++) o.push(dqRatio(u[g * HN + k]) * BASE[g]); return o; }
@@ -14693,16 +14732,16 @@ const TABF = {
     h += '<div class="mk-bar">' + [['all', '✦', 'All']].concat(CLS.map(c => [c, CLASSES[c][0], CLASSES[c][1]])).map(([c, i, n]) => '<button class="tab' + (cls === c ? ' on' : '') + '" data-act="mk2Cls" data-arg="' + c + '">' + i + ' ' + n + '</button>').join('') + '</div>';
     if (!can) h += '<p class="hint">You can browse ' + esc(nodeName(sel)) + ' prices here, but buying and selling needs you on the spot.</p>';
     h += '<div class="mk-row mk-hd"><span></span><span>Good</span><span>Buy</span><span>Sell</span><span>Supply</span><span>Trend</span><span>Have</span><span></span></div>'; const sp = gv.sp || spread();
-    const gs = GOODS.map((k, g) => g).filter(g => cls === 'all' || GCLS[g] === cls).sort((a, b) => (invCount(GOODS[b]) > 0) - (invCount(GOODS[a]) > 0) || GCLS[a].localeCompare(GCLS[b]) || BASE[a] - BASE[b]);
+    const gs = GOODS.map((k, g) => g).filter(g => hasGood(g) && (cls === 'all' || GCLS[g] === cls)).sort((a, b) => (invCount(GOODS[b]) > 0) - (invCount(GOODS[a]) > 0) || GCLS[a].localeCompare(GCLS[b]) || BASE[a] - BASE[b]);
     for (const g of gs) { const k = GOODS[g]; const r = viewRatio(sel, g); const p = BASE[g] * r; const buy = p * (1 + sp) * (1 - disc), sell = p * (1 - sp); const sc = scarcity(r); const hi = viewHist(sel, g); const have = invCount(k);
       h += '<div class="mk-row"><img src="' + icon(k) + '"><span title="' + esc((ITEMS[k].desc || '') + ' · ' + CLASSES[GCLS[g]][1]) + '">' + esc(IT(k)) + '</span><span class="mk-p">' + fmtP(buy) + '</span><span class="mk-p">' + fmtP(sell) + '</span><span class="' + sc[1] + '">' + sc[0] + '</span><span>' + spark(hi, 54, 16) + '</span><span>' + (have || '') + '</span><span class="mk-bt">'
         + (can ? '<button class="btn sm" data-act="mk2Buy" data-arg="' + NODES[sel].id + '|' + k + '|1">Buy</button><button class="btn sm" data-act="mk2Buy" data-arg="' + NODES[sel].id + '|' + k + '|5">×5</button>' + (have ? '<button class="btn sm gold" data-act="mk2Sell" data-arg="' + NODES[sel].id + '|' + k + '|1">Sell</button><button class="btn sm gold" data-act="mk2Sell" data-arg="' + NODES[sel].id + '|' + k + '|' + Math.min(have, 99) + '">All</button>' : '') : '') + '</span></div>'; }
     return h + '<p class="hint">Prices integrate unit by unit — big orders move the market as they fill. One deal moves at most a quarter of a stall\'s stock. Spread ' + Math.round(sp * 100) + '%.</p>'; },
   ledger(st, gv) { let sel = NI(this.mk2L || 'home'); if (sel < 0) sel = 0; this.mk2L = NODES[sel].id; if (isGuest()) { const V = G._mkView; if (!V.h[this.mk2L] || !G._mkHT || Date.now() - G._mkHT > 15000 || G._mkHN !== this.mk2L) { G._mkHT = Date.now(); G._mkHN = this.mk2L; G.v2Send('mk2', { op: 'pxH', n: this.mk2L }); if (!V._all) { V._all = 1; G.v2Send('mk2', { op: 'pxAll' }); } } }
     let h = '<div class="mk-bar"><span>Ledger for</span>' + nodeOpt(this.mk2L, n => true, 'mk2LSel') + '<button class="btn sm" data-act="mk2L">Show</button></div>';
-    const mv = []; for (let g = 0; g < GOODS.length; g++) { const a = viewHist(sel, g); if (a.length > 2) mv.push([g, a[a.length - 1] / a[0], a]); } mv.sort((a, b) => Math.abs(Math.log(b[1])) - Math.abs(Math.log(a[1])));
+    const mv = []; for (let g = 0; g < GOODS.length; g++) { if (!hasGood(g)) continue; const a = viewHist(sel, g); if (a.length > 2) mv.push([g, a[a.length - 1] / a[0], a]); } mv.sort((a, b) => Math.abs(Math.log(b[1])) - Math.abs(Math.log(a[1])));
     h += '<div class="cols"><div><h3>Biggest movers (2 days)</h3>' + (known(sel) ? mv.slice(0, 8).map(([g, , a]) => '<div class="mk-lr"><img src="' + icon(GOODS[g]) + '"><span>' + esc(IT(GOODS[g])) + '</span>' + spark(a, 90, 22) + '<b>' + fmtP(a[a.length - 1]) + '</b>' + pctTxt(a[a.length - 1], a[0]) + '</div>').join('') : '<p class="hint">Fetching…</p>');
-    h += '<h3>All goods</h3>' + CLS.map(c => '<div class="mk-cl"><b>' + CLASSES[c][0] + ' ' + CLASSES[c][1] + '</b> ' + GOODS.map((k, g) => g).filter(g => GCLS[g] === c).map(g => { const a = viewHist(sel, g); const p = viewPrice(sel, g); return '<span class="mk-chip" title="' + esc(IT(GOODS[g])) + '"><img src="' + icon(GOODS[g]) + '">' + fmtP(p) + (a.length > 2 ? ' ' + pctTxt(a[a.length - 1], a[0]) : '') + '</span>'; }).join('') + '</div>').join('') + '</div>';
+    h += '<h3>All goods</h3>' + CLS.map(c => '<div class="mk-cl"><b>' + CLASSES[c][0] + ' ' + CLASSES[c][1] + '</b> ' + GOODS.map((k, g) => g).filter(g => GCLS[g] === c && hasGood(g)).map(g => { const a = viewHist(sel, g); const p = viewPrice(sel, g); return '<span class="mk-chip" title="' + esc(IT(GOODS[g])) + '"><img src="' + icon(GOODS[g]) + '">' + fmtP(p) + (a.length > 2 ? ' ' + pctTxt(a[a.length - 1], a[0]) : '') + '</span>'; }).join('') + '</div>').join('') + '</div>';
     h += '<div><h3>Market news</h3>' + (arr(st.news).length ? arr(st.news).slice().reverse().map(n => '<div class="mk-nw">' + esc(n.i) + ' <small>Day ' + (n.d | 0) + '</small> ' + esc(n.t) + '</div>').join('') : '<p class="hint">Quiet markets.</p>');
     h += '<h3>Active events</h3>' + (arr(st.sh).length ? arr(st.sh).map(s => '<div class="mk-nw">⚡ ' + esc(s.x) + ' <small>until day ' + (s.until | 0) + '</small></div>').join('') : '<p class="hint">None right now.</p>');
     const lv = fin(gv.lvl, 0); h += '<h3>Guild stewards</h3><p class="hint">' + (lv > 0.12 ? 'Coins are outpacing goods — the stewards raised taxes and fees (×' + fin(gv.sink, 1).toFixed(2) + ') and trimmed quest purses.' : lv < -0.12 ? 'Goods are outpacing coins — fees are lowered (×' + fin(gv.sink, 1).toFixed(2) + ') and rewards sweetened.' : 'Coins and goods are in balance; fees normal.') + '</p>' + (st.wg && st.wg.c ? '<p class="hint">Village wages yesterday: ' + st.wg.c + ' coins to ' + st.wg.n + ' worker' + (st.wg.n === 1 ? '' : 's') + ' — they bought ' + (+st.wg.f || 0).toFixed(1) + ' food at the stalls. Cost of living ×' + (G.mk2Col ? G.mk2Col() : 1).toFixed(2) + '.</p>' : '') + '</div></div>'; return h; },
@@ -15094,7 +15133,7 @@ function marketSupply(si) { const cs = villageCells(); if (!cs.length) return; l
   for (const c of cs) { for (let i = 0; i < L.length; i++) { const s = D[L[i]]; if (s.ro === 'h' && s.k <= 14 && !s.wd) { nH += c.N[i]; kH += s.k * ecoSuit(s, c, si); } } vr += c.V / (1000 * ecoCap(c)); cr += c.C; }
   const game = kH > 0 ? nH / kH : 0.6, veg = vr / cs.length, cor = cr / cs.length;
   const meat = eclamp(game / 0.55, 0.45, 1.6), hide = eclamp(0.5 + 0.5 * game / 0.55, 0.5, 1.5), herb = eclamp((veg / 0.62) * (1 - 0.8 * cor), 0.45, 1.5);
-  const m = { raw_meat: meat, bone: hide, moth_silk: eclamp(0.7 + 0.3 * herb, 0.5, 1.4) }; for (const k of HERBS) m[k] = herb;
+  const m = { raw_meat: meat, hide: hide, bone: eclamp(0.75 + 0.25 * hide, 0.5, 1.4), moth_silk: eclamp(0.7 + 0.3 * herb, 0.5, 1.4) }; for (const k of HERBS) m[k] = herb;
   lastSupply = { meat: r2(meat), hide: r2(hide), herb: r2(herb), game: r2(game), veg: r2(veg), day: eDay() }; if (G.mk2SetEco) safe('ecoMk', () => G.mk2SetEco(m)); }
 G.ecoSupply = () => lastSupply;
 // ---------- spawn bridge: wild spawns near players are sampled from the cell's populations ----------
@@ -15221,7 +15260,7 @@ function graph(sel, L) { const hs = sel.hist || []; if (hs.length < 2) return '<
   s += '</svg><div class="small" style="display:flex;flex-wrap:wrap;gap:8px">' + top.map((j, n) => '<span style="color:' + cols[n] + '">■ ' + esc(SPN(L[j])) + '</span>').join('') + '<span style="color:#4a6a3a">■ vegetation</span><span class="muted" style="margin-left:auto">' + hs.length + ' days → today</span></div>'; return s; }
 G.ui.p_ecolens = function () { const tabs = [['land', '🗺 Land'], ['life', '🐾 Life'], ['subs', '🧬 Subspecies'], ['log', '📜 Notes']]; if (!tabs.some(t => t[0] === this.tab)) this.tab = 'land';
   let h = this.head('🔭 Ecology Lens') + this.tabs(tabs); const V = view(G.ecoSel || null);
-  if (!V && G.netGuest && G.net && !(parseFloat(G.net.hostFv) >= 2.5)) return h + '<p class="hint">Your host runs v' + esc(String((G.net && G.net.hostFv) || '2').slice(0, 6)) + ' — the living ecology is simulated by the host, so the Lens needs a v2.5 host. Your own worlds have it.</p>';
+  if (G.netGuest && G.net && !(parseFloat(G.net.hostFv) >= 2.5)) return h + '<p class="hint">Your host runs v' + esc(String((G.net && G.net.hostFv) || '2').slice(0, 6)) + ' — the living ecology is simulated by the host, so the Lens needs a v2.5 host. Your own worlds have it.</p>';
   if (!V) return h + '<p class="hint">' + (G.netGuest ? 'Asking the host for the land around you…' : 'Ecology runs in the overworld and the four realms.') + '</p>';
   if (G.netGuest && G.ecoView && Date.now() - (G.ecoViewT || 0) > 2500) guestAsk(G.ecoSel || null);
   const sel = V.sel; const L = V.sl || ESL[V.d] || [];
@@ -15236,7 +15275,7 @@ G.ui.p_ecolens = function () { const tabs = [['land', '🗺 Land'], ['life', '�
         h += '<div class="v2card small" style="margin-top:6px">🌿 Sanctuary: ' + (need.length ? 'needs ' + need.map(esc).join(' · ') : 'criteria met — forming (' + sel.sd + '/3 days)') + '<div class="muted">Plant saplings, dig ponds, place Nest Boxes, keep corruption away and let the keystone thrive.</div></div>'; }
       else h += '<div class="v2card small" style="margin-top:6px;border-color:#e8c050">✦ <b>Sanctuary</b> — legends may walk here; a Heartseed waits once each season.</div>';
       h += '<div class="small muted" style="margin-top:4px">Rewilding: 🪺 ' + sel.nb + ' nest boxes · 💧 ' + sel.pd + ' ponds · 🌳 forest +' + Math.round(sel.fo * 100) + '%' + (sel.i ? ' · ⚠ invasive: ' + sel.i.map(k => esc(SPN(k))).join(', ') : '') + '</div></div>'; }
-    h += '</div>'; if (V.sup) h += '<div class="v2card small" style="margin-top:8px">🪙 Village market supply from the land: meat ×' + V.sup.meat.toFixed(2) + ' · hide & bone ×' + V.sup.hide.toFixed(2) + ' · herbs ×' + V.sup.herb.toFixed(2) + ' <span class="muted">(more supply → lower prices)</span></div>'; }
+    h += '</div>'; if (V.sup) h += '<div class="v2card small" style="margin-top:8px">🪙 Village market supply from the land: meat ×' + V.sup.meat.toFixed(2) + ' · hide ×' + V.sup.hide.toFixed(2) + ' · herbs ×' + V.sup.herb.toFixed(2) + ' <span class="muted">(more supply → lower prices)</span></div>'; }
   else if (this.tab === 'life') { if (!sel) return h + '<p class="hint">Pick a cell on the Land tab.</p>'; h += '<h3 style="margin:2px 0">' + esc(sel.nm) + '</h3>' + graph(sel, L) + '<table class="small" style="width:100%;margin-top:6px;border-collapse:collapse"><tr class="muted"><td>Species</td><td>Role</td><td style="text-align:right">Here</td><td style="text-align:right" title="How many this land could support">Capacity</td><td style="text-align:center;padding-left:12px">Trend</td></tr>';
     const D = ESP_DEF[V.d]; L.map((k, i) => [k, i]).filter(([k, i]) => (sel.n[i] || 0) >= 0.05 || (sel.kp[i] || 0) >= 0.5).sort((a, b) => (sel.n[b[1]] || 0) - (sel.n[a[1]] || 0)).forEach(([k, i]) => { const hs = sel.hist || []; const a = hs.length > 3 ? hs[Math.max(0, hs.length - 6)][2 + i] || 0 : null, b = sel.n[i] || 0; const tr = a == null ? '·' : b > a * 1.15 + 0.2 ? '▲' : b < a * 0.85 - 0.2 ? '▼' : '▬';
       h += '<tr><td>' + SPE(k) + ' ' + esc(SPN(k)) + (k === sel.ks ? ' <span class="muted">(keystone)</span>' : '') + (sel.fl && sel.fl.includes(k) ? ' <span title="migrating">🧭</span>' : '') + '</td><td class="muted">' + ROLE_N[D[k].ro] + '</td><td style="text-align:right">' + (b < 0.25 ? '<span class="muted">—</span>' : b.toFixed(b < 10 ? 1 : 0)) + '</td><td style="text-align:right" class="muted">' + (sel.kp[i] || 0).toFixed(0) + '</td><td style="text-align:center;padding-left:12px;color:' + (tr === '▲' ? '#8fd18f' : tr === '▼' ? '#e07a7a' : '#999') + '">' + tr + '</td></tr>'; });
@@ -15433,8 +15472,8 @@ function skyFrame(T, cam, dt) {
   const sd = sunDir(T); R.corona.position.copy(cam.position).addScaledVector(v3(sd, 1), SKYD - 20); const cs = BOD.sun * (SKYD - 20) * 2 * 4.2; R.corona.scale.set(cs, cs, 1); R.corona.material.opacity = sol ? sstep(0.82, 0.99, sol.o) : 0; R.corona.visible = R.corona.material.opacity > 0.01;
   // comet
   const cv = cometVis(T) * R.wx; R.cHead.visible = R.tail.visible = R.cCore.visible = cv > 0.01 && night > 0.05;
-  if (R.cHead.visible) { const c = elems().comet, w = cometWin(T); const cd = starDir(c.ra + 0.05 * (T - w.tp), c.z, T); const H = v3(cd, SKYD - 8); const sv = v3(sd, 1); const hn = H.clone().normalize(); const away = sv.clone().negate(); away.addScaledVector(hn, -away.dot(hn)); if (away.lengthSq() < 1e-6) away.set(0, 1, 0); away.normalize(); /* anti-sun, in the sky plane so the tail keeps its full arc */ const tipD = hn.clone().addScaledVector(away, 0.26 + 0.24 * cv).normalize().multiplyScalar(SKYD - 8);
-    R.cHead.position.copy(cam.position).add(H); const hs = 15 + 9 * cv; R.cHead.scale.set(hs, hs, 1); R.cHead.material.opacity = Math.min(1, 0.35 + cv) * night; R.cCore.position.copy(R.cHead.position); R.cCore.scale.set(4.5, 4.5, 1); R.cCore.material.opacity = Math.min(1, 0.5 + cv) * night; const view = H.clone().normalize(); const side = new THREE.Vector3().crossVectors(tipD.clone().sub(H), view).normalize(); const w0 = 3.2, w1 = 14 + 10 * cv;
+  if (R.cHead.visible) { const c = elems().comet, w = cometWin(T); const cd = starDir(c.ra + 0.05 * (T - w.tp), c.z, T); const H = v3(cd, SKYD - 8); const sv = v3(sd, 1); const hn = H.clone().normalize(); const away = sv.clone().negate(); away.addScaledVector(hn, -away.dot(hn)); if (away.lengthSq() < 1e-6) away.set(0, 1, 0); away.normalize(); /* anti-sun, in the sky plane so the tail keeps its full arc */ const tipD = hn.clone().addScaledVector(away, 0.3 + 0.3 * cv).normalize().multiplyScalar(SKYD - 8); R.cDir = [hn.clone(), tipD.clone().normalize()]; /* v2.6: longer arc, remembered for G.almLook */
+    R.cHead.position.copy(cam.position).add(H); const hs = 24 + 16 * cv; R.cHead.scale.set(hs, hs, 1); R.cHead.material.opacity = Math.min(1, 0.35 + cv) * night; R.cCore.position.copy(R.cHead.position); R.cCore.scale.set(6.5, 6.5, 1); R.cCore.material.opacity = Math.min(1, 0.5 + cv) * night; const view = H.clone().normalize(); const side = new THREE.Vector3().crossVectors(tipD.clone().sub(H), view).normalize(); const w0 = 5, w1 = 22 + 16 * cv;
     const tp = R.tail.geometry.attributes.position; const P0 = H.clone().addScaledVector(side, -w0), P1 = H.clone().addScaledVector(side, w0), P2 = tipD.clone().addScaledVector(side, -w1), P3 = tipD.clone().addScaledVector(side, w1); [P0, P1, P2, P3].forEach((p, i) => tp.setXYZ(i, cam.position.x + p.x, cam.position.y + p.y, cam.position.z + p.z)); tp.needsUpdate = true; R.tailMat.uniforms.uOp.value = cv * night; }
   // meteors: showers ~1.4/s, sporadic 0.04/s
   const rate = (showerOn(T) ? 1.4 : 0.04) * night * R.wx; R.mAcc = (R.mAcc || 0) + dt * rate; while (R.mAcc > 1) { R.mAcc -= 1; if (R.mets.length < 16) { const rad = starDir(1.1 + (ELS % 7) * 0.7, 0.35, T); const a = Math.random() * TAU; const off = [Math.cos(a) * 0.5, 0.15 + Math.random() * 0.5, Math.sin(a) * 0.5]; const st = [rad[0] * 0.4 + off[0], Math.abs(rad[1] * 0.4 + off[1]) + 0.15, rad[2] * 0.4 + off[2]]; const L = Math.hypot(...st); const p0 = st.map(v => v / L); const dir = [p0[0] - rad[0], p0[1] - rad[1], p0[2] - rad[2]]; const DL = Math.hypot(...dir) || 1; R.mets.push({ p0, d: dir.map(v => v / DL), t: 0, life: 0.45 + Math.random() * 0.5, len: 0.05 + Math.random() * 0.07 }); } }
@@ -15569,6 +15608,7 @@ G.ui.p_almanac = function () { const tabs = [['sky', '🌙 Tonight'], ['cal', '�
   let h = this.head('🌌 Celestial Almanac') + this.tabs(tabs); const T = almT(), a = AS(); if (!a) return h + '<p>Start a world first.</p>';
   h += '<div class="small muted" style="margin:-2px 0 8px">Now: ' + whenStr(T) + ' · ' + (G.season ? (G.season().icon + ' ' + G.season().name) : '') + ' · the sky is the same for everyone in this world</div>';
   if (this.tab === 'sky') { h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">' + moonRow('lumen', T) + moonRow('vesper', T) + '</div>';
+    if (R.cHead && R.cHead.visible) h += '<div class="v2card" style="margin-top:8px">☄ A comet is in the sky tonight. <button class="btn sm gold" data-act="almLook">Show me</button></div>';
     const eff = effectsNow(); h += '<h3 style="margin:10px 0 4px">In effect now</h3>' + (eff.length ? '<ul class="small" style="margin:0;padding-left:18px">' + eff.map(e => '<li>' + aesc(e) + '</li>').join('') + '</ul>' : '<p class="small muted">A quiet sky.</p>');
     const P = elems().planets.map(p => { const d = planetDir(p, T); return '<span style="color:' + p.col + '">●</span> ' + aesc(p.nm) + ' <small class="muted">' + (d[1] > 0.05 ? 'up' : 'below the horizon') + '</small>'; });
     h += '<h3 style="margin:10px 0 4px">Wandering stars</h3><div class="small">' + P.join(' · ') + '</div>';
@@ -15585,6 +15625,9 @@ G.ui.p_almanac = function () { const tabs = [['sky', '🌙 Tonight'], ['cal', '�
     h += '<div class="v2card" style="margin-top:8px">Every 100 achievement points earns a star to name' + (G.S.creative ? ' (creative: unlimited)' : '') + '. You can name <b>' + (G.S.creative ? '∞' : tok) + '</b> more. ' + (night ? 'Look at a dark patch of sky first — the star appears where you look.' : 'By day the star is placed in a free patch of sky.') + '<br><input id="almStarNm" maxlength="24" placeholder="Name your star" style="background:#0b0f18;color:#e8eefc;border:1px solid #3a4a66;border-radius:6px;padding:4px 6px;margin-top:6px"> <button class="btn pri" data-act="almStar">⭐ Name it</button></div>'; }
   else if (this.tab === 'myth') { h += a.myth.length ? a.myth.slice().reverse().map(m => '<div class="v2card"><b>' + aesc((EV_NAME[m.k] || ['✧', m.k]).join(' ')) + '</b> <small class="muted">Day ' + m.d + '</small><br>' + aesc(m.t) + (Array.isArray(m.all) ? '<details class="small" style="margin-top:4px"><summary class="muted">Other tellings</summary>' + m.all.filter((x, i) => i !== m.v).map(x => '<div>' + aesc(x) + '</div>').join('') + '</details>' : '') + '</div>').join('') : '<p class="small muted">Witness an eclipse, a comet, a meteor shower, an aurora or a conjunction, and the villagers, Wayfarers and hedge-witches will each tell it their own way.</p>'; }
   return h; };
+// v2.6: frame the comet — aim at a point a third of the way down the tail, so the head sits off the crosshair with the tail in view
+G.almLook = () => { if (!R.cHead || !R.cHead.visible || !R.cDir) return false; const [h, t] = R.cDir; const d = h.clone().lerp(t, 0.36).normalize(); G.pitch = Math.asin(Math.max(-1, Math.min(1, d.y))); G.yaw = Math.atan2(-d.x, -d.z); return true; };
+G.uiActions.almLook = () => { G.ui.closePanel(); setTimeout(() => { if (!G.almLook()) toast('No comet in the sky right now.', 'warn'); }, 60); };
 G.uiActions.almOpen = () => G.ui.openPanel('almanac', hasAstro() || obsBuilt() ? 'cal' : 'sky');
 G.uiActions.almAl = k => { const a = AS(); if (!a || !(k in AL_DEF)) return; a.al[k] = a.al[k] ? 0 : 1; G.ui.refreshPanel(); };
 G.uiActions.almChart = k => { const a = AS(); const T = almT(); const C = elems().cons[k | 0]; if (!a || !C || !obsBuilt()) return; const yr = Math.floor((dayOf(T) - 1) / AYEAR); const ck = yr + ':' + C.k; if (a.charted[ck]) return toast('Already charted this year.', 'warn'); if (!((R.night || 0) > 0.35) || starDir(C.ra, C.z, T)[1] <= 0.15) return toast('Chart it when it is overhead at night.', 'warn');
@@ -15629,9 +15672,10 @@ G.hook('use', k => { if (k === 'astrolabe') G.ui.openPanel('almanac', 'cal'); })
 G.pauseExtras.push(() => '<button class="btn" data-act="almOpen">🌌 Almanac</button>');
 G.commands.sky = (rest, say) => { const a = String(rest || '').trim().split(/\s+/); const T = almT();
   if (a[0] === 'next' || !a[0]) { const l = events(T, T + 10).slice(0, 8); say(l.length ? l.map(e => whenStr(e.t0) + ' ' + evTitle(e)).join(' | ') : 'Nothing in the next 10 days'); return; }
+  if (a[0] === 'look') { say(G.almLook() ? '☄ There it is.' : 'No comet in the sky right now.'); return; }
   if (a[0] === 'labels') { G.almLabels = !G.almLabels; say('Sky labels ' + (G.almLabels ? 'on' : 'off')); return; }
   if (a[0] === 'goto') { if (!G.S.creative) return say('Creative only'); const k = a[1] || 'eclipse_total'; const e = events(T, T + 200).find(q => q.k === k || q.k.startsWith(k)); if (!e) return say('None found'); const t = e.t0 - 10 * MIN; G.S.day = Math.floor(t) + 1; G.S.time = afrac(t); say('Jumped to ' + whenStr(t) + ' — ' + evTitle(e) + ' at ' + hhmm(e.t0)); return; }
-  say('/sky next · /sky labels · /sky goto <eclipse_total|comet|shower|blood_moon|conjunction|aurora> (creative)'); };
+  say('/sky next · /sky labels · /sky look · /sky goto <eclipse_total|comet|shower|blood_moon|conjunction|aurora> (creative)'); };
 G.almTest = { skyFrame, R, LV, AS, events, elems, solarState, bloodState, starTokens, addStar, skySpot, labels, almT, conjNow, witness, fallTick, dropStar, FALL, ALM_CORE };
 // ---------- Questforge: a returning comet always seeds a chain; finishing it yields a Comet Ember ----------
 G.almCometNeed = () => { const T = almT(); if (cometVis(T) <= 0 || !G.world || G.world.dim !== 'over') return null; const w = cometWin(T); return { ref: Math.round(w.tp * 10), nm: elems().comet.nm }; };
@@ -15663,6 +15707,733 @@ const firstNews = function news25pre() { try { if (!localStorage.getItem('voxelm
 if (G.hooks && Array.isArray(G.hooks.worldMade)) G.hooks.worldMade.unshift(firstNews); else G.hook('worldMade', firstNews);
 G.hook('worldMade', function news25() { let seen = true; try { seen = !!localStorage.getItem('voxelmythos_news25'); if (!seen) localStorage.setItem('voxelmythos_news25', '1'); } catch (e) {} if (!seen) setTimeout(() => toast('🌌 Voxel Mythos v2.5 “Wild Skies”: a living ecology and a sky you can predict. Esc → “New in v2.5”', 'mythos'), 5800); });
 }
+
+// ==== 71_r26.js
+// ===== v2.6 refinement pass (R1 hide good, R3 graceful fallback of v2.5 blocks in older builds) =====
+{
+// ---------- R1: a real Hide good (no animal is harmed: village ranches tan shed coats and hides of animals that died of age) ----------
+if (!ITEMS.hide) defItem('hide', 'Tanned Hide', { value: 6, rarity: 0, glyph: '🟫', color: '#9a6a3c', desc: 'Supple leather tanned at village ranches from shed coats — no animal is hurt for it. Used for saddles, straps and the Engineer\u2019s Hammer grip. Trade it at the Living Market.' });
+if (!RECIPES.find(r => r.out === 'saddle' && r.req.hide)) RECIPES.push({ out: 'saddle', n: 1, req: { hide: 3, planks: 2, iron: 1 } });
+
+// ---------- R3: Nest Box (140) / Star-metal (141) in builds older than v2.5 ----------
+// Old loaders keep a delta pair only when BLOCKS[id] exists and a later pair for the same index overwrites an earlier one.
+// So each save writes [i, fallback, i, real]: v2.0–v2.4 keep the fallback (planks / iron ore) instead of a hole, v2.5+ keep
+// the real block. The placed-block list (looked up in BLOCKS by older monument/ruin code) carries the fallback and is mapped
+// back here on load. Purely additive: no new keys, nothing an older build cannot read.
+const FB = { 140: 16, 141: 11 }; G.blockFallback = FB;
+const hasFb = it => { for (const id of it) if (FB[id] !== undefined) return true; return false; };
+function rebuildPairs(a) { const b = []; for (let i = 0; i + 1 < a.length; i += 2) { const f = FB[a[i + 1]]; if (f !== undefined && !(b.length >= 2 && b[b.length - 2] === a[i] && b[b.length - 1] === f)) b.push(a[i], f); b.push(a[i], a[i + 1]); } return b; }
+G.hook('preSave', function r26Fallback() {
+  const w = G.world; if (!w || !w.deltas) return; const touched = [];
+  for (const m of w.deltas.values()) if (hasFb(m.values())) { Object.defineProperty(m, Symbol.iterator, { configurable: true, writable: true, value: function* () { for (const e of Map.prototype.entries.call(m)) { const f = FB[e[1]]; if (f !== undefined) yield [e[0], f]; yield e; } } }); touched.push(m); }
+  const P = w.placed; if (P && hasFb(P.values())) { Object.defineProperty(P, Symbol.iterator, { configurable: true, writable: true, value: function* () { for (const [k, id] of Map.prototype.entries.call(P)) yield [k, FB[id] !== undefined ? FB[id] : id]; } }); touched.push(P); }
+  const D = G.S && G.S.dims; if (D && typeof D === 'object') for (const d in D) { const o = D[d]; if (!o || typeof o !== 'object') continue;
+    if (o.deltas && typeof o.deltas === 'object') for (const k in o.deltas) { const a = o.deltas[k]; if (Array.isArray(a) && a.some((v, i) => i & 1 && FB[v] !== undefined)) o.deltas[k] = rebuildPairs(a); }
+    if (Array.isArray(o.placed)) for (let i = 3; i < o.placed.length; i += 4) if (FB[o.placed[i]] !== undefined) o.placed[i] = FB[o.placed[i]]; }
+  if (touched.length) queueMicrotask(() => { for (const m of touched) delete m[Symbol.iterator]; }); // serialize() is synchronous; the live maps are untouched afterwards
+});
+function fixPlaced() { const w = G.world; if (!w || !w.placed) return 0; let n = 0; for (const [pk, id] of w.placed) { if (id !== 16 && id !== 11) continue; const [x, y, z] = pk.split(',').map(Number); const dm = w.deltas.get((x >> 4) + ',' + (z >> 4)); const real = dm && dm.get((x & 15) + ((z & 15) << 4) + (y << 8)); if (real !== undefined && FB[real] === id) { w.placed.set(pk, real); n++; } } return n; }
+G.hook('load', () => safe('r26fix', fixPlaced)); G.hook('dimChange', () => safe('r26fix', fixPlaced));
+G.r26 = { FB, fixPlaced, rebuildPairs };
+}
+
+// ==== 72_ww_a_core.js
+// ======================================================================
+// v2.6 WATERWORKS (MP-8) · part A — levelled fluid cells, active set, solver
+// Cells hold levels 1..15 (absent entry = full 15). Flow: down first, then
+// sideways equalisation at a viscosity-dependent rate; full columns push
+// sideways in proportion to their head (fountains, siphons, U-tubes).
+// Host / solo authoritative. Existing water is "settled": it never moves
+// until something next to it changes. Infinite water only from the ocean
+// (natural water at or below sea level) and from Wellspring blocks.
+// ======================================================================
+const WWV = 1;
+const wwT = (base, f) => G.v2tile(H => { H.noiseFill(base, 0.12); if (f) f(H); });
+const T_MUD = wwT([92, 66, 44], H => H.speck([60, 42, 28], 30, 0.1));
+const T_HONEY = wwT([232, 168, 40], H => H.speck([255, 214, 110], 20, 0.06));
+const T_MANA = wwT([70, 150, 255], H => { H.speck([190, 240, 255], 18, 0.05); H.speck([150, 120, 255], 10, 0.05); });
+const T_TAR = wwT([28, 14, 40], H => H.speck([110, 50, 160], 16, 0.1));
+const T_BASALT = G.v2tile(H => { H.noiseFill([62, 62, 70], 0.18); for (let x = 0; x < 16; x += 5) for (let y = 0; y < 16; y++) H.px(x, y, [40, 40, 46]); });
+const T_SPRING = G.v2tile(H => { H.stone ? H.noiseFill([112, 116, 120], 0.15) : 0; for (let y = 4; y < 12; y++) for (let x = 4; x < 12; x++) H.px(x, y, H.vary([70, 150, 230], 0.12)); });
+if (!BLOCKS[142]) defBlock(142, 'mud', 'Mud', { tiles: T_MUD, solid: false, opaque: false, liquid: true, hard: 0, drop: null, xp: 0 });
+if (!BLOCKS[143]) defBlock(143, 'honey', 'Honey', { tiles: T_HONEY, solid: false, opaque: false, liquid: true, hard: 0, drop: null, xp: 0, emit: 0.1 });
+if (!BLOCKS[144]) defBlock(144, 'mana', 'Mana-essence', { tiles: T_MANA, solid: false, opaque: false, liquid: true, hard: 0, drop: null, xp: 0, emit: 0.7 });
+if (!BLOCKS[145]) defBlock(145, 'void_tar', 'Void-tar', { tiles: T_TAR, solid: false, opaque: false, liquid: true, hard: 0, drop: null, xp: 0, emit: 0.2 });
+if (!BLOCKS[146]) defBlock(146, 'basalt', 'Basalt', { tiles: T_BASALT, hard: 1.6, tier: 1, sound: 'stone', value: 2 });
+if (!BLOCKS[147]) defBlock(147, 'wellspring', 'Wellspring', { tiles: [T_SPRING, 3, 3], hard: 2, tier: 1, sound: 'stone', value: 60 });
+defItem('basalt', 'Basalt', { value: 2, place: 146, desc: 'Lava cooled by flowing water. A sturdy dark building stone.' });
+defItem('wellspring', 'Wellspring', { value: 60, place: 147, rarity: 2, desc: 'A spring stone: water wells up from it forever (1 level every tick it has room). One of only two infinite water sources, with the ocean.' });
+defItem('twilight_crystal', 'Twilight Crystal', { value: 120, rarity: 3, glyph: '🔮', color: '#c9a2ff', desc: 'Left behind when mana-essence and void-tar annihilate each other.' });
+RECIPES.push({ out: 'wellspring', n: 1, req: { pearl: 2, crystal: 2, cobble: 8 } });
+// older versions do not know these blocks: saves and sets carry a fallback (see 71_r26)
+Object.assign(G.blockFallback, { 142: B.WATER, 143: B.WATER, 144: B.WATER, 145: B.WATER, 146: B.COBBLE, 147: B.COBBLE });
+
+// fluid table: visc = sim ticks between sideways moves (1 = every tick); div = share divisor
+const FLD = {}; const FLK = {};
+function defFluid(id, k, visc, div, o) { FLD[id] = Object.assign({ id, k, visc, div }, o || {}); FLK[k] = id; }
+defFluid(B.WATER, 'water', 1, 4, { col: '#4aa0ff' }); defFluid(B.LAVA, 'lava', 6, 3, { col: '#ff7a20', hot: 1 }); defFluid(142, 'mud', 3, 3, { col: '#6a4a30' });
+defFluid(143, 'honey', 5, 3, { col: '#e8a828' }); defFluid(144, 'mana', 1, 4, { col: '#5ab0ff' }); defFluid(145, 'tar', 4, 3, { col: '#4a1a6a' });
+const isFluid = id => FLD[id] !== undefined;
+
+// packed integer keys: x,z in [-32768, 32767], y in [0, 127]
+const KX = 32768, KZM = 65536 * 128;
+const pk = (x, y, z) => ((x + KX) * 65536 + (z + KX)) * 128 + y;
+const kx = k => Math.floor(k / KZM) - KX, kz = k => (Math.floor(k / 128) % 65536) - KX, ky = k => k % 128;
+const inRange = (x, z) => x > -KX && x < KX - 1 && z > -KX && z < KX - 1;
+
+const WW = G.ww = { on: true, tick: 0, cap: 40000, act: new Set(), frozen: new Set(), dims: {}, R: 64, rNear: 32, perTick: 2600, cur: 0, list: null,
+  st: { cells: 0, moved: 0, ms: 0, msRing: new Float32Array(64), n: 0, over: 0, peakAct: 0, created: 0, removed: 0 }, self: 0, out: [], puddles: new Set(), actDim: 'over' };
+function dimOf() { return (G.world && G.world.dim) || 'over'; }
+function store(d) { d = d || dimOf(); return WW.dims[d] || (WW.dims[d] = { lv: new Map(), ch: new Map(), mem: new Map(), stash: null, sol: new Map(), iceLv: new Map(), springs: new Set() }); }
+const chKey = (cx, cz) => cx + ',' + cz;
+WW.store = store; WW.pk = pk; WW.kx = kx; WW.ky = ky; WW.kz = kz; WW.FLD = FLD; WW.FLK = FLK; WW.isFluid = isFluid;
+function levelAt(x, y, z, id) { if (id === undefined) id = G.world.get(x, y, z); if (!isFluid(id)) return 0; const v = store().lv.get(pk(x, y, z)); return v === undefined ? 15 : v; }
+WW.levelAt = levelAt;
+// mesh-side per-chunk map of partial levels (<15) by local index
+function chSet(D, x, y, z, L) { const ck = chKey(x >> 4, z >> 4), i = (x & 15) + ((z & 15) << 4) + (y << 8); let m = D.ch.get(ck);
+  if (L > 0 && L < 15) { if (!m) { m = new Map(); D.ch.set(ck, m); } if (m.get(i) === L) return false; m.set(i, L); return true; }
+  if (m && m.has(i)) { m.delete(i); if (!m.size) D.ch.delete(ck); return true; } return false; }
+function dirtyAt(x, z) { const w = G.world, lx = x & 15, lz = z & 15, cx = x >> 4, cz = z >> 4; w.markDirty(cx, cz); if (lx === 0) w.markDirty(cx - 1, cz); if (lx === 15) w.markDirty(cx + 1, cz); if (lz === 0) w.markDirty(cx, cz - 1); if (lz === 15) w.markDirty(cx, cz + 1); }
+// is this untracked cell an infinite source? natural ocean water, or a cell sitting on a Wellspring
+const SEA_DIMS = { over: 1, tidal: 1 };
+function infinite(x, y, z, id, k, D) { if (D.lv.has(k)) return false; if (id === B.WATER && y <= SEA && SEA_DIMS[dimOf()] && !G.world.placed.has(x + ',' + y + ',' + z)) return true; if (id === B.LAVA && dimOf() === 'ember' && !G.world.placed.has(x + ',' + y + ',' + z)) return true; return false; }
+WW.infinite = (x, y, z) => { const id = G.world.get(x, y, z); return isFluid(id) && infinite(x, y, z, id, pk(x, y, z), store()); };
+// commit a cell: L = 0 clears it; id = fluid block id
+function put(x, y, z, id, L) {
+  const w = G.world, D = store(), k = pk(x, y, z), cur = w.get(x, y, z);
+  if (L <= 0) { D.lv.delete(k); WW.puddles.delete(k); if (isFluid(cur)) { setB(x, y, z, 0); } if (chSet(D, x, y, z, 0)) dirtyAt(x, z); WW.out.push(x, y, z, 0, 0); return; }
+  L = Math.min(15, L | 0); D.lv.set(k, L); if (L <= 2) WW.puddles.add(k); else WW.puddles.delete(k);
+  if (cur !== id) setB(x, y, z, id); if (chSet(D, x, y, z, L)) dirtyAt(x, z); WW.out.push(x, y, z, id, L);
+  if (cur !== id) for (const f of WW.hooks.arrive) f(x, y, z, id, L);
+}
+function setB(x, y, z, id) { WW.self++; const ar = G.applyingRemote; G.applyingRemote = true; try { G.world.set(x, y, z, id, { eco: true, ww: 1 }); } finally { G.applyingRemote = ar; WW.self--; } }
+WW.put = put;
+function wake(x, y, z) { if (y < 1 || y >= WH || !inRange(x, z)) return; const k = pk(x, y, z); if (WW.act.has(k)) return; if (WW.act.size >= WW.cap) { WW.st.over++; return; } WW.act.add(k); }
+function wakeAround(x, y, z) { const w = G.world; for (let d = 0; d < 7; d++) { const nx = x + (d === 1) - (d === 2), ny = y + (d === 3) - (d === 4), nz = z + (d === 5) - (d === 6); if (isFluid(w.get(nx, ny, nz))) wake(nx, ny, nz); } }
+WW.wake = wake; WW.wakeAround = wakeAround;
+// may fluid move into this block? air, or a natural (unplaced) plant which it washes away
+function enterable(bid, x, y, z) { if (bid === 0) return true; const bd = BLOCKS[bid]; return !!(bd && bd.cross && !bd.solid && !G.world.placed.has(x + ',' + y + ',' + z) && !(G.S && G.S.v2 && G.S.v2.crops && G.S.v2.crops[x + ',' + y + ',' + z])); }
+// claim protection: fluid never crosses into a claim from outside it unless the owner allows natural disasters
+function claimOk(sx, sz, tx, tz) { if (!G.claimAt || !G.claims) return true; const t = G.claimAt(tx, tz); if (!t || t.natural) return true; return G.claimAt(sx, sz) === t; }
+WW.hooks = { enter: [], react: [], arrive: [] }; // later parts add machine gates and fluid interactions
+function passGate(x, y, z, bid, dir) { for (const f of WW.hooks.enter) { const r = f(x, y, z, bid, dir); if (r !== undefined) return r; } return undefined; }
+function react(x, y, z, id, nx, ny, nz, nid) { for (const f of WW.hooks.react) if (f(x, y, z, id, nx, ny, nz, nid)) return true; return false; }
+const DX4 = [1, 0, -1, 0], DZ4 = [0, 1, 0, -1];
+// one cell update; returns true if anything moved
+function stepCell(k) {
+  const w = G.world, D = store(); const x = kx(k), y = ky(k), z = kz(k);
+  if (!w.isLoaded(x, z)) { WW.frozen.add(k); return false; }
+  const id = w.get(x, y, z); const F = FLD[id]; if (!F) { if (D.lv.delete(k) && chSet(D, x, y, z, 0)) dirtyAt(x, z); return false; }
+  const inf = infinite(x, y, z, id, k, D); let L = inf ? 15 : (D.lv.get(k) ?? 15); const L0 = L; let moved = false;
+  // 0) wellspring below: refill
+  if (w.get(x, y - 1, z) === 147 && id === B.WATER && L < 15 && !inf) { L++; moved = true; }
+  // 1) down
+  if (y > 1) { const bid = w.get(x, y - 1, z);
+    if (enterable(bid, x, y - 1, z) && passGate(x, y - 1, z, bid, 5) !== false && claimOk(x, z, x, z)) { const amt = inf ? 15 : L; if (bid) setB(x, y - 1, z, 0); put(x, y - 1, z, id, amt); if (!inf) L -= amt; moved = true; wake(x, y - 1, z); if (WW.fluxAdd) WW.fluxAdd(x, y - 1, z, amt); }
+    else if (bid === id) { const Lb = D.lv.get(pk(x, y - 1, z)); if (Lb !== undefined && Lb < 15) { const amt = inf ? 15 - Lb : Math.min(L, 15 - Lb); put(x, y - 1, z, id, Lb + amt); if (!inf) L -= amt; moved = true; wake(x, y - 1, z); if (WW.fluxAdd && amt) WW.fluxAdd(x, y - 1, z, amt); } }
+    else if (isFluid(bid)) { if (react(x, y, z, id, x, y - 1, z, bid)) return true; }
+  }
+  // 2) sideways, only when supported and on this fluid's viscosity beat
+  if (L > 0 && (WW.tick + ((x * 7 + z * 13) & 7)) % F.visc === 0) {
+    const bid = w.get(x, y - 1, z); const supported = y <= 1 || (bid !== 0 && !enterable(bid, x, y - 1, z) && !(bid === id && (D.lv.get(pk(x, y - 1, z)) ?? 15) < 15));
+    if (supported) { const r0 = (WW.tick + x + z) & 3;
+      for (let j = 0; j < 4 && L > 0; j++) { const d = (r0 + j) & 3; const nx = x + DX4[d], nz = z + DZ4[d]; const nid = w.get(nx, y, nz);
+        let nl; if (nid === id) nl = D.lv.get(pk(nx, y, nz)) ?? 15; else if (enterable(nid, nx, y, nz)) { const g = passGate(nx, y, nz, nid, d); if (g === false) continue; nl = 0; } else { if (isFluid(nid) && react(x, y, z, id, nx, y, nz, nid)) return true; const g = passGate(nx, y, nz, nid, d); if (g !== true) continue; nl = -1; }
+        if (nl < 0) continue; if (!claimOk(x, z, nx, nz)) continue;
+        const nb = w.get(nx, y - 1, nz); const drop = nl === 0 && (enterable(nb, nx, y - 1, nz) || (nb === id && (D.lv.get(pk(nx, y - 1, nz)) ?? 15) < 15));
+        const diff = L - nl; if (diff < 2 && !(drop && diff >= 1 && L >= 1)) continue;
+        let t = drop ? Math.max(1, Math.ceil(diff / 2)) : Math.max(1, Math.floor(diff / F.div)); if (inf) t = Math.min(t, 15 - nl); else t = Math.min(t, L - (drop ? 0 : 1));
+        if (t <= 0) continue; if (nid && nid !== id) setB(nx, y, nz, 0); put(nx, y, nz, id, nl + t); if (!inf) L -= t; moved = true; wake(nx, y, nz); memAdd(nx, y, nz, t);
+      }
+    }
+  }
+  // 3) pressure: a full cell under a column pushes into a neighbour column up to the column's head (U-tubes, fountains)
+  if (L === 15 && (WW.tick & 1) === 0) { let h = 0; while (h < 12 && w.get(x, y + h + 1, z) === id && (D.lv.get(pk(x, y + h + 1, z)) ?? 15) === 15) h++;
+    if (h >= 1) { const topY = y + h + 1; const tk = pk(x, topY - 1, z); const tinf = infinite(x, topY - 1, z, id, tk, D);
+      for (let d = 0; d < 4; d++) { const nx = x + DX4[d], nz = z + DZ4[d]; if (w.get(nx, y, nz) !== id || (D.lv.get(pk(nx, y, nz)) ?? 15) < 15) continue;
+        let yy = y + 1; while (yy < topY - 1 && w.get(nx, yy, nz) === id && (D.lv.get(pk(nx, yy, nz)) ?? 15) === 15) yy++; if (yy >= topY - 1) continue;
+        const nid = w.get(nx, yy, nz); let nl; if (nid === id) nl = D.lv.get(pk(nx, yy, nz)) ?? 15; else if (enterable(nid, nx, yy, nz)) nl = 0; else continue; if (nl >= 15) continue;
+        // source: our column's top cell (or the ocean itself)
+        const sL = tinf ? 15 : (D.lv.get(tk) ?? 15); if (sL <= 1 && !tinf) continue; const t = Math.min(2, 15 - nl, tinf ? 2 : sL - 1);
+        if (nid && nid !== id) setB(nx, yy, nz, 0); put(nx, yy, nz, id, nl + t); if (!tinf) put(x, topY - 1, z, id, sL - t); wake(nx, yy, nz); wake(x, topY - 1, z); moved = true; break; }
+    }
+  }
+  if (!inf && L !== L0) put(x, y, z, id, L);
+  if (moved) { wakeAround(x, y, z); wake(x, y, z); WW.st.moved++; }
+  return moved;
+}
+WW.stepCell = stepCell;
+// river memory: where water keeps flowing, the bed remembers (feeds erosion, rain refill, the Hydrology view)
+function memAdd(x, y, z, t) { if (WW.fluxAdd) WW.fluxAdd(x, y, z, t); const k = pk(x, y, z); const m = store().mem; const v = (m.get(k) || 0) + t; if (v > 4000) return; if (!m.has(k) && m.size >= 8192) return; m.set(k, v); }
+WW.memAdd = memAdd;
+// main tick: near cells every tick (10 Hz), far cells every 10th tick (1 Hz); fixed cell budget -> deterministic
+function players() { const P = [G.S.player]; const N = G.net; if (N && N.active && N.role === 'host' && N.players) for (const pl of N.players.values()) if (pl && pl.pos && (!pl.dim || pl.dim === dimOf())) P.push({ x: pl.pos.x, z: pl.pos.z }); return P; }
+function nearest2(P, x, z) { let b = Infinity; for (const p of P) { const dx = p.x - x, dz = p.z - z; const d = dx * dx + dz * dz; if (d < b) b = d; } return b; }
+WW.step = function () {
+  if (!WW.on || G.netGuest || !G.world) return; const t0 = performance.now(); WW.tick++;
+  const P = players(); const rN2 = WW.rNear * WW.rNear, R2 = WW.R * WW.R; const far = WW.tick % 10 === 0;
+  const list = Array.from(WW.act); WW.act.clear(); let n = 0, i = 0;
+  for (; i < list.length; i++) { const k = list[i]; const d2 = nearest2(P, kx(k), kz(k));
+    if (d2 > R2) { WW.frozen.add(k); continue; } if (d2 > rN2 && !far) { WW.act.add(k); continue; }
+    if (n >= WW.perTick) break; n++; stepCell(k); }
+  for (; i < list.length; i++) WW.act.add(list[i]); // over budget: carry to the next tick, in order
+  // frozen cells thaw when a player comes back in range (1 Hz)
+  if (far && WW.frozen.size) { let m = 0; for (const k of WW.frozen) { if (m++ > 4000) break; if (G.world.isLoaded(kx(k), kz(k)) && nearest2(P, kx(k), kz(k)) <= R2) { WW.frozen.delete(k); wake(kx(k), ky(k), kz(k)); } } }
+  const ms = performance.now() - t0; const s = WW.st; s.cells = n; s.ms = ms; s.msRing[s.n++ % 64] = ms; s.peakAct = Math.max(s.peakAct, WW.act.size);
+  // adaptive simulation radius 32..128 by cost and load
+  if (!WW.fixedR) { if (ms > 4 || WW.act.size > 30000) WW.R = Math.max(32, WW.R - 8); else if (ms < 2 && WW.act.size < 20000) WW.R = Math.min(128, WW.R + 2); }
+};
+WW.p95 = () => { const a = Array.from(WW.st.msRing).sort((a, b) => a - b); return +a[Math.floor(a.length * 0.95)].toFixed(2); };
+WW.settle = function (maxTicks) { let t = 0; while (WW.act.size && t < (maxTicks || 2000)) { WW.step(); t++; } return t; };
+G.sched.add('waterworks', () => WW.step(), { hz: 10, budgetMs: 4, priority: 1 });
+
+// wake fluid next to any change that is not the fluid sim's own; retire the old 400-cell flow queue
+const NOFLOW = { length: 0, push() { return 0; }, splice() { return []; } };
+G.hook('worldMade', () => { const w = G.world; if (!w || w._wwWrapped) return; w._wwWrapped = true; const orig = w.onChange;
+  w.onChange = function (x, y, z, old, id, opts) { const r = orig ? orig.apply(this, arguments) : undefined; if (!WW.self && WW.on && !G.netGuest && !(opts && opts.ww)) safe('wwWake', () => { if (isFluid(id)) { if (!(opts && opts.eco) || opts.placed) { const D = store(), k = pk(x, y, z); if (!D.lv.has(k) && !infinite(x, y, z, id, k, D)) D.lv.set(k, 15); } wake(x, y, z); } if (isFluid(old) && old !== id) { const D = store(), k = pk(x, y, z); D.lv.delete(k); if (chSet(D, x, y, z, 0)) dirtyAt(x, z); } wakeAround(x, y, z); }); return r; }; });
+G.hook('tick', function wwEcoFlow() { if (G.eco && G.eco.flow !== NOFLOW && WW.on) G.eco.flow = NOFLOW; });
+// the old random lava spreader is replaced by the levelled sim (water/lava contact stays in thermal chemistry)
+{ const L = G.hooks.tick || []; const i = L.findIndex(f => f && f.name === 'lavaWater'); if (i >= 0) { const old = L[i]; L[i] = function lavaWater(dt) { if (!WW.on) return old(dt); }; } }
+
+// ==== 72_ww_b_save.js
+// v2.6 WATERWORKS · part B — persistence (S.v2.ww, additive), dimensions, mesh feed
+G.wwMeshLv = (cx, cz) => { const D = WW.dims[dimOf()]; return D ? (D.ch.get(cx + ',' + cz) || null) : null; };
+const WW_ACT_CAP = 20000;
+function wwPack() {
+  const S = G.S; if (!S || !S.v2) return; stashAct(); const out = { v: WWV, d: {} };
+  for (const dn in WW.dims) { const D = WW.dims[dn]; const o = {}; let any = false;
+    for (const [k, L] of D.lv) { const x = kx(k), y = ky(k), z = kz(k); const ck = (x >> 4) + ',' + (z >> 4); (o[ck] || (o[ck] = [])).push((x & 15) + ((z & 15) << 4) + (y << 8), L); any = true; }
+    const a = []; if (D.stash) for (const k of D.stash) { if (a.length >= WW_ACT_CAP * 3) break; a.push(kx(k), ky(k), kz(k)); }
+    const m = []; for (const [k, v] of D.mem) if (v >= 4) m.push(kx(k), ky(k), kz(k), Math.round(v));
+    const ic = []; for (const [k, L] of D.iceLv) ic.push(kx(k), ky(k), kz(k), L); const sp = []; for (const k of D.springs) sp.push(kx(k), ky(k), kz(k));
+    if (any || a.length || m.length || ic.length || sp.length) { const r = { lv: o, a, m }; if (ic.length) r.i = ic; if (sp.length) r.s = sp; out.d[dn] = r; } }
+  S.v2.ww = out; unstashAct();
+}
+function stashAct() { const D = store(WW.actDim); D.stash = new Set([...WW.act, ...WW.frozen]); }
+function unstashAct() { const D = store(WW.actDim); D.stash = null; }
+function wwUnpack(S) {
+  WW.dims = {}; WW.act.clear(); WW.frozen.clear(); WW.puddles.clear(); WW.out.length = 0; WW.tick = 0; WW.actDim = dimOf();
+  const o = S && S.v2 && S.v2.ww; if (!o || typeof o !== 'object' || !o.d) return 0; let n = 0;
+  for (const dn in o.d) { const r = o.d[dn]; if (!r || typeof r !== 'object') continue; const D = store(dn);
+    for (const ck in r.lv || {}) { const p = ck.split(','); const cx = +p[0], cz = +p[1], a = r.lv[ck]; if (!Array.isArray(a) || !isFinite(cx) || !isFinite(cz)) continue;
+      for (let i = 0; i + 1 < a.length; i += 2) { const li = a[i] | 0, L = a[i + 1] | 0; if (L < 1 || L > 15) continue; const x = cx * 16 + (li & 15), z = cz * 16 + ((li >> 4) & 15), y = li >> 8; if (y < 1 || y >= WH) continue;
+        const k = pk(x, y, z); D.lv.set(k, L); if (L < 15) { let m = D.ch.get(ck); if (!m) { m = new Map(); D.ch.set(ck, m); } m.set(li, L); } if (dn === WW.actDim && L <= 2) WW.puddles.add(k); n++; } }
+    if (Array.isArray(r.a)) { const st = new Set(); for (let i = 0; i + 2 < r.a.length; i += 3) st.add(pk(r.a[i] | 0, r.a[i + 1] | 0, r.a[i + 2] | 0)); if (dn === WW.actDim) for (const k of st) WW.frozen.add(k); else D.stash = st; }
+    if (Array.isArray(r.i)) for (let i = 0; i + 3 < r.i.length; i += 4) D.iceLv.set(pk(r.i[i] | 0, r.i[i + 1] | 0, r.i[i + 2] | 0), clamp(r.i[i + 3] | 0, 1, 15));
+    if (Array.isArray(r.s)) for (let i = 0; i + 2 < r.s.length; i += 3) D.springs.add(pk(r.s[i] | 0, r.s[i + 1] | 0, r.s[i + 2] | 0));
+    if (Array.isArray(r.m)) for (let i = 0; i + 3 < r.m.length; i += 4) D.mem.set(pk(r.m[i] | 0, r.m[i + 1] | 0, r.m[i + 2] | 0), +r.m[i + 3] || 0); }
+  // cells that were moving when saved continue (they thaw from the frozen list as players come near)
+  return n;
+}
+WW.pack = wwPack; WW.unpack = wwUnpack;
+G.hook('preSave', () => { if (G.S && G.S.v2 && !G.netGuest) safe('wwPack', wwPack); });
+G.hook('load', () => safe('wwLoad', () => { wwUnpack(G.S); remeshFluid(); }));
+G.hook('newGame', () => safe('wwNew', () => wwUnpack(null)));
+G.hook('quit', () => { WW.dims = {}; WW.act.clear(); WW.frozen.clear(); WW.puddles.clear(); });
+G.hook('dimChange', () => safe('wwDim', () => { const D0 = store(WW.actDim); D0.stash = new Set([...WW.act, ...WW.frozen]); WW.act.clear(); WW.frozen.clear(); WW.puddles.clear();
+  WW.actDim = dimOf(); const D = store(); if (D.stash) { for (const k of D.stash) WW.frozen.add(k); D.stash = null; } for (const [k, L] of D.lv) if (L <= 2) WW.puddles.add(k); remeshFluid(); }));
+function remeshFluid() { const D = WW.dims[dimOf()]; if (!D || !G.world) return; for (const ck of D.ch.keys()) { const p = ck.split(','); const cx = +p[0], cz = +p[1]; for (let dz = -1; dz <= 1; dz++) for (let dx = -1; dx <= 1; dx++) G.world.markDirty(cx + dx, cz + dz); } }
+WW.remesh = remeshFluid;
+
+// ==== 72_ww_c_nature.js
+// v2.6 WATERWORKS · part C — interactions, hydration, solutes, river memory, climate coupling, erosion (Worker)
+if (!BLOCKS[148]) defBlock(148, 'twilight_geode', 'Twilight Crystal', { tiles: G.v2tile(H => { H.noiseFill([60, 40, 90], 0.2); H.blob([200, 160, 255], 4, 3); H.blob([255, 240, 255], 2, 2); }), hard: 1.2, tier: 1, emit: 0.6, drop: 'twilight_crystal', xp: 20, value: 0 });
+G.blockFallback[148] = B.OBSIDIAN;
+// ---- fluid meets fluid ----
+WW.hooks.react.push(function wwReact(x, y, z, id, nx, ny, nz, nid) {
+  const w = G.world, D = store(); const A = FLD[id].k, Bk = FLD[nid].k;
+  if ((A === 'water' && Bk === 'lava') || (A === 'lava' && Bk === 'water')) {
+    const lx = A === 'lava' ? x : nx, ly = A === 'lava' ? y : ny, lz = A === 'lava' ? z : nz; const wx = A === 'lava' ? nx : x, wy = A === 'lava' ? ny : y, wz = A === 'lava' ? nz : z;
+    const lk = pk(lx, ly, lz); const LL = infinite(lx, ly, lz, B.LAVA, lk, D) ? 15 : (D.lv.get(lk) ?? 15); const solid = LL >= 12 ? B.OBSIDIAN : 146;
+    D.lv.delete(lk); if (chSet(D, lx, ly, lz, 0)) dirtyAt(lx, lz); setB(lx, ly, lz, solid); WW.out.push(lx, ly, lz, solid, 0);
+    const wk = pk(wx, wy, wz); if (!infinite(wx, wy, wz, B.WATER, wk, D)) { const WL = D.lv.get(wk) ?? 15; put(wx, wy, wz, B.WATER, WL - 2); }
+    wakeAround(lx, ly, lz); wakeAround(wx, wy, wz); G.particles.spawn(lx + 0.5, ly + 1, lz + 0.5, '#e8e8f0', 12, 2, 1.2, -2); if (G.audio.burst) G.audio.burst(0.25, 3000, 0.5, 0.1, 'highpass'); G.st2(solid === 146 ? 'wwBasalt' : 'obsidian'); return true; }
+  if ((A === 'mana' && Bk === 'tar') || (A === 'tar' && Bk === 'mana')) {
+    const k1 = pk(x, y, z), k2 = pk(nx, ny, nz); const L1 = D.lv.get(k1) ?? 15, L2 = D.lv.get(k2) ?? 15; const a = Math.min(L1, L2);
+    put(x, y, z, id, L1 - a); put(nx, ny, nz, nid, L2 - a); const cx = (x + nx) / 2 + 0.5, cy = (y + ny) / 2 + 0.5, cz = (z + nz) / 2 + 0.5;
+    G.glowP.spawn(cx, cy, cz, '#ffffff', 30, 6, 0.8, 0, 0.3); G.glowP.spawn(cx, cy, cz, '#c9a2ff', 30, 4, 1.2, 0, 0.3); if (typeof addLight === 'function') addLight(cx, cy, cz, 14, 0xc9a2ff, 0.7, 0.6); if (G.audio.burst) G.audio.burst(0.5, 900, 1.2, 0.3, 'lowpass');
+    // every 8 units annihilated leave one crystal where the two met
+    const T = G.S.v2; T.wwAnn = (T.wwAnn || 0) + a; G.st2('wwAnnihilate');
+    if (T.wwAnn >= 8) { T.wwAnn -= 8; const sx = L1 - a <= 0 ? x : nx, sy = L1 - a <= 0 ? y : ny, sz = L1 - a <= 0 ? z : nz; if (!w.get(sx, sy, sz)) { setB(sx, sy, sz, 148); WW.out.push(sx, sy, sz, 148, 0); G.st2('wwTwilight'); toast('🔮 Mana and void-tar annihilated — a Twilight Crystal formed', 'mythos'); } }
+    wakeAround(x, y, z); wakeAround(nx, ny, nz); return true; }
+  if ((A === 'water' && Bk === 'mud') || (A === 'mud' && Bk === 'water')) return false; // they simply sit side by side (mud is heavier)
+  if ((A === 'lava' && (Bk === 'honey' || Bk === 'tar')) || ((A === 'honey' || A === 'tar') && Bk === 'lava')) { // lava sears honey to nothing, boils tar to smoke
+    const hx = A === 'lava' ? nx : x, hy = A === 'lava' ? ny : y, hz = A === 'lava' ? nz : z; put(hx, hy, hz, A === 'lava' ? nid : id, 0); G.particles.spawn(hx + 0.5, hy + 0.8, hz + 0.5, '#555', 10, 1.5, 1.2, -1.5); wakeAround(hx, hy, hz); return true; }
+  return false;
+});
+// ---- water arriving next to farmland hydrates it; ash dissolves into a fertile plume ----
+WW.hooks.arrive.push(function wwArrive(x, y, z, id) { if (id !== B.WATER) return; const w = G.world;
+  for (let d = 0; d < 9; d++) { const q = d % 5, ax = x + (q === 0) - (q === 1), az = z + (q === 2) - (q === 3), ay = d < 5 ? y - 1 : y; if (d === 8) continue; const b = w.get(ax, ay, az); if (b === B.FARMLAND) { w.set(ax, ay, az, B.FARMLAND_WET, { placed: true }); G.particles.spawn(ax + 0.5, ay + 1.05, az + 0.5, '#7ab0ff', 4, 0.6, 0.5); G.st2('wwHydrate'); } }
+  for (let d = 0; d < 6; d++) { const [dx, dy, dz] = N6[d]; const b = w.get(x + dx, y + dy, z + dz); if (b === B.ASH) { setB(x + dx, y + dy, z + dz, 0); WW.out.push(x + dx, y + dy, z + dz, 0, 0); store().sol.set(pk(x, y, z), 10); G.particles.spawn(x + dx + 0.5, y + dy + 0.5, z + dz + 0.5, '#9a9a8a', 10, 1, 0.8); wakeAround(x + dx, y + dy, z + dz); G.st2('wwDissolve'); break; } }
+});
+// ---- solute plumes drift downstream: down first, else towards the lowest neighbouring level; fertilise crops they reach ----
+function solTick() { const D = WW.store(), w = G.world; if (!D.sol.size) return; const nx = new Map(); let n = 0;
+  for (let [k, c] of D.sol) { if (n++ > 400) { nx.set(k, c); continue; } const x = kx(k), y = ky(k), z = kz(k); if (c <= 0) continue; if (w.get(x, y, z) !== B.WATER) { // the water moved on: the plume follows it (down first, then sideways)
+      let f = null; if (w.get(x, y - 1, z) === B.WATER) f = pk(x, y - 1, z); else for (let d = 0; d < 4 && f === null; d++) for (const yy of [y, y - 1]) if (w.get(x + DX4[d], yy, z + DZ4[d]) === B.WATER) { f = pk(x + DX4[d], yy, z + DZ4[d]); break; }
+      if (f !== null) nx.set(f, Math.max(nx.get(f) || 0, c - 0.5)); continue; }
+    if (Math.random() < 0.5) G.particles.spawn(x + Math.random(), y + 0.6, z + Math.random(), '#b8c070', 1, 0.2, 1.4, 0, 0.1);
+    let fert = false; for (let d = 0; d < 8; d++) { const q = d % 4, ax = x + (q === 0) - (q === 1), az = z + (q === 2) - (q === 3); const ay = d < 4 ? y - 1 : y; const b = w.get(ax, ay, az); if (b === B.FARMLAND || b === B.FARMLAND_WET) { const ck = ax + ',' + (ay + 1) + ',' + az; const V = G.S.v2; if (V.crops && V.crops[ck] && G.growCrop) { G.growCrop(ck, 1); fert = true; G.st2('wwFertile'); G.particles.spawn(ax + 0.5, ay + 1.5, az + 0.5, '#9cff6a', 8, 1, 0.8); } } }
+    if (fert) { c -= 2; if (c <= 0) continue; }
+    let best = null, bl = (D.lv.get(k) ?? 15); if (w.get(x, y - 1, z) === B.WATER) best = pk(x, y - 1, z); else for (let d = 0; d < 4; d++) { const xx = x + DX4[d], zz = z + DZ4[d]; if (w.get(xx, y, zz) !== B.WATER) continue; const l = D.lv.get(pk(xx, y, zz)) ?? 15; if (l < bl) { bl = l; best = pk(xx, y, zz); } }
+    if (best !== null && c > 1) nx.set(best, Math.max(nx.get(best) || 0, c - 1)); else if (c > 1) { // still water: the plume diffuses slowly to a neighbouring water cell
+      const d = Math.floor(Math.random() * 4), xx = x + DX4[d], zz = z + DZ4[d]; if (w.get(xx, y, zz) === B.WATER && Math.random() < 0.6) { const k2 = pk(xx, y, zz); nx.set(k2, Math.max(nx.get(k2) || 0, c - 0.5)); } else nx.set(k, Math.max(nx.get(k) || 0, c - 0.25)); } }
+  D.sol = nx; }
+G.sched.add('wwSolute', () => { if (!G.netGuest && WW.on) solTick(); }, { hz: 2, budgetMs: 0.5, priority: 3 });
+// ---- ice keeps the level it froze at (no volume from nowhere) ----
+G.hook('worldMade', () => { const w = G.world; if (!w || w._wwIce) return; w._wwIce = true; const orig = w.onChange;
+  w.onChange = function (x, y, z, old, id) { if (!G.netGuest) { if (old === B.WATER && id === B.ICE) { const D = WW.store(), k = pk(x, y, z); const L = D.lv.get(k); if (L !== undefined) D.iceLv.set(k, L); }
+      else if (old === B.ICE && id === B.WATER) { const D = WW.store(), k = pk(x, y, z); const L = D.iceLv.get(k); if (L !== undefined) { D.iceLv.delete(k); const r = orig ? orig.apply(this, arguments) : undefined; D.lv.set(k, L); if (L < 15 && chSet(D, x, y, z, L)) dirtyAt(x, z); return r; } } }
+    return orig ? orig.apply(this, arguments) : undefined; }; });
+// ---- wellsprings: water wells up into the cell above whenever there is room ----
+function springAt(x, y, z) { const w = G.world; if (w.get(x, y, z) !== 147) return; const a = w.get(x, y + 1, z); if (a === 0) { put(x, y + 1, z, B.WATER, 4); wake(x, y + 1, z); } else if (a === B.WATER) wake(x, y + 1, z); }
+G.hook('place', (x, y, z, id) => { if (id === 147 && !G.netGuest) { const S = WW.store(); S.springs.add(pk(x, y, z)); springAt(x, y, z); toast('💧 The Wellspring begins to flow', ''); } });
+G.sched.add('wwSprings', () => { if (G.netGuest || !WW.on) return; const S = WW.store(); if (!S.springs.size) return; for (const k of S.springs) { const x = kx(k), y = ky(k), z = kz(k); if (!G.world.isLoaded(x, z)) continue; if (G.world.get(x, y, z) !== 147) { S.springs.delete(k); continue; } springAt(x, y, z); } }, { hz: 1, budgetMs: 0.3, priority: 3 });
+// ---- climate coupling ----
+const wxKind = () => (G.weatherKind ? G.weatherKind() : (G.S.weather && G.S.weather.kind)) || 'clear';
+function climateTick() { const w = G.world, D = WW.store(), p = G.S.player; const k0 = wxKind(); const wet = k0 === 'rain' || k0 === 'storm';
+  if (wet) { // rain refills the beds that remember a river, then low hollows
+    let n = 0; for (const [k, v] of D.mem) { if (n >= 6) break; if (v < 20 || Math.random() > 0.08) continue; const x = kx(k), y = ky(k), z = kz(k); if (!w.isLoaded(x, z) || Math.hypot(x - p.x, z - p.z) > 64 || y < w.heightAt(x, z)) continue; const b = w.get(x, y, z); if (b === 0 && w.get(x, y - 1, z) && !isFluid(w.get(x, y - 1, z))) { put(x, y, z, B.WATER, 3); wake(x, y, z); n++; G.st2('wwRainRefill'); } else if (b === B.WATER) { const L = D.lv.get(k); if (L !== undefined && L < 15) { put(x, y, z, B.WATER, L + 1); wake(x, y, z); n++; } } }
+    if (Math.random() < 0.5) for (let i = 0; i < 4; i++) { const x = Math.floor(p.x + (Math.random() - 0.5) * 48), z = Math.floor(p.z + (Math.random() - 0.5) * 48); if (!w.isLoaded(x, z)) continue; const y = w.heightAt(x, z); if (y <= SEA || y >= WH - 2) continue; const top = w.get(x, y, z); if (top !== B.GRASS && top !== B.DIRT && top !== B.SAND) continue; if (w.get(x, y + 1, z) !== 0) continue;
+      let hollow = true; for (let d = 0; d < 4; d++) if (w.heightAt(x + DX4[d], z + DZ4[d]) <= y) { hollow = false; break; } if (!hollow || WW.puddles.size > 60) continue; put(x, y + 1, z, B.WATER, 1); G.st2('wwPuddle'); }
+  } else if (WW.puddles.size) { // sun dries shallow water; summer and deserts faster, never while raining
+    let n = 0; for (const k of [...WW.puddles]) { if (n++ > 24) break; const x = kx(k), y = ky(k), z = kz(k); if (!w.isLoaded(x, z) || w.get(x, y, z) !== B.WATER) { WW.puddles.delete(k); continue; } if (y < w.heightAt(x, z)) continue; if (WW.act.has(k)) continue;
+      const t = G.ambientTemp ? G.ambientTemp(x, y, z) : 15; const pr = clamp((t - 4) / 60, 0, 0.6) * ((G.daylight || 0.5) > 0.4 ? 1 : 0.3); if (Math.random() < pr) { const L = D.lv.get(k) ?? 15; put(x, y, z, B.WATER, L - 1); if (L - 1 <= 0) G.st2('wwEvap'); } } }
+}
+G.sched.add('wwClimate', () => { if (!G.netGuest && WW.on && G.world && G.world.dim === 'over') climateTick(); }, { hz: 0.5, budgetMs: 0.6, priority: 3 });
+// river memory fades slowly (a dry season lets a bed forget)
+G.hook('dawn', () => { if (G.netGuest) return; for (const D of Object.values(WW.dims)) for (const [k, v] of D.mem) { const nv = v * 0.9; if (nv < 2) D.mem.delete(k); else D.mem.set(k, nv); } });
+// ---- erosion: a slow idle pass; flowing water carries soft natural ground downstream (stone 20x slower). Scoring runs in a Worker. ----
+const SOFT = new Set([B.DIRT, B.GRASS, B.SAND, B.SNOW, B.GRAVEL, 142].filter(v => v !== undefined)); const HARD = new Set([B.STONE, B.COBBLE].filter(v => v !== undefined));
+function erodeScore(L, seed) { const out = []; for (let i = 0; i < L.length; i += 6) { const flux = L[i + 4], hard = L[i + 5]; let h = (L[i] * 73856093 ^ L[i + 1] * 19349663 ^ L[i + 2] * 83492791 ^ seed) >>> 0; h = Math.imul(h ^ (h >>> 13), 1274126177) >>> 0; const r = (h % 100000) / 100000; const p = Math.min(0.5, flux / 400) / (hard ? 20 : 1); if (r < p) out.push(i / 6); } return out; }
+let erW = null; try { if (typeof Worker !== 'undefined' && !G.noWorkers) { const src = 'const erodeScore = ' + erodeScore.toString() + ';\nonmessage = e => { postMessage({ id: e.data.id, r: erodeScore(e.data.L, e.data.seed) }); };'; erW = new Worker(URL.createObjectURL(new Blob([src], { type: 'text/javascript' }))); erW.onerror = ev => { try { ev.preventDefault(); } catch (_) { } erW = null; }; } } catch (e) { erW = null; }
+let erJob = null, erId = 0; WW.erosion = { passes: 0, eroded: 0, deposited: 0, worker: !!erW };
+function erodeCollect() { const w = G.world, D = WW.store(); const L = [], meta = []; const p = G.S.player;
+  for (const [k, v] of D.mem) { if (v < 30) continue; const x = kx(k), y = ky(k), z = kz(k); if (!w.isLoaded(x, z) || Math.hypot(x - p.x, z - p.z) > 96) continue; if (w.get(x, y, z) !== B.WATER || !D.lv.has(k) || (D.lv.get(k) ?? 15) >= 14) continue;
+    const bed = w.get(x, y - 1, z); if (!SOFT.has(bed) && !HARD.has(bed)) continue; if (w.placed.has(x + ',' + (y - 1) + ',' + z)) continue; if (G.claimAt) { const c = G.claimAt(x, z); if (c && !c.natural) continue; }
+    L.push(x, y - 1, z, bed, v, HARD.has(bed) ? 1 : 0); if (L.length >= 6 * 300) break; }
+  return L; }
+function erodeApply(L, idx) { const w = G.world, D = WW.store(); for (const i of idx.slice(0, 6)) { const x = L[i * 6], y = L[i * 6 + 1], z = L[i * 6 + 2], bed = L[i * 6 + 3]; if (w.get(x, y, z) !== bed || w.get(x, y + 1, z) !== B.WATER) continue;
+    setB(x, y, z, 0); if (G.structCheck) G.structCheck(x, y, z, 1); WW.out.push(x, y, z, 0, 0); wakeAround(x, y, z); wake(x, y + 1, z); WW.erosion.eroded++; G.st2('wwEroded');
+    // deposit downstream: the nearest still, shallow water cell (low memory) becomes a sandbar
+    let dep = null, best = 1e9; for (let dz = -6; dz <= 6; dz++) for (let dx = -6; dx <= 6; dx++) for (let dy = -3; dy <= 0; dy++) { const xx = x + dx, yy = y + 1 + dy, zz = z + dz; const k = pk(xx, yy, zz); if (w.get(xx, yy, zz) !== B.WATER) continue; const l = D.lv.get(k); if (l === undefined || l > 4) continue; if ((D.mem.get(k) || 0) > 10) continue; const s = dx * dx + dz * dz - dy * 4; if (s < best) { best = s; dep = [xx, yy, zz]; } }
+    if (dep) { put(dep[0], dep[1], dep[2], B.WATER, 0); setB(dep[0], dep[1], dep[2], B.SAND); WW.out.push(dep[0], dep[1], dep[2], B.SAND, 0); WW.erosion.deposited++; wakeAround(dep[0], dep[1], dep[2]); } } }
+G.sched.add('wwErosion', () => { if (G.netGuest || !WW.on || erJob || !G.world) return; const L = erodeCollect(); WW.erosion.passes++; if (!L.length) return; const seed = (G.S.seed | 0) ^ WW.erosion.passes;
+  if (erW) { const id = ++erId; erJob = { id, L, t: performance.now() }; erW.onmessage = e => { const j = erJob; erJob = null; if (!j || e.data.id !== j.id) return; safe('wwErode', () => erodeApply(j.L, e.data.r)); }; erW.postMessage({ id, L, seed }); setTimeout(() => { if (erJob && erJob.id === id) erJob = null; }, 5000); }
+  else erodeApply(L, erodeScore(L, seed)); }, { hz: 0.2, budgetMs: 0.8, priority: 4 });
+WW.erodeNow = () => { const L = erodeCollect(); const r = erodeScore(L, (G.S.seed | 0) ^ ++WW.erosion.passes); erodeApply(L, r); return { cand: L.length / 6, picked: r.length }; };
+WW.solTick = solTick; WW.climateTick = climateTick;
+
+// ==== 72_ww_d_machines.js
+// v2.6 WATERWORKS · part D — machines: water wheel (power source), pump, valve, sluice gate, aqueduct, level sensor
+const T_WHEEL = G.v2tile(H => { H.noiseFill([128, 92, 52], 0.15); for (let i = 0; i < 16; i++) { H.px(i, i, [70, 48, 26]); H.px(15 - i, i, [70, 48, 26]); H.px(i, 7, [90, 62, 34]); H.px(7, i, [90, 62, 34]); } for (let i = 0; i < 16; i++) { H.px(i, 0, [60, 40, 22]); H.px(i, 15, [60, 40, 22]); H.px(0, i, [60, 40, 22]); H.px(15, i, [60, 40, 22]); } });
+const T_PUMP = lgTile([80, 96, 110], '^', [140, 210, 255], [60, 120, 170]);
+const T_VALVE = G.v2tile(H => { H.bevel([96, 100, 108], [140, 144, 152], [50, 52, 58]); for (let a = 0; a < 24; a++) { const t = a / 24 * Math.PI * 2; H.px(8 + Math.round(Math.cos(t) * 5), 8 + Math.round(Math.sin(t) * 5), [200, 60, 50]); } for (let i = 3; i < 13; i++) { H.px(i, 8, [200, 60, 50]); H.px(8, i, [200, 60, 50]); } });
+const T_SLUICE = G.v2tile(H => { H.noiseFill([110, 80, 50], 0.14); for (let y = 0; y < 16; y += 4) for (let x = 0; x < 16; x++) H.px(x, y, [60, 44, 28]); for (let y = 0; y < 16; y++) { H.px(1, y, [120, 124, 132]); H.px(14, y, [120, 124, 132]); } });
+const T_SLUICE_O = G.v2tile(H => { H.noiseFill([40, 70, 110], 0.2); for (let y = 0; y < 16; y++) { H.px(1, y, [120, 124, 132]); H.px(14, y, [120, 124, 132]); H.px(0, y, [90, 94, 100]); H.px(15, y, [90, 94, 100]); } for (let x = 2; x < 14; x++) { H.px(x, 0, [110, 80, 50]); H.px(x, 1, [90, 64, 40]); } H.speck([180, 220, 255], 10, 0.1); });
+const T_AQ_TOP = G.v2tile(H => { H.noiseFill([150, 146, 136], 0.1); for (let y = 0; y < 16; y++) for (let x = 3; x < 13; x++) H.px(x, y, H.vary([96, 120, 150], 0.08)); for (let y = 0; y < 16; y++) { H.px(2, y, [110, 106, 98]); H.px(13, y, [110, 106, 98]); } });
+const T_AQ_SIDE = G.v2tile(H => { H.bricks([156, 150, 138], [104, 100, 92], 4); for (let x = 4; x < 12; x++) for (let y = 9; y < 16; y++) if ((x - 8) * (x - 8) + (y - 16) * (y - 16) < 20) H.px(x, y, [40, 38, 34]); });
+const T_LEVEL = lgTile([40, 70, 110], '≈', [120, 200, 255], [80, 150, 220]);
+const WWM = [ // [id, key, name, type, tiles, opts, item value]
+  [149, 'water_wheel', 'Water Wheel', 'wheel', T_WHEEL, { omni: 1 }, 30, 'A power source: water flowing or falling past it turns the wheel. Signal strength rises with the flow. Drives belts, drills and the Logic Core like a motor.'],
+  [150, 'pump', 'Pump', 'pump', T_PUMP, { faced: 1 }, 40, 'Powered: lifts fluid from the side behind it (or below) out of its front face — up hills, out of pits.'],
+  [151, 'valve', 'Valve', 'valve', T_VALVE, { faced: 1 }, 20, 'Powered: lets fluid through between its back and front faces (levels equalise, 2 per tick). Unpowered: shut.'],
+  [152, 'sluice_gate', 'Sluice Gate', 'sluice', T_SLUICE, { faced: 1 }, 30, 'A dam gate. Powered: opens and passes a lot of water (8 per tick) from back to front. The gate shows when it is open.'],
+  [153, 'sluice_open', 'Sluice Gate (open)', 'sluice', T_SLUICE_O, { faced: 1, drop: 'sluice_gate' }, 0, ''],
+  [154, 'aqueduct', 'Aqueduct', 'aqueduct', [T_AQ_TOP, T_AQ_SIDE, T_AQ_SIDE], { faced: 1 }, 6, 'A channel block: water sitting on top is carried along the arrow, even on the flat. Chain them into canals.'],
+  [155, 'level_sensor', 'Level Sensor', 'slevel', T_LEVEL, { omni: 1 }, 20, 'Outputs the level (1–15) of the fluid in the block above it as signal strength. 0 when dry.'],
+];
+for (const [id, key, name, type, tiles, o, val, desc] of WWM) { if (!BLOCKS[id]) defBlock(id, key, name, Object.assign({ tiles, hard: 1.4, sound: id === 149 || id === 152 || id === 153 ? 'wood' : 'stone', value: val }, o.drop ? { drop: o.drop } : {}));
+  if (val) defItem(key, name, { value: val, place: id, desc }); G.logicRegister(id, type, o); }
+Object.assign(G.blockFallback, { 149: B.PLANKS, 150: B.COBBLE, 151: B.COBBLE, 152: B.PLANKS, 153: B.PLANKS, 154: B.COBBLE, 155: B.GLASS });
+G.TECH.hydraulics = { name: 'Hydraulics', era: 3, cost: { coins: 500, iron: 8 }, pre: ['mechanics'], blocks: ['water_wheel', 'pump', 'valve', 'sluice_gate', 'aqueduct', 'level_sensor'], desc: 'Wheels turn flowing water into power; pumps, valves, sluices and aqueducts put water where you want it.' };
+RECIPES.push({ out: 'water_wheel', n: 1, req: { planks: 12, iron: 2 }, tech: 'hydraulics' }, { out: 'pump', n: 1, req: { iron: 6, glass: 2 }, tech: 'hydraulics' }, { out: 'valve', n: 1, req: { iron: 4 }, tech: 'hydraulics' },
+  { out: 'sluice_gate', n: 1, req: { planks: 6, iron: 3 }, tech: 'hydraulics' }, { out: 'aqueduct', n: 4, req: { cobble: 6, clay: 1 }, tech: 'hydraulics' }, { out: 'level_sensor', n: 1, req: { glass: 2, iron: 1, crystal: 1 }, tech: 'hydraulics' });
+for (let i = RECIPES.length - 1; i >= 0; i--) { const r = RECIPES[i]; if (r.tech !== 'hydraulics') continue; for (const k in r.req) if (!ITEMS[k]) delete r.req[k]; }
+// ---- flow flux (what turns wheels): every unit that moves into a cell adds to that cell's flux; halves every 0.5 s ----
+WW.flux = new Map();
+WW.fluxAdd = (x, y, z, t) => { if (WW.flux.size > 20000) return; const k = pk(x, y, z); WW.flux.set(k, (WW.flux.get(k) || 0) + t); };
+G.sched.add('wwFlux', () => { for (const [k, v] of WW.flux) { const n = v * 0.5; if (n < 0.3) WW.flux.delete(k); else WW.flux.set(k, n); } }, { hz: 2, budgetMs: 0.4, priority: 3 });
+// ---- fluid helpers ----
+function cellFl(x, y, z) { const w = G.world, id = w.get(x, y, z); if (FLD[id]) { const k = pk(x, y, z), D = store(); const inf = infinite(x, y, z, id, k, D); return { id, L: inf ? 15 : (D.lv.get(k) ?? 15), inf }; } if (enterable(id, x, y, z)) return { id: 0, L: 0, inf: false }; return null; }
+function xfer(a, ax, ay, az, b, bx, by, bz, n) { if (!a || !b || !a.id || a.L <= 0) return 0; if (b.id && b.id !== a.id) return 0; const t = Math.min(n, a.L, 15 - b.L); if (t <= 0) return 0; if (!claimOk(ax, az, bx, bz)) return 0;
+  const bid = G.world.get(bx, by, bz); if (bid && bid !== a.id) setB(bx, by, bz, 0); put(bx, by, bz, a.id, b.L + t); if (!a.inf) put(ax, ay, az, a.id, a.L - t); wakeAround(ax, ay, az); wake(ax, ay, az); wake(bx, by, bz); wakeAround(bx, by, bz); WW.fluxAdd(bx, by, bz, t); return t; }
+const front = (c, C) => { const d = DIRS[C.f | 0]; return [c.x + d[0], c.y + d[1], c.z + d[2]]; }; const back = (c, C) => { const d = DIRS[C.f | 0]; return [c.x - d[0], c.y - d[1], c.z - d[2]]; };
+// ---- sources ----
+G.logicExt.src.wheel = (c, C) => { let f = 0; for (let d = 0; d < 6; d++) f += WW.flux.get(pk(c.x + DIRS[d][0], c.y + DIRS[d][1], c.z + DIRS[d][2])) || 0; const o = f > 0.5 ? clamp(Math.ceil(f / 2), 1, 15) : 0; C.rpm = o; return o; };
+G.logicExt.src.slevel = (c) => { const q = cellFl(c.x, c.y + 1, c.z); return q && q.id ? q.L : 0; };
+// ---- consumers (host, 10 Hz) ----
+G.logicExt.cons.pump = (c, C, pw) => { if (!pw || LS.tick % 3) return; const [fx, fy, fz] = front(c, C); let [bx, by, bz] = back(c, C); let a = cellFl(bx, by, bz); if (!a || !a.id) { bx = c.x; by = c.y - 1; bz = c.z; a = cellFl(bx, by, bz); }
+  const b = cellFl(fx, fy, fz); const t = xfer(a, bx, by, bz, b, fx, fy, fz, 3); if (t) { G.st2('wwPumped', t); if (Math.random() < 0.3) G.particles.spawn(fx + 0.5, fy + 0.6, fz + 0.5, '#9cd0ff', 3, 0.8, 0.4); } };
+function gateFlow(c, C, cap) { const [fx, fy, fz] = front(c, C), [bx, by, bz] = back(c, C); const a = cellFl(bx, by, bz), b = cellFl(fx, fy, fz); if (!a || !b) return 0;
+  const vertical = (C.f | 0) >= 4; // a downward-facing gate drains straight through
+  if (a.id && (vertical ? (C.f | 0) === 5 : a.L > b.L + 1)) return xfer(a, bx, by, bz, b, fx, fy, fz, vertical ? cap : Math.min(cap, Math.ceil((a.L - b.L) / 2)));
+  if (b.id && !vertical && b.L > a.L + 1) return xfer(b, fx, fy, fz, a, bx, by, bz, Math.min(cap, Math.ceil((b.L - a.L) / 2))); return 0; }
+G.logicExt.cons.valve = (c, C, pw) => { if (pw) gateFlow(c, C, 2); };
+G.logicExt.cons.sluice = (c, C, pw) => { const want = pw ? 153 : 152; if (c.id !== want) { G.world.set(c.x, c.y, c.z, want, { placed: true }); G.audio.burst && G.audio.burst(0.3, 300, 0.8, 0.25, 'lowpass'); }
+  if (pw) { const t = gateFlow(c, C, 8); if (t) { G.st2('wwSluiced', t); const [fx, fy, fz] = front(c, C); if (Math.random() < 0.5) G.particles.spawn(fx + 0.5, fy + 0.5, fz + 0.5, '#d8eeff', 4, 1.5, 0.5, -3); } } };
+G.logicExt.cons.aqueduct = (c, C) => { const ax = c.x, ay = c.y + 1, az = c.z; const a = cellFl(ax, ay, az); if (!a || !a.id || a.L <= 0) return; const d = DIRS[C.f | 0]; if ((C.f | 0) >= 4) return;
+  const nx = c.x + d[0], nz = c.z + d[2]; const b = cellFl(nx, ay, nz); if (!b) return; const nextAq = G.LTYPE[G.world.get(nx, c.y, nz)] === 'aqueduct';
+  if (b.L < a.L || (nextAq && b.L < 15 && a.L >= 2)) { const t = xfer(a, ax, ay, az, b, nx, ay, nz, nextAq ? 3 : 2); if (t) G.st2('wwAqueduct', t); } };
+// ---- spinning paddle-wheel overlay + a gentle splash for wheels that are turning ----
+const wheelOv = new Map(); const PADDLE = new THREE.BoxGeometry(0.08, 1.15, 0.3); const HUB = new THREE.CylinderGeometry(0.16, 0.16, 1.06, 10); const wheelMat = new THREE.MeshLambertMaterial({ color: '#8a6034' }); const hubMat = new THREE.MeshLambertMaterial({ color: '#5a5a62' });
+function wheelMesh(c) { const g = new THREE.Group(); g.position.set(c.x + 0.5, c.y + 0.5, c.z + 0.5); const r = new THREE.Group(); for (let i = 0; i < 4; i++) { const p = new THREE.Mesh(PADDLE, wheelMat); p.rotation.x = i * Math.PI / 4; p.position.x = 0.56; r.add(p); const q = p.clone(); q.position.x = -0.56; r.add(q); } const h = new THREE.Mesh(HUB, hubMat); h.rotation.z = Math.PI / 2; r.add(h); g.add(r); g.userData.r = r; return g; }
+G.hook('tick', function wwWheels(dt) { if (!G.scene || !G.world) return; const p = G.S.player; const seen = new Set();
+  for (const c of LS.comps.values()) { if (c.type !== 'wheel') continue; if (Math.abs(c.x - p.x) > 48 || Math.abs(c.z - p.z) > 48) continue; seen.add(c.k); let g = wheelOv.get(c.k); if (!g) { g = wheelMesh(c); G.scene.add(g); wheelOv.set(c.k, g); }
+    const o = G.netGuest ? (G.LS.out.get(c.k) || 0) : (G.logicCfg(c.k).rpm || 0); g.userData.r.rotation.x += dt * o * 0.5; if (o && Math.random() < dt * 2) G.particles.spawn(c.x + 0.5, c.y + 0.2, c.z + 0.5, '#e0f0ff', 2, 0.8, 0.4); }
+  for (const [k, g] of wheelOv) if (!seen.has(k)) { G.scene.remove(g); wheelOv.delete(k); } });
+G.hook('dimChange', () => { for (const g of wheelOv.values()) G.scene.remove(g); wheelOv.clear(); }); G.hook('quit', () => { for (const g of wheelOv.values()) G.scene && G.scene.remove(g); wheelOv.clear(); });
+WW.machines = { cellFl, xfer };
+
+// ==== 72_ww_e_net.js
+// v2.6 WATERWORKS · part E — multiplayer: host-authoritative fluids. The host flushes WW.out at 5 Hz as per-chunk RLE diffs
+// ('wwd') to v2.6+ peers; older peers get plain block sets (with fallback ids for < 2.5). Guests apply ids at once and glide levels.
+const wwFv = fv => parseFloat(fv) >= 2.6;
+WW.net = { sent: 0, bytes: 0, recv: 0, cells: 0, lastMsg: null };
+function wwEncode(out) { // last state per cell wins → per chunk: sorted local index runs [start, count, id, L]
+  const last = new Map(); for (let i = 0; i + 4 < out.length + 1; i += 5) last.set(pk(out[i], out[i + 1], out[i + 2]), [out[i + 3], out[i + 4]]);
+  const by = {}; for (const [k, v] of last) { const x = kx(k), y = ky(k), z = kz(k); const ck = Math.floor(x / CS) + ',' + Math.floor(z / CS); const li = (((x % CS) + CS) % CS) + (((z % CS) + CS) % CS) * CS + y * CS * CS; (by[ck] || (by[ck] = [])).push([li, v[0], v[1]]); }
+  const c = {}; let n = 0; for (const ck in by) { const a = by[ck].sort((p, q) => p[0] - q[0]); const r = []; let s = a[0]; let cnt = 1;
+    for (let i = 1; i <= a.length; i++) { const e = a[i]; if (e && e[0] === s[0] + cnt && e[1] === s[1] && e[2] === s[2]) { cnt++; continue; } r.push(s[0], cnt, s[1], s[2]); n++; s = e; cnt = 1; } c[ck] = r; }
+  return { c, last, runs: n }; }
+function wwFlush() { const N = G.net; if (!WW.out.length) return; const out = WW.out; WW.out = []; if (!N || !N.active || N.role !== 'host' || N.loadingWorld) return;
+  const { c, last } = wwEncode(out); const msg = { t: 'v2', k: 'wwd', d: dimOf(), c }; let olds = null, oldsFb = null;
+  for (const L of N.links) { if (!L.pid) continue; const pl = N.players.get(L.pid); if (pl && pl.dim && pl.dim !== 'none' && pl.dim !== dimOf()) continue;
+    if (wwFv(L.fv)) { L.send(msg); WW.net.sent++; }
+    else { if (!olds) { olds = []; for (const [k, v] of last) olds.push(kx(k), ky(k), kz(k), v[0], 0); } const fb = fbPeer(L.fv); const c = parseFloat(L.fv) >= 2.5 ? 'a' : 'b'; oldsFb = oldsFb || {}; L.send({ t: 'sets', a: fb ? (oldsFb[c] || (oldsFb[c] = fbSets(olds, L.fv))) : olds }); WW.net.sent++; } }
+  WW.net.bytes += JSON.stringify(c).length; WW.net.lastMsg = msg; }
+// network sync must never be throttled by the adaptive scheduler (a skipped flush = a desync window), so it runs from the tick on its own 5 Hz clock
+let wwNetAcc = 0; G.hook('tick', function wwNetTick(dt) { if (!G.S || G.state !== 'play') return; wwNetAcc += Math.min(dt || 0, 0.5); if (wwNetAcc < 0.2) return; wwNetAcc = 0; if (!G.netGuest) safe('wwNet', wwFlush); else WW.out.length = 0; });
+// ---- guest side ----
+const glide = new Map(); // pk -> target level
+G.v2Handlers.wwd = function (m) { if (!G.netGuest || !m || typeof m.c !== 'object' || m.d !== dimOf()) return; const w = G.world; if (!w) return; const D = store(); let n = 0;
+  for (const ck in m.c) { const a = m.c[ck]; if (!Array.isArray(a) || !/^-?\d+,-?\d+$/.test(ck)) continue; const [cx, cz] = ck.split(',').map(Number);
+    for (let i = 0; i + 3 < a.length && n < 60000; i += 4) { const s = a[i] | 0, cnt = clamp(a[i + 1] | 0, 0, 4096), id = a[i + 2] | 0, L = clamp(a[i + 3] | 0, 0, 15); if (BLOCKS[id] === undefined) continue;
+      for (let j = 0; j < cnt; j++) { const li = s + j; const x = cx * CS + (li % CS), z = cz * CS + (Math.floor(li / CS) % CS), y = Math.floor(li / (CS * CS)); if (y < 0 || y >= WH) continue; n++; const k = pk(x, y, z);
+        const cur = w.get(x, y, z); if (cur !== id) { WW.self++; try { applySet(x, y, z, id, w.placed.has(x + ',' + y + ',' + z) && !isFluid(id) ? 1 : 0); } finally { WW.self--; } }
+        if (isFluid(id)) { const had = D.lv.get(k); if (cur !== id || had === undefined) { const st = cur === id ? 15 : Math.min(L, 4); D.lv.set(k, L >= 15 && cur === id ? 15 : st); if (chSet(D, x, y, z, D.lv.get(k))) dirtyAt(x, z); } if (D.lv.get(k) !== L) glide.set(k, L); else glide.delete(k); }
+        else { glide.delete(k); if (D.lv.delete(k) && chSet(D, x, y, z, 0)) dirtyAt(x, z); } } } }
+  WW.net.recv++; WW.net.cells += n; };
+// 20 Hz: displayed levels move towards the host's (half the gap per step) → surfaces slide instead of popping at 5 Hz
+let wwGlAcc = 0; function wwGlideStep() { if (!G.netGuest || !glide.size) return; const D = store(), w = G.world; let n = 0;
+  for (const [k, T] of glide) { if (n++ > 3000) break; const x = kx(k), y = ky(k), z = kz(k); if (!isFluid(w.get(x, y, z))) { glide.delete(k); continue; } const c = D.lv.get(k) ?? 15; const nv = c === T ? T : c + Math.sign(T - c) * Math.max(1, Math.ceil(Math.abs(T - c) / 2)); D.lv.set(k, nv); if (chSet(D, x, y, z, nv)) dirtyAt(x, z); if (nv === T) glide.delete(k); } }
+G.hook('tick', function wwGlideTick(dt) { if (!G.netGuest || !G.S || G.state !== 'play') return; wwGlAcc += Math.min(dt || 0, 0.5); if (wwGlAcc < 0.05) return; wwGlAcc = 0; safe('wwGlide', wwGlideStep); });
+G.hook('quit', () => glide.clear()); G.hook('dimChange', () => glide.clear());
+WW.encode = wwEncode; WW.flushNet = wwFlush; WW.glide = glide;
+
+// ==== 72_ww_f_ui.js
+// v2.6 WATERWORKS · part F — the Bucket (fluid-level aware, fill-to-level), fluid items, Hydrology view in the Ecology Lens, /ww and /bucket
+defItem('bucket', 'Bucket', { value: 6, use: true, rarity: 1, desc: 'Right-click fluid to scoop it (up to 15 levels — one full block), right-click a surface (or Shift+right-click fluid) to pour. Set a fill level with /bucket level N or by clicking the bucket chip: pours stop when the block reaches that level.' });
+RECIPES.push({ out: 'bucket', n: 1, req: { iron: 3 } });
+for (const [id, k, nm, val, req, desc] of [[142, 'mud', 'Mud', 2, { dirt: 4 }, 'A full block of thick mud. Flows slowly; erodes away in rivers.'], [143, 'honey', 'Honey', 8, { flower_red: 3, apple: 1 }, 'Pressed nectar — a slow, glowing fluid. Lava sears it away.'],
+  [144, 'mana', 'Mana-essence', 30, { essence: 1, crystal: 1 }, 'Liquid magic. Meeting void-tar, both annihilate in a flash — sometimes leaving a Twilight Crystal.'], [145, 'void_tar', 'Void-tar', 30, { voidsteel: 1, coal: 2 }, 'A creeping dark fluid. Annihilates with mana-essence.']]) {
+  if (!ITEMS[k]) defItem(k, nm, { value: val, place: id, desc }); const r = {}; for (const i in req) if (ITEMS[i]) r[i] = req[i]; if (Object.keys(r).length) RECIPES.push({ out: k, n: 1, req: r }); }
+const BK = () => { const V = G.S.v2; V.wwb = V.wwb || { f: 0, n: 0, lv: 0 }; return V.wwb; }; // additive save key: bucket fluid id, units, fill-to level (0 = pour all)
+function fluidRay(maxD) { const [ox, oy, oz] = eyePos(), [dx, dy, dz] = lookDir(); const w = G.world; let x = Math.floor(ox), y = Math.floor(oy), z = Math.floor(oz); let px = x, py = y, pz = z;
+  for (let t = 0; t < maxD; t += 0.05) { const X = Math.floor(ox + dx * t), Y = Math.floor(oy + dy * t), Z = Math.floor(oz + dz * t); if (X === x && Y === y && Z === z && t) continue; px = x; py = y; pz = z; x = X; y = Y; z = Z; const b = w.get(x, y, z);
+    if (isFluid(b)) return { fl: true, x, y, z, b }; if (b && BLOCKS[b] && BLOCKS[b].solid !== false && !BLOCKS[b].cross) return { fl: false, x, y, z, b, ax: px, ay: py, az: pz }; } return null; }
+// host-side operations (solo or host directly; guests ask the host)
+function bScoop(x, y, z, want, f) { const w = G.world, id = w.get(x, y, z); if (!isFluid(id) || (f && f !== id)) return null; const D = store(), k = pk(x, y, z); const inf = infinite(x, y, z, id, k, D); const L = inf ? 15 : (D.lv.get(k) ?? 15); const t = Math.min(want, L); if (t <= 0) return null;
+  if (!claimOk(x, z, x, z)) return null; if (!inf) put(x, y, z, id, L - t); wakeAround(x, y, z); return { f: id, n: t }; }
+function bPour(x, y, z, f, n, lv) { const w = G.world, cur = w.get(x, y, z); if (!isFluid(f) || n <= 0) return 0; if (cur && cur !== f && !enterable(cur, x, y, z)) return 0; if (!claimOk(x, z, x, z)) return 0; const D = store(), k = pk(x, y, z);
+  const have = cur === f ? (D.lv.get(k) ?? 15) : 0; const target = lv ? clamp(lv, 1, 15) : 15; const t = Math.min(n, Math.max(0, target - have)); if (t <= 0) return 0; if (cur && cur !== f) setB(x, y, z, 0); put(x, y, z, f, have + t); wake(x, y, z); wakeAround(x, y, z); return t; }
+G.hook('use', (k, tgt) => { if (k !== 'bucket') return; const B0 = BK(); const r = fluidRay(G.S.creative ? 7 : 5); if (!r) return true; const cap = 15;
+  const K = (G.input && G.input.keys) || {}; const forcePour = !!(K.ShiftLeft || K.ShiftRight); // partial bucket: scoop more unless a fill-to level is set or Shift is held (then top up / pour)
+  const pour = B0.n > 0 && (B0.n >= cap || !r.fl || r.b !== B0.f || B0.lv > 0 || forcePour);
+  if (!pour && r.fl && (B0.n < cap) && (!B0.n || B0.f === r.b)) { const want = cap - B0.n; if (G.netGuest) { G.v2Send('wwB', { op: 's', x: r.x, y: r.y, z: r.z, n: want, f: B0.f || 0 }); return true; } const got = bScoop(r.x, r.y, r.z, want, B0.f || 0); if (got) { B0.f = got.f; B0.n += got.n; G.audio.burst && G.audio.burst(0.2, 900, 0.8, 0.2, 'lowpass'); G.st2('wwScoop'); } bucketHud(); return true; }
+  if (B0.n > 0) { let x, y, z; if (r.fl) { x = r.x; y = r.y; z = r.z; } else { x = r.ax; y = r.ay; z = r.az; } if (G.netGuest) { G.v2Send('wwB', { op: 'p', x, y, z, n: B0.n, f: B0.f, lv: B0.lv }); return true; }
+    const t = bPour(x, y, z, B0.f, B0.n, B0.lv); if (t) { B0.n -= t; if (!B0.n) B0.f = 0; G.particles.spawn(x + 0.5, y + 0.6, z + 0.5, (FLD[B0.f || r.b] || FLD[B.WATER]).col || '#4aa0ff', 6, 1.2, 0.5); G.audio.burst && G.audio.burst(0.25, 600, 0.6, 0.2, 'lowpass'); G.st2('wwPour'); } else toast(B0.lv ? '🪣 That block is already at level ' + B0.lv : '🪣 No room to pour there', ''); bucketHud(); return true; }
+  toast('🪣 The bucket is empty — right-click water (or any fluid) to scoop', ''); return true; });
+G.v2Handlers.wwB = function (m, pl) { if (G.netGuest || !pl || !m) return; const x = m.x | 0, y = m.y | 0, z = m.z | 0; if (!Number.isFinite(pl.x) || Math.hypot(pl.x - x, pl.y - y, pl.z - z) > 9) return;
+  { const c = claimAt(x, z); if (c && !can(c, pl.uid || ('p' + pl.id), 'build')) { G.v2SendTo(pl.id, 'wwBr', { op: m.op, n: 0, f: 0 }); return; } } let res;
+  if (m.op === 's') { const g = bScoop(x, y, z, clamp(m.n | 0, 0, 15), m.f | 0); res = { op: 's', f: g ? g.f : 0, n: g ? g.n : 0 }; } else if (m.op === 'p') { const t = bPour(x, y, z, m.f | 0, clamp(m.n | 0, 0, 15), clamp(m.lv | 0, 0, 15)); res = { op: 'p', n: t }; } else return;
+  G.v2SendTo(pl.id, 'wwBr', res); };
+G.v2Handlers.wwBr = function (m) { if (!G.netGuest || !m) return; const B0 = BK(); if (m.op === 's' && m.n > 0 && isFluid(m.f | 0)) { B0.f = m.f | 0; B0.n = clamp(B0.n + (m.n | 0), 0, 15); G.st2('wwScoop'); } else if (m.op === 'p') { const t = clamp(m.n | 0, 0, B0.n); B0.n -= t; if (!B0.n) B0.f = 0; if (!t) toast('🪣 No room to pour there', ''); } bucketHud(); };
+// HUD chip: shows what the bucket holds; click cycles the fill-to level (all → 4 → 8 → 12 → 15)
+let chip = null; function bucketHud() { if (!chip) { chip = document.createElement('div'); chip.id = 'wwBucket'; chip.style.cssText = 'position:fixed;left:50%;bottom:96px;transform:translateX(-50%);padding:4px 12px;border-radius:14px;background:rgba(10,20,34,.78);border:1px solid #3a6a9a;color:#cfe6ff;font:600 13px system-ui;z-index:30;cursor:pointer;display:none;pointer-events:auto';
+    chip.onclick = () => { const B0 = BK(); const seq = [0, 4, 8, 12, 15]; B0.lv = seq[(seq.indexOf(B0.lv) + 1) % seq.length]; bucketHud(); }; document.body.appendChild(chip); }
+  const S = G.S, held = S && G.state === 'play' && S.hotbar && S.hotbar[S.sel] === 'bucket'; chip.style.display = held ? 'block' : 'none'; if (!held) return; const B0 = BK(); const F = FLD[B0.f];
+  const bar = '▮'.repeat(Math.ceil(B0.n / 3)) + '▯'.repeat(5 - Math.ceil(B0.n / 3)); chip.innerHTML = '🪣 ' + (B0.n ? '<span style="color:' + (F && F.col || '#4aa0ff') + '">' + esc(BLOCKS[B0.f].name) + '</span> ' + bar + ' ' + B0.n + '/15' : 'empty') + ' <span style="opacity:.7">· pour ' + (B0.lv ? 'to level ' + B0.lv : 'all') + '</span>'; }
+G.sched.add('wwBucketHud', () => bucketHud(), { hz: 4, budgetMs: 0.2, priority: 4 });
+G.commands.bucket = (rest, say) => { const a = String(rest || '').trim().split(/\s+/); const B0 = BK(); if (a[0] === 'level') { const n = a[1] === 'off' || a[1] === 'all' ? 0 : clamp(parseInt(a[1], 10) || 0, 0, 15); B0.lv = n; bucketHud(); return say('🪣 Pour ' + (n ? 'up to level ' + n : 'everything')); }
+  if (a[0] === 'empty') { B0.n = 0; B0.f = 0; bucketHud(); return say('🪣 Emptied'); } say('🪣 ' + (B0.n ? BLOCKS[B0.f].name + ' ' + B0.n + '/15' : 'empty') + ' · fill-to: ' + (B0.lv || 'all') + ' — /bucket level N|all, /bucket empty'); };
+G.commands.ww = (rest, say) => { const a = String(rest || '').trim().split(/\s+/); const D = store(); let mem = 0; for (const v of D.mem.values()) if (v >= 20) mem++;
+  if (a[0] === 'settle' && G.S.creative && !G.netGuest) return say('💧 settled in ' + WW.settle(3000) + ' ticks');
+  if (a[0] === 'off' && G.S.creative) { WW.on = false; return say('💧 Waterworks paused'); } if (a[0] === 'on') { WW.on = true; return say('💧 Waterworks running'); }
+  say('💧 Waterworks: ' + (WW.on ? 'on' : 'paused') + ' · active ' + WW.act.size + ' · frozen ' + WW.frozen.size + ' · tracked ' + D.lv.size + ' · river-bed cells ' + mem + ' · radius ' + WW.R + ' · p95 ' + (WW.p95 ? WW.p95().toFixed(2) : '?') + ' ms' + (G.netGuest ? ' (host simulates)' : '') + ' · erosion ' + WW.erosion.eroded + '/' + WW.erosion.deposited); };
+// ---- Hydrology view: an extra tab in the Ecology Lens (top-down 64×64 around you) ----
+function hydroImg() { const w = G.world, p = G.S.player, D = store(), N = 64, cx = Math.floor(p.x) - 32, cz = Math.floor(p.z) - 32; const c = document.createElement('canvas'); c.width = c.height = N; const g = c.getContext('2d'); const im = g.createImageData(N, N); const st = { water: 0, river: 0, active: 0, flow: 0 };
+  for (let dz = 0; dz < N; dz++) for (let dx = 0; dx < N; dx++) { const x = cx + dx, z = cz + dz, o = (dz * N + dx) * 4; if (!w.isLoaded(x, z)) { im.data[o] = im.data[o + 1] = im.data[o + 2] = 18; im.data[o + 3] = 255; continue; } const hy = w.heightAt(x, z); let top = hy, id = w.get(x, top, z); let depth = 0, fid = 0;
+    for (let y = Math.min(WH - 1, hy + 2); y > 1; y--) { const b = w.get(x, y, z); if (isFluid(b)) { fid = fid || b; depth++; } else if (b && depth) break; else if (b && !depth) { id = b; break; } }
+    let r = 70, gg = 90, bb = 60; const h = clamp((hy - 20) / 50, 0, 1); r = 60 + h * 90; gg = 80 + h * 70; bb = 50 + h * 60;
+    if (fid) { st.water++; const F = FLD[fid]; const col = F && F.col ? [parseInt(F.col.slice(1, 3), 16), parseInt(F.col.slice(3, 5), 16), parseInt(F.col.slice(5, 7), 16)] : [70, 160, 255]; const k = clamp(0.35 + depth * 0.12, 0, 1); r = col[0] * k; gg = col[1] * k; bb = col[2] * k; }
+    let m = 0, f = 0, a = false; for (let y = hy - 2; y <= hy + 3; y++) { const kk = pk(x, y, z); m = Math.max(m, D.mem.get(kk) || 0); f += (WW.flux && WW.flux.get(kk)) || 0; if (WW.act.has(kk)) a = true; }
+    if (m >= 20) { st.river++; r = r * 0.6 + 40; gg = gg * 0.6 + 200 * 0.4; bb = bb * 0.6 + 230 * 0.4; } if (f > 0.5) { st.flow++; r = gg = bb = Math.min(255, 180 + f * 6); } if (a) { st.active++; r = Math.min(255, r + 60); }
+    if (dx === 32 && dz === 32) { r = 255; gg = 80; bb = 80; } im.data[o] = r; im.data[o + 1] = gg; im.data[o + 2] = bb; im.data[o + 3] = 255; }
+  g.putImageData(im, 0, 0); return { url: c.toDataURL(), st }; }
+const _lens = G.ui.p_ecolens; G.ui.p_ecolens = function () { const T0 = [['land', '🗺 Land'], ['life', '🐾 Life'], ['subs', '🧬 Subspecies'], ['log', '📜 Notes']], T1 = T0.concat([['hydro', '💧 Hydrology']]);
+  if (this.tab !== 'hydro') { const h = _lens.apply(this, arguments); const a = this.tabs(T0); return h.indexOf(a) >= 0 ? h.replace(a, this.tabs(T1)) : h; }
+  let h = this.head('🔭 Ecology Lens') + this.tabs(T1); const I = hydroImg(); const D = store();
+  h += '<div style="display:flex;gap:14px;flex-wrap:wrap"><div><img src="' + I.url + '" style="width:320px;height:320px;image-rendering:pixelated;border-radius:6px;border:1px solid #2a3a4a"><div class="small muted" style="max-width:320px;margin-top:4px">64 × 64 m around you (red dot). Blue = fluid (darker = deeper) · <span style="color:#8de0f0">teal = riverbed memory</span> · <span style="color:#fff">white = flowing now</span> · bright = still settling.</div></div>';
+  h += '<div style="flex:1;min-width:240px"><h3 style="margin:2px 0">💧 Waterworks</h3><div class="small">Fluid in view: <b>' + I.st.water + '</b> columns · flowing <b>' + I.st.flow + '</b> · settling <b>' + I.st.active + '</b> · riverbeds <b>' + I.st.river + '</b></div>';
+  h += '<div class="small" style="margin-top:6px">World: active cells <b>' + WW.act.size + '</b> / ' + WW.cap + ' · sleeping far away <b>' + WW.frozen.size + '</b> · sim radius ' + WW.R + ' m · slice p95 ' + (WW.p95 ? WW.p95().toFixed(2) : '?') + ' ms</div>';
+  h += '<div class="small" style="margin-top:6px">Erosion: carved <b>' + WW.erosion.eroded + '</b> · sandbars <b>' + WW.erosion.deposited + '</b>' + (WW.erosion.worker ? ' <span class="muted">(worker)</span>' : '') + '</div>';
+  h += '<div class="v2card small" style="margin-top:8px">Where water keeps running the bed remembers it: rain refills remembered rivers first, and in time soft ground is carried downstream (stone 20× slower). Placed blocks and protected homes never erode.</div>' + (G.netGuest ? '<div class="small muted" style="margin-top:6px">The host simulates water; this map shows what has reached you (riverbed memory lives on the host).</div>' : '') + '</div></div>';
+  return h; };
+WW.hydroImg = hydroImg; WW.bucket = BK; WW.fluidRay = fluidRay; WW.bScoop = bScoop; WW.bPour = bPour;
+
+// ==== 73_ls_a_solver.js
+// v2.6 LOAD & STONE · part A — materials (strength / weight / span), bounded load solver (≤4,096 blocks per change), corbel/arch steps, buttresses,
+// grandfathering by delta (only failures CAUSED by this edit fall — anything already standing before stays "settled"), host-only.
+const LSS = G.ls = { on: true, cap: 4096, crushK: 12, st: { solves: 0, ms: 0, ring: new Float32Array(64), n: 0, maxN: 0, grand: 0, fell: 0, events: 0 } };
+// [strength, weight, span]; the doc's examples: dirt 2/2/1 · wood 6/2/5 · stone 10/4/4 · brick 12/4/5 · iron beam 30/6/12 · star-metal 60/5/20 · Weaver Silk 40/0.5/32
+const MATK = { dirt: [2, 2, 1], grass: [2, 2, 1], farmland: [2, 2, 1], wet_farmland: [2, 2, 1], sand: [1, 2, 0], snow: [1, 1, 0], ash: [1, 1, 0],
+  log: [6, 2, 5], planks: [6, 2, 5], bark: [6, 2, 5], bookshelf: [5, 2, 4], stone: [10, 4, 4], cobble: [10, 4, 4], temple_stone: [11, 4, 4], dungeon_brick: [12, 4, 5], void_stone: [12, 4, 4], basalt: [12, 5, 4], weavestone: [14, 4, 6],
+  hearthstone: [14, 4, 5], waystone: [14, 4, 5], bricks: [12, 4, 5], red_bricks: [12, 4, 5], white: [12, 4, 5], obsidian: [20, 6, 6], glass: [2, 1, 2], lamp: [3, 1, 2], cloud: [2, 0.5, 3],
+  gold_block: [20, 8, 6], aether_block: [25, 3, 10], iron_beam: [30, 6, 12], star_metal: [60, 5, 20], weaver_silk: [40, 0.5, 32], ice: [4, 2, 2], leaves: [1, 0.5, 2] };
+const MASON = new Set(['stone', 'cobble', 'temple_stone', 'dungeon_brick', 'void_stone', 'basalt', 'weavestone', 'hearthstone', 'waystone', 'bricks', 'red_bricks', 'white', 'obsidian']);
+const MAT = []; const ISM = new Uint8Array(512);
+function matOf(id) { let m = MAT[id]; if (m) return m; const b = BLOCKS[id]; const k = b ? b.key : ''; m = MATK[k] || (k.includes('leaves') ? MATK.leaves : k.endsWith('_block') ? [22, 6, 7] : k.includes('log') || k.includes('plank') ? MATK.planks : [8, 3, 4]); MAT[id] = m; ISM[id] = MASON.has(k) ? 1 : 0; return m; }
+// tension materials (metal beams, enchanted cable) resist bending: ×1.5 capacity when hanging sideways; stepped masonry (corbels/arches) works in compression: ×4
+const TEN = {}; ['iron_beam', 'star_metal', 'weaver_silk', 'voidsteel'].forEach(k => { if (B[k.toUpperCase()]) TEN[B[k.toUpperCase()]] = 1; }); LSS.TEN = TEN;
+LSS.matOf = matOf; LSS.MATK = MATK;
+const lsStore = () => { const V = G.S.v2; V.ls = V.ls || { v: 1, rf: {}, wear: {}, off: false, falls: 0, learned: 0, lessons: 0 }; return V.ls; }; LSS.store = lsStore;
+const N6L = [[1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1], [0, 1, 0], [0, -1, 0]];
+const kOf = (x, y, z) => x + ',' + y + ',' + z;
+// natural ground: a solid, non-liquid block that the player did not place (terrain, natural trees count as rooted)
+function natSolid(w, x, y, z, ov) { const k = kOf(x, y, z); let id, pl; if (ov && ov.has(k)) { const o = ov.get(k); id = o.id; pl = o.pl; } else { id = w.get(x, y, z); pl = w.placed.has(k); } if (!id || pl) return false; const b = BLOCKS[id]; return !!(b && b.solid && !b.liquid && !(WW && WW.isFluid && WW.isFluid(id))); }
+// solve one local structure. ov: Map "x,y,z" -> {id, pl} overrides (used to evaluate the world as it was BEFORE an edit)
+function solve(seeds, ov, want) { const t0 = performance.now(); const w = G.world; const P = w.placed; const S = lsStore();
+  const getId = (x, y, z, k) => { if (ov && ov.has(k)) return ov.get(k); return P.has(k) ? { id: w.get(x, y, z), pl: true } : null; };
+  const idx = new Map(); const X = new Int32Array(LSS.cap), Y = new Int32Array(LSS.cap), Z = new Int32Array(LSS.cap), ID = new Uint16Array(LSS.cap); let n = 0; const q = [];
+  for (const [x, y, z] of seeds) { const k = kOf(x, y, z); if (idx.has(k)) continue; const o = getId(x, y, z, k); if (!o || !o.pl || !o.id) continue; idx.set(k, n); X[n] = x; Y[n] = y; Z[n] = z; ID[n] = o.id; q.push(n); n++; }
+  let capped = false; const front = new Uint8Array(LSS.cap);
+  for (let h = 0; h < q.length; h++) { const i = q[h]; for (const [dx, dy, dz] of N6L) { const x = X[i] + dx, y = Y[i] + dy, z = Z[i] + dz; const k = kOf(x, y, z); if (idx.has(k)) continue; const o = getId(x, y, z, k); if (!o || !o.pl || !o.id) continue; const b = BLOCKS[o.id]; if (!b || b.liquid || (WW && WW.isFluid && WW.isFluid(o.id))) continue;
+      if (n >= LSS.cap) { capped = true; front[i] = 1; continue; } idx.set(k, n); X[n] = x; Y[n] = y; Z[n] = z; ID[n] = o.id; q.push(n); n++; } }
+  if (!n) return null;
+  // reinforcement (Engineer's Hammer) and weathering
+  const RF = S.rf, WR = S.wear; const str = new Float32Array(n), spn = new Float32Array(n), wt = new Float32Array(n);
+  for (let i = 0; i < n; i++) { const m = matOf(ID[i]); const k = kOf(X[i], Y[i], Z[i]); const rf = RF[k] ? 1.5 : 1, wr = 1 - Math.min(0.2, WR[k] || 0); let s = m[0] * rf * wr;
+    // saturated soil (Waterworks): earthy blocks touching water are half as strong
+    if (m[0] <= 2 && WW && WW.isFluid) for (const [dx, dy, dz] of N6L) { if (WW.isFluid(w.get(X[i] + dx, Y[i] + dy, Z[i] + dz))) { s *= 0.5; break; } }
+    str[i] = s; spn[i] = m[2] * (RF[k] ? 1.5 : 1); wt[i] = m[1]; }
+  const below = new Int32Array(n).fill(-1), up = new Int32Array(n).fill(-1); for (let i = 0; i < n; i++) { const j = idx.get(kOf(X[i], Y[i] - 1, Z[i])); if (j !== undefined) { below[i] = j; up[j] = i; } }
+  // support distance in half-steps (Dijkstra with 0/1/2 costs via a deque of buckets)
+  const INF = 1e9; const d = new Int32Array(n).fill(INF); const ground = new Uint8Array(n); const B0 = [];
+  for (let i = 0; i < n; i++) { const x = X[i], y = Y[i], z = Z[i]; let g = front[i] || natSolid(w, x, y - 1, z, ov); if (!g && spn[i] > 0) for (let s = 0; s < 4 && !g; s++) { const [dx, , dz] = N6L[s]; g = natSolid(w, x + dx, y, z + dz, ov); } if (g) { d[i] = 0; ground[i] = 1; B0.push(i); } }
+  const buckets = [B0]; const corb = new Uint8Array(n);
+  for (let b = 0; b < buckets.length; b++) { const L = buckets[b]; if (!L) continue; for (let h = 0; h < L.length; h++) { const i = L[h]; if (d[i] !== b) continue;
+      for (let s = 0; s < 6; s++) { const [dx, dy, dz] = N6L[s]; const j = idx.get(kOf(X[i] + dx, Y[i] + dy, Z[i] + dz)); if (j === undefined) continue; let c;
+        if (dy === 1) c = 0; else if (dy === -1) c = 2; else { c = 2; if (ISM[ID[i]] && ISM[ID[j]] && below[j] < 0 && (below[i] >= 0 || natSolid(w, X[i], Y[i] - 1, Z[i], ov))) { c = 1; } }
+        const nd = b + c; if (nd >= d[j] || nd / 2 > spn[j] * 2 + 2) continue; d[j] = nd; if (c === 1) corb[j] = 1; else if (c === 2) corb[j] = 0; (buckets[nd] || (buckets[nd] = [])).push(j); } } }
+  // loads: children before parents (far first, high first); vertical support takes everything, else split among nearest side/top parents
+  const ord = []; for (let i = 0; i < n; i++) if (d[i] < INF) ord.push(i); ord.sort((a, b) => (d[b] - d[a]) || (Y[b] - Y[a]));
+  const tot = new Float32Array(n), stress = new Float32Array(n), mode = new Uint8Array(n); for (let i = 0; i < n; i++) tot[i] = wt[i];
+  const butt = new Uint8Array(n); // buttress: blocks in a wall column taller than 8 with a grounded pillar beside them
+  for (let i = 0; i < n; i++) { if (below[i] >= 0 || !ground[i]) continue; let h = 0, j = i; while (j >= 0 && h < 40) { h++; j = up[j]; } if (h < 8) continue; let side = false;
+    for (let s = 0; s < 4 && !side; s++) { const [dx, , dz] = N6L[s]; const b2 = idx.get(kOf(X[i] + dx, Y[i], Z[i] + dz)); if (b2 !== undefined && ground[b2]) { let hh = 0, jj = b2; while (jj >= 0 && hh < 40) { hh++; jj = up[jj]; } if (hh >= 4 && hh < h) side = true; } }
+    if (side) { j = i; while (j >= 0) { butt[j] = 1; j = up[j]; } } }
+  for (const i of ord) { const bi = below[i]; if (ground[i] && (bi < 0)) { mode[i] = 0; stress[i] = Math.max(stress[i], tot[i] / (str[i] * LSS.crushK * (butt[i] ? 1.5 : 1))); continue; }
+    if (bi >= 0 && d[bi] <= d[i]) { tot[bi] += tot[i]; mode[i] = 0; stress[i] = Math.max(stress[i], tot[i] / (str[i] * LSS.crushK * (butt[i] ? 1.5 : 1))); continue; }
+    const par = []; let best = INF; for (let s = 0; s < 6; s++) { if (s === 5) continue; const [dx, dy, dz] = N6L[s]; const j = idx.get(kOf(X[i] + dx, Y[i] + dy, Z[i] + dz)); if (j === undefined || d[j] >= d[i]) continue; if (d[j] < best) { best = d[j]; par.length = 0; par.push(j); } else if (d[j] === best) par.push(j); }
+    if (!par.length) { stress[i] = 9; continue; } for (const j of par) tot[j] += tot[i] / par.length; mode[i] = 1;
+    stress[i] = Math.max(tot[i] / (str[i] * (corb[i] ? 4 : TEN[ID[i]] ? 1.5 : 1)), (d[i] / 2) / Math.max(0.01, spn[i] * (corb[i] ? 2 : 1))); }
+  for (let i = 0; i < n; i++) if (d[i] >= INF) stress[i] = 9; // floating: nothing holds it
+  const ms = performance.now() - t0; const T = LSS.st; T.solves++; T.ms = ms; T.ring[T.n++ % 64] = ms; T.maxN = Math.max(T.maxN, n);
+  return { n, X, Y, Z, ID, d, stress, mode, capped, idx, ms, corb, butt }; }
+LSS.solve = solve;
+LSS.p95 = () => { const a = Array.from(LSS.st.ring).sort((a, b) => a - b); return +a[Math.floor(a.length * 0.95)].toFixed(2); };
+// failing set of a solve: Set of keys
+function fails(r) { const f = new Set(); if (!r) return f; for (let i = 0; i < r.n; i++) if (r.stress[i] > 1) f.add(kOf(r.X[i], r.Y[i], r.Z[i])); return f; }
+LSS.fails = fails;
+// ---- change events: coalesced per tick; the "before" world is rebuilt from the first old value each cell had this tick ----
+const pend = new Map(); LSS.pend = pend; LSS.self = 0;
+G.hook('worldMade', () => { const w = G.world; if (!w || w._lsWrapped) return; w._lsWrapped = true; const orig = w.onChange;
+  w.onChange = function (x, y, z, old, id, opts, wasPlaced) { const r = orig ? orig.apply(this, arguments) : undefined;
+    if (!LSS.self && !G.netGuest && old !== id && !(opts && opts.ww) && !(opts && opts.eco && !wasPlaced)) { const isF = WW && WW.isFluid ? WW.isFluid : () => false; if (!(isF(old) && (isF(id) || !id)) && !(isF(id) && !old)) { const k = kOf(x, y, z); if (!pend.has(k)) pend.set(k, { x, y, z, id: old, pl: !!wasPlaced }); } }
+    return r; }; });
+// Only player-caused changes are judged, as in v1: player place/break, guest edits (13_net), explosions (09_extras), erosion and collapses themselves all call
+// G.structCheck(x,y,z,r). World-made structures (camps, mage sites, warrens, airship frames, blueprint builds, farm/lamp toggles) never trigger a check.
+const trig = []; LSS.trig = trig;
+G.structCheck = function (x, y, z, r) { if (G.netGuest || !Number.isFinite(x)) return; trig.push(x | 0, y | 0, z | 0, Math.max(1, (r | 0) + 1)); if (trig.length > 4000) trig.splice(0, trig.length - 4000); };
+
+// ==== 73_ls_b_collapse.js
+// v2.6 LOAD & STONE · part B — events → stress (cracks + creaks, 2 s grace to shore it up) → falling blocks (≤300 instanced, the rest as dust) that hurt, land and re-settle.
+// MP: the host decides; a collapse is broadcast as {seed, blockList} and every v2.6 client animates identical debris (fixed-step physics from the seed).
+const STR = new Map(); LSS.stressed = STR; // key -> {x,y,z,id,t,float}
+function lsSeeds(list) { const s = []; for (const [x, y, z] of list) { s.push([x, y, z]); for (const [dx, dy, dz] of N6L) s.push([x + dx, y + dy, z + dz]); } return s; }
+function lsProcess() { if (!pend.size) { LSS.trig.length = 0; return; } if (!LSS.trig.length) { pend.clear(); return; } const all = new Map(pend); pend.clear(); const T = LSS.trig.splice(0); const S = lsStore(); if (S.off || !LSS.on || G.netGuest || !G.world) return;
+  // keep only the changes near a player-caused trigger; the rest (world-made structures) stay out of the solver entirely
+  const ov = new Map(); for (const [k, o] of all) for (let i = 0; i < T.length; i += 4) if (Math.abs(o.x - T[i]) <= T[i + 3] && Math.abs(o.y - T[i + 1]) <= T[i + 3] && Math.abs(o.z - T[i + 2]) <= T[i + 3]) { ov.set(k, o); break; }
+  if (!ov.size) return;
+  const cells = []; for (const o of ov.values()) cells.push([o.x, o.y, o.z]); const seeds = lsSeeds(cells);
+  const after = solve(seeds, null); if (!after) return; LSS.st.events++; const fA = fails(after); if (!fA.size) return;
+  // grandfathering by delta: a block falls only if THIS edit made it worse (anything already over its limit before the edit is "settled" and stays)
+  const before = solve(seeds, ov); let grand = 0;
+  for (const k of fA) { const j = before ? before.idx.get(k) : undefined; const sb = j === undefined ? 0 : before.stress[j]; const ia = after.idx.get(k); if (sb > 1 && after.stress[ia] <= sb + 0.01) { grand++; continue; } if (STR.has(k)) continue; const i = after.idx.get(k); STR.set(k, { x: after.X[i], y: after.Y[i], z: after.Z[i], id: after.ID[i], t: after.stress[i] >= 9 ? 0.35 : 2, float: after.stress[i] >= 9, s: after.stress[i] }); }
+  LSS.st.grand += grand; if (STR.size) { G.st2('lsStressed'); } }
+LSS.process = lsProcess;
+// seeded RNG (mulberry32) so all peers produce the same debris
+const lsRng = s => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+let creakT = 0;
+function lsStressTick(dt) { if (!STR.size) return; const w = G.world; const due = []; creakT -= dt;
+  for (const [k, s] of STR) { if (w.get(s.x, s.y, s.z) !== s.id || !w.placed.has(k)) { STR.delete(k); continue; } s.t -= dt; if (Math.random() < dt * 3) G.particles.spawn(s.x + 0.5, s.y + 0.1, s.z + 0.5, '#9a8f80', 2, 0.6, 0.6, -6); if (s.t <= 0) due.push(s); }
+  if (creakT <= 0 && STR.size) { creakT = 0.9; const p = G.S.player; let near = Infinity; for (const s of STR.values()) near = Math.min(near, Math.hypot(s.x - p.x, s.y - p.y, s.z - p.z)); if (near < 32 && G.audio.burst) { const g = 0.16 * (1 - near / 32); G.audio.burst(0.5, 95 + Math.random() * 40, 6, g, 'bandpass'); G.audio.burst(0.3, 230, 9, g * 0.6, 'bandpass', 0.18); } }
+  if (!due.length) return;
+  // last chance: did someone shore it up during the grace period?
+  const r = solve(lsSeeds(due.map(s => [s.x, s.y, s.z])), null); const still = fails(r); const fall = [];
+  for (const s of due) { const k = kOf(s.x, s.y, s.z); STR.delete(k); if (still.has(k)) fall.push(s); else G.st2('lsSaved'); }
+  if (fall.length) lsCollapse(fall); }
+function lsCollapse(fall) { const w = G.world; fall.sort((a, b) => a.y - b.y); const list = []; LSS.self++;
+  try { for (const s of fall) { if (w.get(s.x, s.y, s.z) !== s.id) continue; list.push(s.x, s.y, s.z, s.id); w.set(s.x, s.y, s.z, 0, {}); pend.set(kOf(s.x, s.y, s.z), { x: s.x, y: s.y, z: s.z, id: s.id, pl: true }); LSS.trig.push(s.x, s.y, s.z, 1); } } finally { LSS.self--; }
+  if (!list.length) return; const seed = (Math.random() * 2147483647) | 0; const S = lsStore(); S.falls = (S.falls || 0) + 1; LSS.st.fell += list.length / 4; G.st2('lsCollapses'); G.st2('lsBlocksFell', list.length / 4);
+  lsDebrisStart(seed, list, true); if (G.net && G.net.active && G.net.role === 'host') G.v2Send('lsc', { seed, a: list, d: dimOf() });
+  G.runHooks('lsCollapse', list.length / 4, list); }
+LSS.collapse = lsCollapse;
+// ---- debris: fixed-step falling blocks ----
+const DB = { items: [], mesh: null, cap: 300, acc: 0, m4: null, c: null };
+function dbMesh() { if (DB.mesh || !G.scene || typeof THREE === 'undefined') return DB.mesh; const g = new THREE.BoxGeometry(0.96, 0.96, 0.96); DB.mesh = new THREE.InstancedMesh(g, new THREE.MeshLambertMaterial({ color: 0xffffff }), DB.cap); DB.mesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage); DB.mesh.count = 0; DB.mesh.frustumCulled = false; G.scene.add(DB.mesh);
+  DB.m4 = new THREE.Matrix4(); DB.q = new THREE.Quaternion(); DB.e = new THREE.Euler(); DB.v = new THREE.Vector3(); DB.s = new THREE.Vector3(1, 1, 1); DB.c = new THREE.Color(); for (let i = 0; i < DB.cap; i++) DB.mesh.setColorAt(i, DB.c.set(0xffffff)); return DB.mesh; }
+// identical on every peer: initial velocities from the seed, then fixed 1/60 s steps
+function dbInit(seed, a, host) { const R = lsRng(seed); const n = a.length / 4; let cx = 0, cz = 0; for (let i = 0; i < a.length; i += 4) { cx += a[i]; cz += a[i + 2]; } cx /= n; cz /= n; const out = [];
+  for (let i = 0; i < a.length; i += 4) { const x = a[i], y = a[i + 1], z = a[i + 2], id = a[i + 3]; const vx = (R() - 0.5) * 1.6 + (x - cx) * 0.15, vz = (R() - 0.5) * 1.6 + (z - cz) * 0.15, vy = R() * 1.2, sx = (R() - 0.5) * 6, sz = (R() - 0.5) * 6;
+    out.push({ x: x + 0.5, y: y + 0.5, z: z + 0.5, vx, vy, vz, rx: 0, rz: 0, sx, sz, id, host, life: 12, hit: false }); } return out; }
+function lsDebrisStart(seed, a, host) { let over = 0; const n = a.length / 4; let cx = 0, cy = 0, cz = 0; for (let i = 0; i < a.length; i += 4) { cx += a[i]; cy += a[i + 1]; cz += a[i + 2]; } cx /= n; cy /= n; cz /= n;
+  for (const it of dbInit(seed, a, host)) { if (DB.items.length >= DB.cap) { over++; if (G.debris) G.debris.spawn(it.x, it.y, it.z, blockColor(it.id), 4, 3); continue; } DB.items.push(it); }
+  if (G.particles) G.particles.spawn(cx + 0.5, cy + 0.5, cz + 0.5, '#b8ad9c', Math.min(60, 8 + n * 2), 2.5, 1.6, -1.5);
+  if (G.audio.burst) { G.audio.burst(1.2, 70, 1.2, 0.35, 'lowpass'); G.audio.burst(0.6, 400, 1, 0.12, 'bandpass', 0.15); } if (n > 2 && typeof shake === 'function') { const p = G.S.player; const dd = Math.hypot(cx - p.x, cz - p.z); if (dd < 40) shake(Math.min(0.8, 0.15 + n / 60) * (1 - dd / 40)); }
+  LSS.st.over = (LSS.st.over || 0) + over; }
+LSS.debris = DB; LSS.debrisStart = lsDebrisStart;
+const solidAt = (x, y, z) => { const id = G.world.get(Math.floor(x), Math.floor(y), Math.floor(z)); const b = BLOCKS[id]; return !!(id && b && b.solid && !b.liquid); };
+function dbStep(h, items, dry) { items = items || DB.items; const p = G.S.player; for (let k = items.length - 1; k >= 0; k--) { const d = items[k]; d.life -= h; d.vy -= 24 * h; d.vx *= 0.995; d.vz *= 0.995; d.rx += d.sx * h; d.rz += d.sz * h;
+    const nx = d.x + d.vx * h, ny = d.y + d.vy * h, nz = d.z + d.vz * h; if (!solidAt(nx, d.y, d.z)) d.x = nx; else d.vx *= -0.2; if (!solidAt(d.x, d.y, nz)) d.z = nz; else d.vz *= -0.2;
+    // a falling block that reaches you hurts (each client checks its own player; creative is immune)
+    if (!dry && !d.hit && d.vy < -4 && Math.abs(d.x - p.x) < 0.8 && Math.abs(d.z - p.z) < 0.8 && d.y > p.y && d.y - 0.5 < p.y + 1.9) { d.hit = true; if (typeof damagePlayer === 'function') damagePlayer(Math.min(8, 2 + Math.round(-d.vy / 4)), 'falling masonry'); }
+    if (solidAt(d.x, ny - 0.5, d.z) && d.vy < 0) { d.y = Math.floor(ny - 0.5) + 1.5; if (dry) dry.push(Math.floor(d.x), Math.floor(d.y), Math.floor(d.z)); else land(d); items.splice(k, 1); continue; } d.y = ny; if (d.life <= 0 || d.y < -8) items.splice(k, 1); } }
+// dry run (tests, previews): where would this collapse land? pure function of seed + list + world
+LSS.debrisPath = (seed, a) => { const it = dbInit(seed, a, false); const out = []; for (let t = 0; t < 720 && it.length; t++) dbStep(1 / 60, it, out); return out; };
+function land(d) { const x = Math.floor(d.x), y = Math.floor(d.y), z = Math.floor(d.z); const id = d.id; const col = blockColor(id); if (G.debris) G.debris.spawn(d.x, d.y - 0.4, d.z, col, 5, 2.6); if (Math.random() < 0.35 && G.audio.brk) G.audio.brk(BLOCKS[id] && BLOCKS[id].sound || 'stone');
+  if (!d.host || G.netGuest) return; const w = G.world; // the host re-settles some rubble where it lands (masonry → cobble, wood → planks); the rest crumbles into its drop
+  const m = matOf(id); const k = BLOCKS[id] ? BLOCKS[id].key : ''; const rubble = ISM[id] ? B.COBBLE : (k.includes('plank') || k.includes('log') ? B.PLANKS : id); const cur = w.get(x, y, z);
+  if ((cur === 0 || (WW && WW.isFluid && WW.isFluid(cur))) && ((x * 31 + y * 17 + z * 7) & 3) !== 0 && m[2] > 0) { w.set(x, y, z, rubble, { placed: true }); G.st2('lsResettled'); }
+  else { const it = BLOCKS[id] && BLOCKS[id].drop; const p = G.S.player; if (it && ITEMS[it] && Math.hypot(p.x - x, p.z - z) < 24 && Math.random() < 0.5) invAdd(it, 1); } }
+let dbFrame = 0;
+G.hook('tick', function lsTick(dt) { if (!G.S || G.state !== 'play') return; dt = Math.min(dt || 0, 0.25);
+  if (!G.netGuest) { safe('lsProcess', lsProcess); safe('lsStress', () => lsStressTick(dt)); }
+  if (DB.items.length) { DB.acc += dt; let n = 0; while (DB.acc >= 1 / 60 && n++ < 15) { DB.acc -= 1 / 60; dbStep(1 / 60); } } else DB.acc = 0; });
+G.hook('frame', function lsFrame() { const m = dbMesh(); if (!m) return; const L = DB.items; m.count = L.length; if (!L.length && !m.visible) return; m.visible = L.length > 0;
+  for (let i = 0; i < L.length; i++) { const d = L[i]; DB.e.set(d.rx, 0, d.rz); DB.q.setFromEuler(DB.e); DB.v.set(d.x, d.y, d.z); DB.m4.compose(DB.v, DB.q, DB.s); m.setMatrixAt(i, DB.m4); m.setColorAt(i, blockColor(d.id)); }
+  m.instanceMatrix.needsUpdate = true; if (m.instanceColor) m.instanceColor.needsUpdate = true; });
+G.v2Handlers.lsc = function (m) { if (!G.netGuest || !m || !Array.isArray(m.a)) return; if (m.d && m.d !== dimOf()) return; const a = m.a.slice(0, 4 * 2000).map(v => v | 0); LSS.st.recv = (LSS.st.recv || 0) + 1;
+  // the collapse can arrive before the host's block sets: clear the fallen cells locally (no echo) so the debris starts from the same world the host simulated
+  const w = G.world; G.applyingRemote = true; try { for (let i = 0; i + 3 < a.length; i += 4) if (w.get(a[i], a[i + 1], a[i + 2]) === a[i + 3]) w.set(a[i], a[i + 1], a[i + 2], 0, {}); } finally { G.applyingRemote = false; }
+  lsDebrisStart(m.seed | 0, a, false); };
+G.hook('quit', () => { DB.items.length = 0; STR.clear(); pend.clear(); }); G.hook('dimChange', () => { DB.items.length = 0; STR.clear(); pend.clear(); });
+
+// ==== 73_ls_c_tools.js
+// v2.6 LOAD & STONE · part C — new materials (Iron Beam, Weaver Silk), Stress Sensor (Logic Core), Engineer's Hammer, Stress View (V with the hammer),
+// weathering + worker upkeep, the engineering lesson (Mentor after 3 collapses, with a ghost prop), /ls.
+const T_BEAM = G.v2tile(H => { H.bevel([92, 98, 108], [150, 156, 168], [48, 52, 60]); for (let x = 0; x < 16; x++) { H.px(x, 3, [60, 64, 72]); H.px(x, 12, [60, 64, 72]); } for (let i = 4; i < 12; i++) H.px(7, i, [70, 74, 84]); H.speck([170, 120, 80], 6, 0.2); });
+const T_SILK = G.v2tile(H => { H.noiseFill([236, 230, 250], 0.06); for (let i = 0; i < 16; i++) { H.px(i, (i * 3) & 15, [200, 180, 255]); H.px((i * 5) & 15, i, [210, 196, 255]); H.px(i, i, [190, 170, 250]); H.px(15 - i, i, [190, 170, 250]); } });
+const T_STRESS = lgTile([90, 70, 60], '⚖', [255, 170, 90], [200, 110, 60]);
+if (!BLOCKS[156]) defBlock(156, 'iron_beam', 'Iron Beam', { tiles: T_BEAM, hard: 2.2, tier: 1, sound: 'stone', value: 14 });
+if (!BLOCKS[157]) defBlock(157, 'weaver_silk', 'Weaver Silk', { tiles: T_SILK, hard: 0.6, sound: 'grass', value: 30, emit: 0 });
+if (!BLOCKS[158]) defBlock(158, 'stress_sensor', 'Stress Sensor', { tiles: T_STRESS, hard: 1.2, sound: 'stone', value: 25 });
+defItem('iron_beam', 'Iron Beam', { value: 14, place: 156, desc: 'Strength 30 · weight 6 · span 12. Bridges and long floors.' });
+defItem('weaver_silk', 'Weaver Silk', { value: 30, place: 157, desc: 'Enchanted cable: strength 40 · weight 0.5 · span 32. Rope bridges that cross canyons.' });
+defItem('stress_sensor', 'Stress Sensor', { value: 25, place: 158, desc: 'Logic Core source: outputs how close the block above it is to failing (0–15). Wire it to a lamp or bell as a collapse alarm.' });
+defItem('eng_hammer', "Engineer's Hammer", { value: 20, use: true, rarity: 1, desc: 'Right-click a built block: reinforce it (+50% strength and span, costs 1 iron) and clear weathering. Shift+right-click: read its load. V: Stress View.' });
+RECIPES.push({ out: 'iron_beam', n: 2, req: { iron: 3 } }, { out: 'eng_hammer', n: 1, req: { iron: 2, planks: 1 } }, { out: 'stress_sensor', n: 1, req: { iron: 2, glass: 1 } });
+{ const r = {}; for (const [k, v] of [['aether', 1], ['essence', 1], ['flower_red', 2]]) if (ITEMS[k]) r[k] = v; RECIPES.push({ out: 'weaver_silk', n: 4, req: r }); }
+Object.assign(G.blockFallback, { 156: B.COBBLE, 157: B.WHITE || B.PLANKS, 158: B.COBBLE });
+G.logicRegister(158, 'sstress', { omni: 1 }); LSS.TEN[156] = 1; LSS.TEN[157] = 1;
+const sensCache = new Map(); // key -> [stress, t]
+G.logicExt.src.sstress = (c) => { const k = c.x + ',' + (c.y + 1) + ',' + c.z; const now = G.t || 0; const e = sensCache.get(k); if (e && now - e[1] < 1) return e[0];
+  let v = 0; if (G.world.placed.has(k)) { const r = solve([[c.x, c.y + 1, c.z]], null); const i = r && r.idx.get(k); if (i !== undefined) v = Math.max(0, Math.min(15, Math.round(r.stress[i] * 15))); } sensCache.set(k, [v, now]); return v; };
+// ---- Engineer's Hammer ----
+function lsInfo(x, y, z) { const k = kOf(x, y, z); const w = G.world; if (!w.placed.has(k)) return { natural: true }; const r = solve([[x, y, z]], null); const i = r && r.idx.get(k); if (i === undefined) return null; const S = lsStore(); const m = matOf(r.ID[i]);
+  return { s: r.stress[i], d: r.d[i] / 2, mode: r.mode[i], m, rf: !!S.rf[k], wear: S.wear[k] || 0, corb: r.corb[i], butt: r.butt[i], n: r.n, ms: r.ms }; }
+LSS.info = lsInfo;
+function hammerUse(x, y, z, info, pl) { const k = kOf(x, y, z); const S = lsStore(); const w = G.world; if (!w.placed.has(k)) return 'natural';
+  if (info) return 'info'; if (S.rf[k] && !S.wear[k]) return 'already'; S.rf[k] = 1; delete S.wear[k]; G.st2('lsReinforced');
+  // shoring up can rescue a block that is already cracking
+  if (STR.has(k)) { const s = STR.get(k); s.t = Math.max(s.t, 0.2); } if (G.net && G.net.active && G.net.role === 'host') G.v2Send('lsRf', { key: k, v: 1 }); return 'ok'; }
+G.hook('use', (k) => { if (k !== 'eng_hammer') return; const h = getTarget(); if (!h || h.x === undefined) { toast("🔨 Aim at a block you built", ''); return true; }
+  const x = h.x, y = h.y, z = h.z; const Kk = (G.input && G.input.keys) || {}; const info = !!(Kk.ShiftLeft || Kk.ShiftRight);
+  const I = lsInfo(x, y, z); if (!I || I.natural) { toast('🔨 Natural ground — it carries everything', ''); return true; }
+  const pct = Math.round(I.s * 100); const nm = BLOCKS[G.world.get(x, y, z)].name; const line = '🔨 ' + nm + ': load ' + (I.s >= 9 ? 'UNSUPPORTED' : pct + '%') + ' · ' + (I.mode ? 'hanging ' + I.d.toFixed(1) + ' from support' : 'carried from below') + (I.corb ? ' · arch/corbel ×2' : '') + (I.butt ? ' · buttressed' : '') + (I.rf ? ' · reinforced' : '') + (I.wear ? ' · weathered ' + Math.round(I.wear * 100) + '%' : '') + ' · str ' + I.m[0] + ' wt ' + I.m[1] + ' span ' + I.m[2];
+  if (info) { toast(line, pct > 100 ? 'warn' : ''); G.st2('lsInspect'); return true; }
+  if (!G.S.creative && !(G.S.inv.iron > 0)) { toast('🔨 Reinforcing needs 1 iron', 'warn'); return true; }
+  if (G.netGuest) { G.v2Send('lsR', { x, y, z }); if (!G.S.creative) invAdd('iron', -1); toast('🔨 Reinforced (host confirms)', 'good'); return true; }
+  const r = hammerUse(x, y, z, false); if (r === 'already') { toast('🔨 Already reinforced', ''); return true; } if (r === 'ok') { if (!G.S.creative) invAdd('iron', -1); if (G.audio.burst) { G.audio.burst(0.08, 1800, 2, 0.25, 'bandpass'); G.audio.burst(0.2, 600, 3, 0.15, 'bandpass', 0.05); } G.particles.spawn(x + 0.5, y + 0.5, z + 0.5, '#d8dde8', 8, 1.6, 0.5); toast('🔨 Reinforced — ' + line.slice(3), 'good'); lsBump(); }
+  return true; });
+G.v2Handlers.lsR = function (m, pl) { if (G.netGuest || !pl || !m) return; const x = m.x | 0, y = m.y | 0, z = m.z | 0; if (!Number.isFinite(pl.x) || Math.hypot(pl.x - x, pl.y - y, pl.z - z) > 9) return; if (G.hgGuard && !G.hgGuard(pl, x, y, z, G.world.get(x, y, z))) return; hammerUse(x, y, z, false, pl); };
+G.v2Handlers.lsRf = function (m) { if (!G.netGuest || !m || typeof m.key !== 'string' || m.key.length > 40) return; const S = lsStore(); if (m.v) { S.rf[m.key] = 1; delete S.wear[m.key]; } else delete S.rf[m.key]; }; // note: v2Send's own 'k' is the message type, so the cell key travels as 'key'
+// reinforcement/wear follow the block: breaking it clears them
+G.hook('brk', (x, y, z) => { const S = lsStore(); const k = kOf(x, y, z); delete S.rf[k]; delete S.wear[k]; });
+// ---- Stress View ----
+const SV = { on: false, mesh: null, t: 0, n: 0 }; LSS.view = SV;
+function svBuild() { if (SV.mesh || !G.scene) return; const g = new THREE.BoxGeometry(1.02, 1.02, 1.02); SV.mesh = new THREE.InstancedMesh(g, new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.42, depthWrite: false }), 4096); SV.mesh.count = 0; SV.mesh.frustumCulled = false; SV.mesh.renderOrder = 5; G.scene.add(SV.mesh); SV.m4 = new THREE.Matrix4(); SV.c = new THREE.Color(); for (let i = 0; i < 4096; i++) SV.mesh.setColorAt(i, SV.c.set(0xffffff)); }
+function svColor(s, grand, str) { if (str) return SV.c.setRGB(1, 0.1 + 0.3 * Math.abs(Math.sin((G.t || 0) * 10)), 0.1); if (s >= 9) return SV.c.setRGB(1, 0, 0.6); if (s > 1) return grand ? SV.c.setRGB(0.62, 0.35, 0.95) : SV.c.setRGB(1, 0.05, 0.05);
+  if (s < 0.5) return SV.c.setRGB(0.2 + s * 1.2, 0.9, 0.25); return SV.c.setRGB(1, 0.9 - (s - 0.5) * 1.6, 0.15); }
+function svRefresh() { svBuild(); if (!SV.mesh) return; const w = G.world, p = G.S.player; const R = 14; const seeds = []; for (const k of w.placed.keys()) { const c1 = k.indexOf(','), c2 = k.indexOf(',', c1 + 1); const x = +k.slice(0, c1), y = +k.slice(c1 + 1, c2), z = +k.slice(c2 + 1); if (Math.abs(x - p.x) <= R && Math.abs(z - p.z) <= R && Math.abs(y - p.y) <= R) seeds.push([x, y, z]); if (seeds.length > 4000) break; }
+  let n = 0; const seen = new Set(); let worst = 0; const S = lsStore();
+  while (seeds.length && n < 4096) { const s0 = seeds.pop(); const k0 = kOf(s0[0], s0[1], s0[2]); if (seen.has(k0)) continue; const r = solve([s0], null); if (!r) { seen.add(k0); continue; }
+    for (let i = 0; i < r.n && n < 4096; i++) { const k = kOf(r.X[i], r.Y[i], r.Z[i]); if (seen.has(k)) continue; seen.add(k); const s = r.stress[i]; worst = Math.max(worst, Math.min(s, 2)); SV.m4.makeTranslation(r.X[i] + 0.5, r.Y[i] + 0.5, r.Z[i] + 0.5); SV.mesh.setMatrixAt(n, SV.m4); SV.mesh.setColorAt(n, svColor(s, s > 1, STR.has(k))); n++; } }
+  SV.mesh.count = n; SV.n = n; SV.worst = worst; SV.mesh.instanceMatrix.needsUpdate = true; if (SV.mesh.instanceColor) SV.mesh.instanceColor.needsUpdate = true; SV.mesh.visible = SV.on; }
+LSS.viewRefresh = svRefresh;
+function svToggle(on) { SV.on = on === undefined ? !SV.on : !!on; if (SV.on) { svRefresh(); G.st2('lsStressView'); lsBump(); toast('🧱 Stress View — green carries easily · yellow working hard · red over the limit · violet settled (old build) · flashing = about to fall', 'good'); } else if (SV.mesh) SV.mesh.visible = false; svChip(); }
+LSS.toggleView = svToggle;
+let chipEl = null; function svChip() { if (!chipEl) { chipEl = document.createElement('div'); chipEl.id = 'lsView'; chipEl.style.cssText = 'position:fixed;right:12px;top:150px;padding:6px 10px;border-radius:8px;background:rgba(20,16,12,.8);border:1px solid #8a6a3a;color:#ffe9c8;font:600 12px system-ui;z-index:30;display:none'; document.body.appendChild(chipEl); }
+  chipEl.style.display = SV.on ? 'block' : 'none'; if (SV.on) chipEl.innerHTML = '🧱 Stress View · ' + SV.n + ' blocks · worst ' + Math.round((SV.worst || 0) * 100) + '%<div style="margin-top:4px;height:6px;border-radius:3px;background:linear-gradient(90deg,#33e640,#ffe626,#ff1a1a,#a05af0)"></div>'; }
+G.hook('frame', function svFrame() { if (!SV.on) return; SV.t += 1 / 60; if (SV.t > 0.7) { SV.t = 0; safe('lsView', () => { svRefresh(); svChip(); }); } });
+{ const prevV = G.keyHooks.KeyV; G.keyHooks.KeyV = (e) => { const S = G.S; if ((S && S.hotbar && S.hotbar[S.sel] === 'eng_hammer') || SV.on) return svToggle(); return prevV ? prevV(e) : undefined; }; }
+// ---- weathering: rain, snow and frost slowly wear exposed blocks (up to −20% strength); hired workers repair near their posts at dawn ----
+G.sched.add('lsWeather', () => { if (G.netGuest || !G.world || G.world.dim !== 'over') return; const S = lsStore(); const wk = G.weatherKind ? G.weatherKind() : 'clear'; const wet = wk === 'rain' || wk === 'storm' || wk === 'snow' || wk === 'blizzard'; if (!wet) return;
+  const w = G.world, P = w.placed; if (!P.size) return; const keys = LSS._keys && LSS._keysN === P.size ? LSS._keys : (LSS._keys = Array.from(P.keys()), LSS._keysN = P.size, LSS._keys);
+  for (let i = 0; i < 48; i++) { const k = keys[(Math.random() * keys.length) | 0]; if (!k) continue; const [x, y, z] = k.split(',').map(Number); if (w.heightAt(x, z) > y) continue; const m = matOf(w.get(x, y, z)); if (m[0] >= 30) continue; S.wear[k] = Math.min(0.2, (S.wear[k] || 0) + (wk === 'snow' || wk === 'blizzard' ? 0.0015 : 0.001)); } }, { hz: 0.2, budgetMs: 0.6, priority: 4 });
+G.hook('dawn', () => { if (G.netGuest) return; const S = lsStore(); let crews = 0; try { crews = G.vilWorkers ? G.vilWorkers().filter(p => !p.strike).length : 0; } catch (e) { crews = 0; } if (!crews) return;
+  let n = 0; const lim = 25 * crews; for (const k in S.wear) { if (S.wear[k] >= 0.05) { delete S.wear[k]; n++; if (n >= lim) break; } } if (n) { G.st2('lsRepaired', n); toast('🧱 Your workers patched ' + n + ' weathered blocks overnight', 'good'); } });
+// ---- learning: three collapses → the Mentor offers an engineering lesson + a ghost prop under the last failure ----
+const GH = { mesh: null, t: 0 };
+function ghostProp(x, y, z) { if (!G.scene) return; if (GH.mesh) { G.scene.remove(GH.mesh); GH.mesh = null; } const w = G.world; let y0 = y - 1; while (y0 > 1 && !w.get(x, y0, z)) y0--; const h = y - y0 - 1; if (h <= 0) return; const geo = new THREE.BoxGeometry(0.96, h, 0.96); const m = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: 0x7ae8ff, transparent: true, opacity: 0.32, depthWrite: false })); m.position.set(x + 0.5, y0 + 1 + h / 2, z + 0.5); G.scene.add(m); GH.mesh = m; GH.t = 20; }
+G.hook('tick', function lsGhostTick(dt) { if (GH.mesh && (GH.t -= dt) <= 0) { G.scene.remove(GH.mesh); GH.mesh = null; } });
+if (typeof COMPS !== 'undefined' && typeof CIDX !== 'undefined' && CIDX.engineering === undefined) { COMPS.push(['engineering', 'Load & Stone', 'build', 'c:ls', 1, () => (lsStore().falls || 0) >= 3, 'Building that stands up',
+  ['Every block has a strength, a weight and a span — how far it can reach from support. Stone reaches about 4, wood 5, iron beams 12, Weaver Silk 32.', 'Hold the Engineer\'s Hammer and press {V} for Stress View: green is easy, red is over the limit.||KeyV', 'Long spans want a pillar (see the blue ghost), an arch of stepped stone (×2 reach), or iron beams. A block that cracks gives you 2 seconds to prop it up.']]); CIDX.engineering = COMPS.length - 1; }
+function lsBump() { if (G.cdxBump) safe('lsBump', () => G.cdxBump('engineering')); const S = lsStore(); S.learned = (S.learned || 0) + 1; }
+G.hook('lsCollapse', (n, list) => { const S = lsStore(); if (n < 2 || G.netGuest) return; const learned = (S.learned || 0) >= 3; if (S.falls >= 3 && !learned && !S.lessonAt || (S.falls - (S.lessonAt || 0)) >= 6 && !learned) { S.lessonAt = S.falls; S.lessons = (S.lessons || 0) + 1; if (G.cdxOfferNow) safe('lsLesson', () => G.cdxOfferNow('engineering', true)); else toast('🦉 Tip: long spans need a pillar, an arch or iron beams — hold the hammer and press V to see the load', 'good'); ghostProp(list[0], list[1], list[2]); G.st2('lsLessons'); } });
+G.hook('dimChange', () => { if (SV.on) svToggle(false); }); G.hook('quit', () => { if (SV.on) svToggle(false); });
+// ---- /ls ----
+G.commands.ls = (rest, say) => { const a = String(rest || '').trim().split(/\s+/); const S = lsStore();
+  if (a[0] === 'physics') { if (!G.S.creative) return say('🧱 Physics can only be switched off in Creative'); if (G.netGuest) return say('🧱 The host decides'); S.off = a[1] === 'off' ? true : a[1] === 'on' ? false : !S.off; return say('🧱 Structural physics ' + (S.off ? 'OFF (Creative)' : 'ON')); }
+  if (a[0] === 'view') { svToggle(); return say('🧱 Stress View ' + (SV.on ? 'on' : 'off')); }
+  const T = LSS.st; say('🧱 Load & Stone: ' + (S.off ? 'off' : 'on') + ' · solves ' + T.solves + ' (p95 ' + LSS.p95() + ' ms, largest ' + T.maxN + ' blocks) · settled old builds kept ' + T.grand + ' · fallen ' + T.fell + ' · cracking now ' + STR.size + ' · reinforced ' + Object.keys(S.rf).length + ' · weathered ' + Object.keys(S.wear).length + ' — /ls view · /ls physics on|off (Creative)'); };
+
+// ==== 74_news26.js
+// ===================== v2.6: "New in v2.6 — Elements and Engineering" card =====================
+{
+const NEWS26 = [
+  ['💧', 'Waterworks', 'water, lava and four new fluids (mud, honey, mana-essence and void-tar) now have real levels. They pour, spread, find their level, fill basins and push through U-bends under pressure. Existing lakes and seas stay calm. Break a dam and the valley floods, then settles.'],
+  ['🌋', 'Fluids react', 'water on lava makes obsidian, or basalt from thin lava, with a hiss of steam. Mana and void-tar cancel out in a flash, and every eight units leave a Twilight Crystal. Water wets nearby farmland, and ash carried downstream feeds the crops it passes.'],
+  ['🏞️', 'Living rivers', 'rivers remember where they flow. Over many days they wear soft beds deeper and drop sand where the water slows. Rain refills old riverbeds and hollows, puddles dry in the sun, ice keeps its level when it freezes, and wellsprings bubble up forever.'],
+  ['⚙️', 'Water machines', 'Water Wheels turn flowing water into Logic Core power and drive belts and drills. Pumps lift water, Valves balance two sides, Sluice Gates open on a signal, Aqueducts carry water across flat land and Level Sensors report the depth. Build canals, mills and fountains.'],
+  ['🪣', 'Bucket & Hydrology', 'craft a Bucket (3 iron). Right-click to scoop or pour, and click the HUD chip to pour only up to 4, 8, 12 or 15. Hold Shift to force a pour. The Ecology Lens has a new 💧 Hydrology tab showing depth, riverbeds and flow.'],
+  ['🧱', 'Load and Stone', 'what you build now has to stand up. Every block has a strength, a weight and a span. Overhangs, long floors and thin towers can fail. A failing block cracks and creaks for two seconds, so you can prop it up, and then it falls as real debris that can hurt you. Builds from before v2.6 are left as they are; they are only checked again when you change them.'],
+  ['🏛️', 'Building that stands', 'stepped stone arches and corbels reach twice as far, buttresses strengthen tall walls, Iron Beams span 12 blocks and Weaver Silk spans 32, enough for a rope bridge across a canyon. Soil soaked with water is half as strong, and rain and snow slowly weather exposed blocks. Hired workers patch the weathering at dawn.'],
+  ['🔨', 'Engineer’s Hammer', 'craft it from 2 iron and a plank. Right-click a block to reinforce it (+50% strength and span, costs 1 iron). Shift+right-click reads its load. Press V while holding the hammer to open Stress View: green blocks are fine, red are over their limit, violet are old builds that have been left alone, and flashing blocks are about to fall. A Stress Sensor sends a block’s load to the Logic Core, so you can wire up a collapse alarm. After a few collapses the Mentor offers a short engineering lesson.'],
+  ['🌐', 'Multiplayer', 'the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris; older guests see the result as normal blocks, with older-friendly stand-ins for the new ones. v2 through v2.6 play together, and v1 is still refused.'],
+  ['✨', 'Refinements', 'the village market is busier and now sells Tanned Hide (gathered from shed coats). Comets are bigger, and “Show me” frames them properly. Nest Boxes and star-metal show up as planks and iron ore in older versions. The late-game economy wobbles less.']
+];
+G.NEWS26 = NEWS26;
+if (G.pauseExtras) G.pauseExtras.unshift(() => '<details class="v2card" id="news26" style="margin-top:6px;text-align:left;grid-column:1/-1"><summary>💧 New in v2.6 — Elements and Engineering</summary>' + NEWS26.map(n => '<div class="small" style="margin:3px 0">' + n[0] + ' <b>' + n[1] + '</b> — ' + esc(n[2]) + '</div>').join('') + '</details>');
+// a fresh player gets one toast (v2.6); older cards stay readable in the Pause menu
+const firstNews26 = function news26pre() { try { if (!localStorage.getItem('voxelmythos_news26')) { for (const v of ['25', '24', '23']) localStorage.setItem('voxelmythos_news' + v, '1'); } } catch (e) {} };
+if (G.hooks && Array.isArray(G.hooks.worldMade)) G.hooks.worldMade.unshift(firstNews26); else G.hook('worldMade', firstNews26);
+G.hook('worldMade', function news26() { let seen = true; try { seen = !!localStorage.getItem('voxelmythos_news26'); if (!seen) localStorage.setItem('voxelmythos_news26', '1'); } catch (e) {} if (!seen) setTimeout(() => toast('💧 Voxel Mythos v2.6 “Elements and Engineering”: water you can engineer, and buildings that have to stand. Esc → “New in v2.6”', 'mythos'), 5800); });
+}
+// How-to-play: a short v2.6 section (water and building) appended to the Help panel
+{ const ui = G.ui; if (ui && typeof ui.p_help === 'function' && !ui._help26) { ui._help26 = true; const orig = ui.p_help;
+  ui.p_help = function () { const h = orig.apply(this, arguments); const add = '<h3>💧 Water & 🧱 building (v2.6)</h3><p style="font-size:13px;line-height:1.5;color:#c9d3ff">Water and lava now flow, fill basins and settle. A <b>Bucket</b> (3 iron) scoops and pours; its HUD chip sets a fill level. Water Wheels power the Logic Core, and Pumps, Valves, Sluice Gates and Aqueducts move water.<br>What you build has to stand: long overhangs, wide floors and thin towers can crack and fall after a 2-second warning, so prop them up. Arches, corbels, buttresses, Iron Beams (span 12) and Weaver Silk (span 32) reach further. The <b>Engineer’s Hammer</b> reinforces a block for 1 iron; Shift+right-click reads its load; <kbd>V</kbd> with the hammer opens Stress View. Builds from before v2.6 are left alone until you change them. Commands: /ww · /bucket · /ls</p>';
+    const i = h.lastIndexOf('<h3>/build examples</h3>'); return i >= 0 ? h.slice(0, i) + add + h.slice(i) : h + add; }; } }
 
 // ==== 99_boot.js
 // ---------------- Boot ----------------

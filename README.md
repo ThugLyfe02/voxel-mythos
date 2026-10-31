@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2.5 “Wild Skies”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.4 saves load in v2.5 unchanged (same storage keys; v2.5 only adds new sections for the ecology and the almanac, so a v2.5 world still opens in v2.4, which ignores them — except placed Nest Boxes and star-metal ore, which older versions don't know and leave out).
+A living voxel sandbox (v2.6 “Elements and Engineering”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.5 saves load in v2.6 unchanged (same storage keys; v2.6 only adds new sections for water levels, structures and the bucket). A v2.6 world still opens in v2.5 and older: water shows at its old full height, and the new v2.6 blocks appear as a familiar stand-in such as water, cobble, planks or obsidian instead of disappearing.
 
 ## Play
 
@@ -39,7 +39,7 @@ Most keys can be rebound in **Esc → Settings → Accessibility → Key binding
 - **Left click (hold)** mine / attack · **Right click** place · eat · use · talk · tame · ride
 - **1–9 / wheel** hotbar · **0** cast your bound Light/Dark path power (duel bolt in a duel) · **-** Crossroads / Light panel
 - **E** inventory & crafting · **M** market (Shift+M living Market) · **,** quest board & journal · **F** talk · **T or /** chat & commands · **Q** cast spell · **G** map & factions
-- **R** mount / dismount / land · **V** thermal vision · **X** weapon ability · **B** armory · **N** tech tree · **J** Story Journal (Shift+J creature codex)
+- **R** mount / dismount / land · **V** thermal vision (Stress View while holding the Engineer's Hammer) · **X** weapon ability · **B** armory · **N** tech tree · **J** Story Journal (Shift+J creature codex)
 - **O** Living Codex (Shift+O party) · **U** trophies · **Y** gallery · **H** Hearth claim view (airship camera on a ship)
 - **.** (period) Celestial Almanac — while looking up at the night sky it toggles star and planet labels instead
 - **L** spellbook · **I** journal · **Z** blueprints · **K** save now · **Esc** pause · **F3** performance overlay
@@ -86,7 +86,18 @@ New in v2.2: `/story [sim N]` `/chronicler [on|off|persona <name>|cap N|fewer]`
 
 New in v2.5: `/eco [stats|rewild|days N (creative)]` `/sky [next|labels|goto <event> (creative)]`
 
+New in v2.6: `/bucket [level N|all|empty]` `/ww [stats|settle (creative)|on|off]` `/ls [view|physics on|off (creative)]`
+
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
+
+## What's new in v2.6 — Elements and Engineering
+
+**Esc → "💧 New in v2.6"** lists all of this in game. Esc → "❔ Help & Controls" has a "Water & building" section.
+
+- 💧 **Waterworks:** water, lava, mud, honey, mana-essence and void-tar have real levels from 1 to 15. They pour, spread, fill basins and push through U-bends. Break a dam and the valley floods, then settles. Water on lava makes obsidian, and rivers slowly wear soft beds (claimed land and anything you built are never eroded). Water Wheels, Pumps, Valves, Sluice Gates, Aqueducts and Level Sensors run from a Logic Core. The Bucket (3 iron) scoops or pours; `/bucket` sets how much.
+- 🧱 **Load and Stone:** every block has a strength, a weight and a span. Stone reaches about 4, wood 5, Iron Beams 12 and Weaver Silk 32. A failing block cracks and creaks for 2 seconds, then falls. Builds from before v2.6 are left standing until an edit makes them worse. The Engineer's Hammer reinforces a block you built or reads its load. **V** while holding the hammer opens Stress View.
+- In a v2.6 game the host runs the water and decides what collapses. v2.6 guests see the same levels and falling debris. Guests on v2.5 or older see the result as ordinary blocks.
+- Refinements: the village market sells Tanned Hide, comets are bigger, and Nest Boxes and star-metal ore appear as planks and iron ore in versions that don't know them.
 
 ## What's new in v2.5 — Wild Skies
 
@@ -173,9 +184,9 @@ Autosave every 30 s, on dimension change, and when you close or hide the tab ("s
 
 ## Playing with friends (peer-to-peer, free, no accounts)
 
-v2.1, v2.2, v2.3, v2.4 and v2.5 play together (v2 still connects too). The living ecology, Ecology Lens and star naming need a v2.5 host (a v2.5 guest at an older host is told so); the sky itself is computed from the world seed, so v2.5 guests see the almanac sky at any host. Older guests see the old sky and wildlife. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.5 games (or host for them): the game refuses politely and explains who should update.
+v2.1 through v2.6 play together (v2 still connects too). In a v2.6 game the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.6 games (or host for them): the game refuses politely and explains who should update.
 
-Kindred memories, the Chronicler, quests, the market, the ecology and the music are run by the host and saved in the host's world.
+Kindred memories, the Chronicler, quests, the market, the ecology, water, structures and the music are run by the host and saved in the host's world.
 
 ### Host (you)
 

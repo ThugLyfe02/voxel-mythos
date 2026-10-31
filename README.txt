@@ -1,10 +1,11 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.5 “Wild Skies”)
-=========================================================
+VOXEL MYTHOS — a living voxel sandbox (v2.6 “Elements and Engineering”)
+=======================================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.4 saves load in v2.5 unchanged (same storage keys;
-v2.5 only adds new sections for the ecology and the almanac, so a v2.5 world still opens in v2.4, which ignores them —
-except placed Nest Boxes and star-metal ore, which older versions don't know and leave out).
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.5 saves load in v2.6 unchanged (same storage keys;
+v2.6 only adds new sections for water levels, structures and the bucket). A v2.6 world still opens in v2.5 and older: water
+shows at its old full height, and the new v2.6 blocks (fluids, water machines, iron beams, Weaver Silk, sensors) appear as
+a familiar stand-in such as water, cobble, planks or obsidian instead of disappearing.
 
 FIRST STEPS: click the game view ("🖱 Click to play") to capture the mouse, then move the mouse to look around.
 Esc releases the mouse and pauses; click again to carry on.
@@ -27,7 +28,7 @@ CONTROLS — desktop (most keys can be rebound in Esc → Settings → Accessibi
     Left click (hold)  mine / attack      Right click  place · eat · use · talk · tame · ride
     1-9 / wheel ...... hotbar             0  cast your bound Light/Dark path power (duel bolt in a duel)     -  Crossroads / Light panel
     E inventory & crafting   M market (Shift+M living Market)   , (comma) quest board & journal   F talk   T or / chat & commands   Q cast spell   G map & factions
-    R mount / dismount / land   V thermal vision   X weapon ability   B armory   N tech tree   J Story Journal (Shift+J creature codex)
+    R mount / dismount / land   V thermal vision (Stress View while holding the Engineer's Hammer)   X weapon ability   B armory   N tech tree   J Story Journal (Shift+J creature codex)
     O Living Codex (Shift+O party)   U trophies   Y gallery   H Hearth claim view (airship camera on a ship)
     .  (period) Celestial Almanac — while looking up at the night sky it toggles star & planet labels instead
     L spellbook   I journal   Z blueprints   K save now   Esc pause   F3 performance overlay
@@ -58,7 +59,49 @@ USEFUL COMMANDS (T or /)
   New in v2.2: /story [sim N]  /chronicler [on|off|persona <name>|cap N|fewer]
     /music [on|off|status|motif|mutate|stinger|density|visual|credits]  /kindred [status|who|rumors|gossip|talk]
   New in v2.5: /eco [stats|rewild|days N (creative)]  /sky [next|labels|goto <event> (creative)]
+  New in v2.6: /bucket [level N|all|empty]  /ww [stats|settle (creative)|on|off]  /ls [view|physics on|off (creative)]
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.6 — ELEMENTS AND ENGINEERING
+  💧 WATERWORKS: water, lava and four new fluids (mud, honey, mana-essence and void-tar) now have real levels from 1 to 15.
+    They pour, spread, find their level, fill basins and push through U-bends under pressure. Existing lakes and seas
+    stay calm until you change them. Break a dam and the valley floods, then settles. The host runs the simulation
+    with a fixed budget per tick, close to players. Areas no one is near freeze and pick up again when someone returns.
+  🌋 Fluids react: water on lava makes obsidian (or basalt from thin lava) with steam. Mana and void-tar cancel out in a
+    flash, and every 8 units leave a Twilight Crystal. Lava sears honey and tar. Water wets nearby farmland, and ash
+    carried downstream feeds the crops it passes.
+  🏞 Living rivers: rivers remember where they flow and, over many days, wear soft beds deeper and drop sand where the
+    water slows (claimed land and anything you built are never eroded). Rain refills old riverbeds and hollows, puddles
+    dry in the sun, ice keeps its level when it freezes, and wellsprings bubble up forever.
+  ⚙ Water machines (Logic Core): the Water Wheel turns flowing water into power and drives belts and drills. The Pump lifts
+    water, the Valve balances two sides, the Sluice Gate opens on a signal, the Aqueduct carries water across flat land
+    and the Level Sensor reports the depth. Build canals, mills, locks and fountains.
+  🪣 Bucket (3 iron): right-click to scoop up to 15 levels or pour. Click the HUD chip (or use /bucket level N) to pour
+    only up to 4, 8, 12 or 15. Hold Shift to force a pour. In multiplayer, the host checks Hearth permissions for guests.
+    The Ecology Lens has a new 💧 Hydrology tab showing depth, riverbeds and flow.
+  🧱 LOAD AND STONE: what you build now has to stand up. Every block has a strength, a weight and a span (how far it
+    can reach from support). Stone reaches about 4, wood 5, Iron Beams 12 and Weaver Silk 32. Long overhangs, wide
+    floors and top-heavy towers can fail. A failing block cracks and creaks for 2 seconds, so you can prop it up. Then it
+    falls as real debris that can hurt you (2-8 damage; Creative is immune). Some of it settles as rubble and the rest
+    drops as items.
+    Builds from before v2.6 are not suddenly knocked down. Anything already over its limit is left as it is (Stress
+    View shows it in violet). It is checked again only when an edit makes it worse.
+    Only changes made by players are judged (placing, mining, explosions, guests' edits, and river erosion). Villages,
+    camps, mage towers, warrens, airship frames and /build structures are never knocked down by the world itself.
+  🏛 Building that stands: stepped stone arches and corbels reach twice as far and carry four times the load.
+    Buttresses strengthen walls taller than 8. Soil soaked with water is half as strong. Rain and snow slowly weather
+    exposed blocks (up to -20 %), and hired workers patch the weathering at dawn.
+  🔨 Engineer's Hammer (2 iron + 1 plank): right-click a block you built to reinforce it (+50 % strength and span, costs
+    1 iron). Shift+right-click reads its load. Press V while holding the hammer to open Stress View: green blocks carry
+    their load easily, yellow ones are working hard, red ones are over their limit, violet ones are old builds left
+    alone, and flashing ones are about to fall. Iron Beam (3 iron → 2), Weaver Silk (aether + essence + 2 red flowers
+    → 4) and the Stress Sensor (2 iron + 1 glass) are new blocks. The Stress Sensor sends the load of the block above
+    it to the Logic Core, so you can wire up a collapse alarm. After three collapses the Mentor offers an engineering
+    lesson and shows a ghost pillar where one would have helped. Creative worlds can switch physics off (/ls physics off).
+  ✨ Refinements: the village market is busier and sells Tanned Hide (gathered from shed coats, no harm done). Comets
+    are bigger, and "Show me" frames the head with its tail. Nest Boxes and star-metal ore now appear as planks and
+    iron ore in versions that don't know them. The late-game economy governor wobbles less.
+  Esc → "💧 New in v2.6" lists all of this in game, and Esc → "❔ Help & Controls" has a "Water & building" section.
 
 WHAT'S NEW IN v2.5 — WILD SKIES
   🌿 LIVING ECOLOGY: every 64 × 64 patch of land tracks plants, water, soil and the animals living there. Hares and deer
@@ -217,15 +260,17 @@ SAVING
   Esc → Worlds & backups: 4 named world slots + the Daily slot, Export (.json backup file), Import, rename, delete.
 
 PLAYING WITH FRIENDS (peer-to-peer, free, no accounts)
-  v2.1, v2.2, v2.3, v2.4 and v2.5 play together (v2 still connects too). The living ecology, Ecology Lens and star
-  naming need a v2.5 host (a v2.5 guest at an older host is told so); the sky itself is computed from the world seed, so
-  v2.5 guests see the almanac sky at any host. Older guests see the old sky and wildlife.
+  v2.1 through v2.6 play together (v2 still connects too). In a v2.6 game the host runs the water and decides what
+  collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes
+  it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new
+  v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host
+  is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host.
   Guests see the host's creatures, pets and helpers with v2.3 bodies, and see
   friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full
   reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an
   older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players.
-  v1 can't join v2–v2.5 games (or host for them): the game refuses politely and explains who should update.
-  Kindred memories, the Chronicler, quests, the market, the ecology and the music are run by the host and saved in the host's world.
+  v1 can't join v2–v2.6 games (or host for them): the game refuses politely and explains who should update.
+  Kindred memories, the Chronicler, quests, the market, the ecology, water, structures and the music are run by the host and saved in the host's world.
   Host (you):
     1. Open voxel-sandbox.html, load or create a world.
     2. Press Esc → "🌐 Host for friends" → "Host & get a room code".
@@ -251,4 +296,10 @@ TECH NOTES
   hour) and saves compactly (about 70 KB). Market deals are host-authoritative with escrow and idempotent transaction ids. v2.5's ecology is a
   Lotka-Volterra-style model per 64 × 64 cell (20 overworld species plus dimension food webs) stepped hourly on the host;
   the almanac is a pure function of seed and time (eclipse contacts found by bisection), costing about 0.01 ms a frame.
+  v2.6 water is a levelled-cell simulation with a capped active set (40,000 cells), a fixed per-tick cell budget and
+  an adaptive radius (32-128 blocks). It is sent to v2.6 guests as per-chunk run-length diffs 5 times a second and
+  smoothed at 20 Hz on screen. Erosion scoring runs in a Web Worker. Load and Stone solves only the connected structure
+  around an edit, using typed arrays and capped at 4,096 blocks; blocks past the cap count as anchored. Typical edits
+  take well under 1 ms, and a solid 16×16×16 cube takes about 12-20 ms. Falling debris is one instanced mesh of up to
+  300 blocks, stepped with fixed 1/60 s physics from a shared seed.
   Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites).
