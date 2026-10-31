@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2.2 “The Living Story”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1, v2 and v2.1 saves load in v2.2 unchanged (same storage keys; new v2.2 data is stored alongside).
+A living voxel sandbox (v2.3 “Living Creatures”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1, v2, v2.1 and v2.2 saves load in v2.3 unchanged (same storage keys; v2.3 adds no new world data, so a v2.3 world still opens in v2.2).
 
 ## Play
 
@@ -61,6 +61,8 @@ Mouse sensitivity, Invert Y, Toggle sprint (Accessibility), FOV, Quality: Auto /
 
 🌪 **World Chaos** slider 0–200 % (host-controlled in multiplayer, saved with the world): more mobs, faster cataclysms, better loot and smarter packs at higher values.
 
+🐾 **Living creatures → Creature detail:** High (full rigs, cloth, foot IK) / Medium / Low (impostors start nearer) / Classic blocks (the v2.2 look). "Damage numbers" and "Screen shake" toggles are in the main list.
+
 **Ultra** (desktop GPUs): real-time shadows, planar water reflections, hi-res textures, light shafts, depth of field and motion blur in photo mode. If the frame rate stays too low, the game switches itself back to High and tells you.
 
 ## Useful commands (T or /)
@@ -82,6 +84,19 @@ New in v2.2: `/story [sim N]` `/chronicler [on|off|persona <name>|cap N|fewer]`
 `/music [on|off|status|motif|mutate|stinger|density|visual|credits]` `/kindred [status|who|rumors|gossip|talk]`
 
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
+
+## What's new in v2.3 — Living Creatures
+
+**Esc → "✨ New in v2.3"** lists all of this in game.
+
+- 🐺 **Living bodies:** every animal, mob, villager, NPC, worker, mage, pet, mount, summon, construct and boss now has an articulated, skinned body (bones, not blocks) — necks, spines, jaws, tails, ears, wings, fins, tentacles and capes all move. The player has a full third-person body too (**F5**): walk/sprint/jump/swing, a seated riding pose on mounts, a hurt flinch, a cast pose and a dead pose; mounts now stand on the ground instead of sinking into it.
+- 👁 Eyes blink and glance around, and creatures turn their heads to track you when you come near. Magical creatures have emissive glowing eyes; rim light picks out silhouettes at dusk.
+- 🦶 Procedural, blended animation: idle breathing, walk → run → gallop, flying, gliding and swimming gaits, leaps, attacks with jaw/claw/tail strikes, flinches and deaths blend smoothly. Feet are planted on uneven ground (foot IK); cloth, hair, manes, ears and tails follow with secondary motion.
+- 🦓 Procedural skins: fur with directional strands, overlapping directional scales (smaller on face and limbs, larger on the back), feathers, chitin, hide, bark, stone, crystal and slime; darker backs and lighter bellies; texture contrast softens with distance. Per-species markings: wolf saddles, lynx/frog/salamander spots, stalker stripes, manticore rosettes, deer dapples, banded dragons and serpents, the boar's dorsal stripe, the badger's blaze, the raccoon's mask and ringed tail, dolphin and otter countershading, a fox's white tail tip and dark stockings, barred hawks and owls.
+- ✨ Ability effects come from the body: breath jets from the mouth, spit and gaze bursts, shimmering hex shields that ripple when hit and shatter, healing helixes, quake rings, gust vortices, ink clouds, blink flashes, dash streaks, burrow spray and landing dust.
+- ⚔ Combat feedback: hits spark where they land (steel/blue sparks on armour and shields), the creature flashes, and optional floating damage numbers rise from the wound (gold for big hits, blue when shielded).
+- 📖 The Living Codex (**O**) turntable shows each creature's animated rig (silhouette until discovered).
+- ⚙ Performance: full detail up close, a lighter body at mid range, and shared instanced impostors far away; the rig manager spreads rig building over frames. Settings → Living creatures → Creature detail lets slower machines trade detail for speed.
 
 ## What's new in v2.2 — The Living Story
 
@@ -137,7 +152,7 @@ Autosave every 30 s, on dimension change, and when you close or hide the tab ("s
 
 ## Playing with friends (peer-to-peer, free, no accounts)
 
-v2, v2.1 and v2.2 play together. Story, score and Kindred talk turn on when the host runs v2.2 (a v2.2 guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2/v2.1/v2.2 games (or host for them): the game refuses politely and explains who should update.
+v2, v2.1, v2.2 and v2.3 play together. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2/v2.1/v2.2/v2.3 games (or host for them): the game refuses politely and explains who should update.
 
 Kindred memories, the Chronicler and the music are run by the host and saved in the host's world.
 
@@ -171,4 +186,4 @@ Very strict firewalls on both sides can block any direct peer-to-peer connection
 
 ## Tech notes
 
-Chunk generation stays on the main thread, time-sliced, because World.POST hooks touch game state; meshing runs in Web Workers. Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites).
+Chunk generation stays on the main thread, time-sliced, because World.POST hooks touch game state; meshing runs in Web Workers. v2.3 creatures are skinned meshes merged to a few draw calls each (one per material), with shared geometry per species, a lighter mid-range LOD and InstancedMesh impostors; skins and coat patterns are procedural in the shader (no image files). Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites).
