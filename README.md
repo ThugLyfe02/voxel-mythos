@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2.4 “Quests and Coin”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.3 saves load in v2.4 unchanged (same storage keys; v2.4 only adds new sections for quests and the market, so a v2.4 world still opens in v2.3, which ignores them).
+A living voxel sandbox (v2.5 “Wild Skies”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.4 saves load in v2.5 unchanged (same storage keys; v2.5 only adds new sections for the ecology and the almanac, so a v2.5 world still opens in v2.4, which ignores them — except placed Nest Boxes and star-metal ore, which older versions don't know and leave out).
 
 ## Play
 
@@ -41,6 +41,7 @@ Most keys can be rebound in **Esc → Settings → Accessibility → Key binding
 - **E** inventory & crafting · **M** market (Shift+M living Market) · **,** quest board & journal · **F** talk · **T or /** chat & commands · **Q** cast spell · **G** map & factions
 - **R** mount / dismount / land · **V** thermal vision · **X** weapon ability · **B** armory · **N** tech tree · **J** Story Journal (Shift+J creature codex)
 - **O** Living Codex (Shift+O party) · **U** trophies · **Y** gallery · **H** Hearth claim view (airship camera on a ship)
+- **.** (period) Celestial Almanac — while looking up at the night sky it toggles star and planet labels instead
 - **L** spellbook · **I** journal · **Z** blueprints · **K** save now · **Esc** pause · **F3** performance overlay
 - **E** while facing a villager, worker, mage or caravan: Kindred talk menu
 - **Bard's Lute** in hand: **1–9** play notes
@@ -83,7 +84,18 @@ New in v2.2: `/story [sim N]` `/chronicler [on|off|persona <name>|cap N|fewer]`
 
 `/music [on|off|status|motif|mutate|stinger|density|visual|credits]` `/kindred [status|who|rumors|gossip|talk]`
 
+New in v2.5: `/eco [stats|rewild|days N (creative)]` `/sky [next|labels|goto <event> (creative)]`
+
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
+
+## What's new in v2.5 — Wild Skies
+
+**Esc → "🌌 New in v2.5"** lists all of this in game.
+
+- 🌿 **Living Ecology:** every 64×64 patch of land tracks plants, water, soil and the animals living there. Herds follow the seasons, and hunting, taming and farming change what spawns around you. Each biome has a keystone species — lose the wolves of a forest and it slowly withers. Plant saplings, dig ponds, place Nest Boxes (3 planks + 1 stick) and release companions to bring it back. A rich, balanced patch becomes a Sanctuary. Craft a Naturalist's Spyglass, or use Pause → Ecology Lens, or `/eco`.
+- 🌌 **Celestial Almanac:** two moons (Lumen, 8 days, and Vesper, 29 days), wandering stars, twelve constellations, comets, meteor showers, blood moons and winter auroras. The sky is computed from your world seed, so a party shares it. Craft an Astrolabe to predict eclipses, comets and showers. Open it with **period (.)**, Pause → Almanac, or `/sky`. Looking up at night, period toggles star and planet labels.
+- The living ecology, Ecology Lens and star naming need a v2.5 host. A v2.5 guest still sees the almanac sky at an older host, because the sky comes from the world seed.
+- Refinements: dragon horns fold flat while riding in first person, worker wages follow the village's cost of living, and new worlds' markets settle before you arrive.
 
 ## What's new in v2.4 — Quests and Coin
 
@@ -161,9 +173,9 @@ Autosave every 30 s, on dimension change, and when you close or hide the tab ("s
 
 ## Playing with friends (peer-to-peer, free, no accounts)
 
-v2, v2.1, v2.2, v2.3 and v2.4 play together. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.4 games (or host for them): the game refuses politely and explains who should update.
+v2.1, v2.2, v2.3, v2.4 and v2.5 play together (v2 still connects too). The living ecology, Ecology Lens and star naming need a v2.5 host (a v2.5 guest at an older host is told so); the sky itself is computed from the world seed, so v2.5 guests see the almanac sky at any host. Older guests see the old sky and wildlife. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.5 games (or host for them): the game refuses politely and explains who should update.
 
-Kindred memories, the Chronicler, quests, the market and the music are run by the host and saved in the host's world.
+Kindred memories, the Chronicler, quests, the market, the ecology and the music are run by the host and saved in the host's world.
 
 ### Host (you)
 

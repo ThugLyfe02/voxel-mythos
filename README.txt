@@ -1,9 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.4 “Quests and Coin”)
-==============================================================
+VOXEL MYTHOS — a living voxel sandbox (v2.5 “Wild Skies”)
+=========================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.3 saves load in v2.4 unchanged (same storage keys;
-v2.4 only adds new sections for quests and the market, so a v2.4 world still opens in v2.3, which ignores them).
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.4 saves load in v2.5 unchanged (same storage keys;
+v2.5 only adds new sections for the ecology and the almanac, so a v2.5 world still opens in v2.4, which ignores them —
+except placed Nest Boxes and star-metal ore, which older versions don't know and leave out).
 
 FIRST STEPS: click the game view ("🖱 Click to play") to capture the mouse, then move the mouse to look around.
 Esc releases the mouse and pauses; click again to carry on.
@@ -28,6 +29,7 @@ CONTROLS — desktop (most keys can be rebound in Esc → Settings → Accessibi
     E inventory & crafting   M market (Shift+M living Market)   , (comma) quest board & journal   F talk   T or / chat & commands   Q cast spell   G map & factions
     R mount / dismount / land   V thermal vision   X weapon ability   B armory   N tech tree   J Story Journal (Shift+J creature codex)
     O Living Codex (Shift+O party)   U trophies   Y gallery   H Hearth claim view (airship camera on a ship)
+    .  (period) Celestial Almanac — while looking up at the night sky it toggles star & planet labels instead
     L spellbook   I journal   Z blueprints   K save now   Esc pause   F3 performance overlay
     E while facing a villager, worker, mage or caravan: Kindred talk menu    Bard's Lute in hand: 1-9 play notes
 
@@ -55,7 +57,41 @@ USEFUL COMMANDS (T or /)
     /codex [stats|creatures|<name>|all (creative)]  /mentor off|quiet|helpful|tip|tts
   New in v2.2: /story [sim N]  /chronicler [on|off|persona <name>|cap N|fewer]
     /music [on|off|status|motif|mutate|stinger|density|visual|credits]  /kindred [status|who|rumors|gossip|talk]
+  New in v2.5: /eco [stats|rewild|days N (creative)]  /sky [next|labels|goto <event> (creative)]
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.5 — WILD SKIES
+  🌿 LIVING ECOLOGY: every 64 × 64 patch of land tracks plants, water, soil and the animals living there. Hares and deer
+    feed lynx, owls and wolves; herds follow the seasons between biomes and you can watch them migrate past. Hunting,
+    taming and farming all change the numbers, and the animals that spawn around you come from what really lives there.
+    The simulation is kept in bounds (a full in-game year was tested with no runaway or vanished species).
+  🐺 Keystones & Sanctuaries: each biome has a keystone species. Lose the wolves of a forest and it slowly withers, its
+    colours fading. Plant saplings, dig ponds, place Nest Boxes (3 planks + 1 stick) and release companions to bring life
+    back. A patch rich and balanced for three days becomes a Sanctuary: legendary creatures appear only there, and once
+    a season it gives you a Heartseed, which completes one Ascension step for a companion.
+  🧬 Evolving wildlife: animals hunted hard grow faster, smaller and warier over many days; those in cold land grow paler
+    coats. When a trait drifts far enough a new subspecies appears and you name it (it shows in the Codex).
+  🔭 Ecology Lens: craft a Naturalist's Spyglass (2 glass, 1 copper, 1 plank) and use it on the land, or Pause → Ecology
+    Lens, or /eco. Land-health map, 30-day life graphs, every species with capacity and trend, Sanctuary progress and
+    field notes. Ecology feeds the Questforge (replant, lead escaped animals home, survey — never a hunt; predators are
+    never quest targets) and Market prices for meat, bone, herbs and more.
+  🌌 CELESTIAL ALMANAC: two moons, Lumen (8 days) and Vesper (29 days), four wandering stars, twelve named constellations,
+    comets every 40-60 days, meteor showers about every 12 days, blood moons and winter auroras far north or south.
+    The whole sky is computed from your world seed, so everyone in a party sees the same sky.
+  🌑 Eclipses to the minute: craft an Astrolabe (2 gold, 2 copper, 1 glass) to predict eclipses, comets, showers and
+    conjunctions 10 days ahead (60 days with an Observatory in the village) and set alarms. Totality falls exactly on
+    the predicted minute. The sky matters: full Lumen speeds companion bonding, new Lumen strengthens dark arts,
+    conjunctions bless the anvil (and Star Charts add +10 % upgrade success), showers drop star-metal ore and a comet
+    starts a quest chain that ends with a Comet Ember. Pause → Almanac, the period key, or /sky.
+  📜 Omens & lore: eclipses, comets and blood moons enter the Chronicle, the music follows the aurora, villagers tell sky
+    stories in three voices and the Questforge reads the sky as omens. You can name a star; the name is shared with
+    your party.
+  🐉 Refinements: dragon horns fold flat while you ride in first person, the roc's breast barring reads at a distance,
+    player name tags stay small and fade out up close (no more banner over a mech), worker wages follow the village's
+    cost of living and are spent at the village market, Logic Cores can run market stalls (PRICE / STOCK / PROFIT /
+    SELL / BUY / SHIP through the same host checks as players), and new worlds' markets settle before you arrive so
+    early-game prices don't swing.
+  Esc → "🌌 New in v2.5" lists all of this in game.
 
 WHAT'S NEW IN v2.4 — QUESTS AND COIN
   📜 QUESTFORGE: quests come from what is really happening in your world — a town short of iron, raiders or wolves near
@@ -181,12 +217,15 @@ SAVING
   Esc → Worlds & backups: 4 named world slots + the Daily slot, Export (.json backup file), Import, rename, delete.
 
 PLAYING WITH FRIENDS (peer-to-peer, free, no accounts)
-  v2, v2.1, v2.2, v2.3 and v2.4 play together. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see
+  v2.1, v2.2, v2.3, v2.4 and v2.5 play together (v2 still connects too). The living ecology, Ecology Lens and star
+  naming need a v2.5 host (a v2.5 guest at an older host is told so); the sky itself is computed from the world seed, so
+  v2.5 guests see the almanac sky at any host. Older guests see the old sky and wildlife.
+  Guests see the host's creatures, pets and helpers with v2.3 bodies, and see
   friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full
   reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an
   older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players.
-  v1 can't join v2–v2.4 games (or host for them): the game refuses politely and explains who should update.
-  Kindred memories, the Chronicler, quests, the market and the music are run by the host and saved in the host's world.
+  v1 can't join v2–v2.5 games (or host for them): the game refuses politely and explains who should update.
+  Kindred memories, the Chronicler, quests, the market, the ecology and the music are run by the host and saved in the host's world.
   Host (you):
     1. Open voxel-sandbox.html, load or create a world.
     2. Press Esc → "🌐 Host for friends" → "Host & get a room code".
@@ -209,4 +248,7 @@ TECH NOTES
   Web Workers. v2.3 creatures are skinned meshes merged to a few draw calls each (one per material), with shared
   geometry per species, a lighter mid-range LOD and InstancedMesh impostors; skins and coat patterns are procedural in the
   shader (no image files). v2.4's market runs as typed arrays (30 markets × 83 goods, about 0.3 ms per in-game
-  hour) and saves compactly (about 70 KB). Market deals are host-authoritative with escrow and idempotent transaction ids. Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites).
+  hour) and saves compactly (about 70 KB). Market deals are host-authoritative with escrow and idempotent transaction ids. v2.5's ecology is a
+  Lotka-Volterra-style model per 64 × 64 cell (20 overworld species plus dimension food webs) stepped hourly on the host;
+  the almanac is a pure function of seed and time (eclipse contacts found by bisection), costing about 0.01 ms a frame.
+  Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites).
