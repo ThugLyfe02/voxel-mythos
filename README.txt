@@ -1,9 +1,9 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.3 “Living Creatures”)
-================================================================
+VOXEL MYTHOS — a living voxel sandbox (v2.4 “Quests and Coin”)
+==============================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1, v2, v2.1 and v2.2 saves load in v2.3 unchanged (same storage keys;
-v2.3 adds no new world data, so a v2.3 world still opens in v2.2).
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.3 saves load in v2.4 unchanged (same storage keys;
+v2.4 only adds new sections for quests and the market, so a v2.4 world still opens in v2.3, which ignores them).
 
 FIRST STEPS: click the game view ("🖱 Click to play") to capture the mouse, then move the mouse to look around.
 Esc releases the mouse and pauses; click again to carry on.
@@ -25,7 +25,7 @@ CONTROLS — desktop (most keys can be rebound in Esc → Settings → Accessibi
   Acting
     Left click (hold)  mine / attack      Right click  place · eat · use · talk · tame · ride
     1-9 / wheel ...... hotbar             0  cast your bound Light/Dark path power (duel bolt in a duel)     -  Crossroads / Light panel
-    E inventory & crafting   M market   F talk   T or / chat & commands   Q cast spell   G map & factions
+    E inventory & crafting   M market (Shift+M living Market)   , (comma) quest board & journal   F talk   T or / chat & commands   Q cast spell   G map & factions
     R mount / dismount / land   V thermal vision   X weapon ability   B armory   N tech tree   J Story Journal (Shift+J creature codex)
     O Living Codex (Shift+O party)   U trophies   Y gallery   H Hearth claim view (airship camera on a ship)
     L spellbook   I journal   Z blueprints   K save now   Esc pause   F3 performance overlay
@@ -56,6 +56,42 @@ USEFUL COMMANDS (T or /)
   New in v2.2: /story [sim N]  /chronicler [on|off|persona <name>|cap N|fewer]
     /music [on|off|status|motif|mutate|stinger|density|visual|credits]  /kindred [status|who|rumors|gossip|talk]
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.4 — QUESTS AND COIN
+  📜 QUESTFORGE: quests come from what is really happening in your world — a town short of iron, raiders or wolves near
+    the village (you drive predators off, you never hunt them), a villager's wish or feud, someone lonely, a ruin or omen the
+    Chronicler noticed, a dungeon, a blueprint, a festival, the season, a celestial event, a pet to tame, your Light/Dark
+    road, a dimension you haven't visited. Every quest has a "Because: …" line naming its cause. If that need goes
+    away, the quest closes itself (half reward if you hadn't started; finish it for the full reward if you had).
+  🔗 Sagas of 3-7 steps, complications (storm, curse, rival party, a deadline of at least a day) and forks with two
+    good-faith endings. Finished quests leave lasting echoes: restored ruins, restocked towns, warmer villagers and
+    entries in the Chronicle.
+  🎯 Difficulty adapts to how you play, and the Chronicler leans toward the kinds of quest you enjoy (abandoning one
+    tells it something too). Rewards scale with era, difficulty and chain length. You can have up to 8 active quests
+    and track 3 on the HUD, which shows direction arrows and soft light beacons. Comma (,) or Pause → Quest board opens
+    the board, journal and echoes.
+  🪙 THE LIVING MARKET (Shift+M, or the link in the M market): 83 goods priced by supply and demand across your village,
+    19 trading towns, the four dimension bazaars and travelling caravans. Production, consumption, spoilage, local
+    industries, shocks (mine collapses, blights, fairs), festivals and the seasons move stock and prices, and the
+    Ledger shows each good's price history. One deal can take at most 25 % of a market's stock, and dumping
+    lowers the price you get, so prices can't be cornered.
+  🏪 Farmers, Smiths, Mystics and Traders run shops (talk → Shop) with friendship discounts of up to 10 %. Towns post
+    contracts that you hand in at the guild board. Couriers and airships carry goods between towns (fees, travel time,
+    occasional storm delays). The old M market now follows the same prices.
+  🏦 Bank: deposits earn about 1 % interest each in-game week (at most 500 coins a week). Loans go up to 3× your
+    weekly income for a 5 % fee in 4 installments; a missed installment only blocks new loans. Merchant ranks run
+    from Peddler to Merchant Prince.
+    A slow governor adjusts market fees and quest/contract payouts so that coins keep their value.
+  🤝 Friends: list up to 6 items on the Exchange Board (2 % listing fee, 3 % sales tax). Sellers are paid even if they
+    were offline. You can also open a trade window with a player within 12 m: any change restarts a 3-second lock,
+    both players must accept, and goods move together or not at all. The host checks every deal, so nothing can
+    be duplicated, and repeated or flooded requests are ignored.
+  🎮 Coins are earned only in the game. There is no real money, nothing to buy and no pay-to-win. All towns and
+    factions are fictional.
+  🐉 Refinements: the dragon has a reptilian silhouette, the roc hovers properly and particles are soft glowing sprites.
+    Guests now see ability effects and other players' mech rigs. Mounted first-person eye height is correct, birds
+    have barred feathers, the badger's blaze shows from the front and tamed pets have new Codex models.
+  Esc → "🪙 New in v2.4" lists all of this in game.
 
 WHAT'S NEW IN v2.3 — LIVING CREATURES
   🐺 LIVING BODIES: every animal, mob, villager, NPC, worker, mage, pet, mount, summon, construct and boss now has an
@@ -145,11 +181,12 @@ SAVING
   Esc → Worlds & backups: 4 named world slots + the Daily slot, Export (.json backup file), Import, rename, delete.
 
 PLAYING WITH FRIENDS (peer-to-peer, free, no accounts)
-  v2, v2.1, v2.2 and v2.3 play together. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see
-  friends seated on their mounts. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an
+  v2, v2.1, v2.2, v2.3 and v2.4 play together. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see
+  friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full
+  reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an
   older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players.
-  v1 can't join v2/v2.1/v2.2/v2.3 games (or host for them): the game refuses politely and explains who should update.
-  Kindred memories, the Chronicler and the music are run by the host and saved in the host's world.
+  v1 can't join v2–v2.4 games (or host for them): the game refuses politely and explains who should update.
+  Kindred memories, the Chronicler, quests, the market and the music are run by the host and saved in the host's world.
   Host (you):
     1. Open voxel-sandbox.html, load or create a world.
     2. Press Esc → "🌐 Host for friends" → "Host & get a room code".
@@ -171,4 +208,5 @@ TECH NOTES
   Chunk generation stays on the main thread, time-sliced, because World.POST hooks touch game state; meshing runs in
   Web Workers. v2.3 creatures are skinned meshes merged to a few draw calls each (one per material), with shared
   geometry per species, a lighter mid-range LOD and InstancedMesh impostors; skins and coat patterns are procedural in the
-  shader (no image files). Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites).
+  shader (no image files). v2.4's market runs as typed arrays (30 markets × 83 goods, about 0.3 ms per in-game
+  hour) and saves compactly (about 70 KB). Market deals are host-authoritative with escrow and idempotent transaction ids. Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites).

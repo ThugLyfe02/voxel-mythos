@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2.3 “Living Creatures”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1, v2, v2.1 and v2.2 saves load in v2.3 unchanged (same storage keys; v2.3 adds no new world data, so a v2.3 world still opens in v2.2).
+A living voxel sandbox (v2.4 “Quests and Coin”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.3 saves load in v2.4 unchanged (same storage keys; v2.4 only adds new sections for quests and the market, so a v2.4 world still opens in v2.3, which ignores them).
 
 ## Play
 
@@ -38,7 +38,7 @@ Most keys can be rebound in **Esc → Settings → Accessibility → Key binding
 
 - **Left click (hold)** mine / attack · **Right click** place · eat · use · talk · tame · ride
 - **1–9 / wheel** hotbar · **0** cast your bound Light/Dark path power (duel bolt in a duel) · **-** Crossroads / Light panel
-- **E** inventory & crafting · **M** market · **F** talk · **T or /** chat & commands · **Q** cast spell · **G** map & factions
+- **E** inventory & crafting · **M** market (Shift+M living Market) · **,** quest board & journal · **F** talk · **T or /** chat & commands · **Q** cast spell · **G** map & factions
 - **R** mount / dismount / land · **V** thermal vision · **X** weapon ability · **B** armory · **N** tech tree · **J** Story Journal (Shift+J creature codex)
 - **O** Living Codex (Shift+O party) · **U** trophies · **Y** gallery · **H** Hearth claim view (airship camera on a ship)
 - **L** spellbook · **I** journal · **Z** blueprints · **K** save now · **Esc** pause · **F3** performance overlay
@@ -84,6 +84,15 @@ New in v2.2: `/story [sim N]` `/chronicler [on|off|persona <name>|cap N|fewer]`
 `/music [on|off|status|motif|mutate|stinger|density|visual|credits]` `/kindred [status|who|rumors|gossip|talk]`
 
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
+
+## What's new in v2.4 — Quests and Coin
+
+**Esc → "🪙 New in v2.4"** lists all of this in game.
+
+- 📜 **Questforge:** quests come from what is really happening in your world — a town short of iron, raiders or wolves near the village (you drive predators off, you never hunt them), a villager's wish or feud, a ruin or omen the Chronicler noticed, and more. Every quest has a "Because: …" line naming its cause, and it closes itself if that need goes away. Sagas run 3–7 steps, with complications and two good-faith endings. Up to 8 active quests; track 3 on the HUD. **Comma (,)** or Pause → Quest board opens the board, journal and echoes.
+- 🪙 **The living Market (Shift+M,** or the link in the **M** market): 83 goods priced by supply and demand across your village, 19 trading towns, the four dimension bazaars and travelling caravans. Shops, town contracts, couriers, a bank, and an Exchange Board where friends can list up to 6 items. Coins are earned only in the game — no real money and no pay-to-win.
+- Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward.
+- Refinements: the dragon's silhouette, the roc's hover, softer particles, and guests now see ability effects and other players' mech rigs.
 
 ## What's new in v2.3 — Living Creatures
 
@@ -152,9 +161,9 @@ Autosave every 30 s, on dimension change, and when you close or hide the tab ("s
 
 ## Playing with friends (peer-to-peer, free, no accounts)
 
-v2, v2.1, v2.2 and v2.3 play together. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2/v2.1/v2.2/v2.3 games (or host for them): the game refuses politely and explains who should update.
+v2, v2.1, v2.2, v2.3 and v2.4 play together. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.4 games (or host for them): the game refuses politely and explains who should update.
 
-Kindred memories, the Chronicler and the music are run by the host and saved in the host's world.
+Kindred memories, the Chronicler, quests, the market and the music are run by the host and saved in the host's world.
 
 ### Host (you)
 
