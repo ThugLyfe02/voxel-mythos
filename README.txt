@@ -1,3 +1,5 @@
+v2.7-hotfix1 (NOT PUBLISHED): v2.7 + join-by-code fix only (src/13_net.js changes: TURN relays, code normalization, 3-try join, clear errors, Enter-to-join). See notes/joinfix.md.
+
 VOXEL MYTHOS — a living voxel sandbox (v2.7 “Realms and Ruins”)
 ===============================================================
 

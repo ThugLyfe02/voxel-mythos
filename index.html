@@ -4090,7 +4090,13 @@ G.NET_FEAT = NET_FEAT; G.mpUid = function () { try { let u = localStorage.getIte
 // ================= 13: Multiplayer (PeerJS P2P + manual WebRTC fallback, host-authoritative) =================
 const NET_CHUNK = 15000, NET_PREFIX = 'vxm-', NET_ALPHA = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
 const KIT_KEY = 'voxelmythos_guestkit', NAME_KEY = 'voxelmythos_mpname';
-const ICE = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }, { urls: 'stun:global.stun.twilio.com:3478' }] };
+// joinfix: the game used to pass STUN-only servers, which REPLACES PeerJS's default config (and its free TURN relays), so two players behind strict / carrier-grade NAT could find each
+// other's room but never open the connection. Now: STUN + PeerJS's public TURN relays over UDP and TCP, plus any TURN servers saved in localStorage 'vm_ice' (JSON array of RTCIceServer, max 3) tried first.
+const ICE_USER = (() => { try { const a = JSON.parse(localStorage.getItem('vm_ice') || 'null'); return Array.isArray(a) ? a.filter(x => x && (typeof x.urls === 'string' || Array.isArray(x.urls))).slice(0, 3) : []; } catch (e) { return []; } })();
+const ICE = { iceServers: ICE_USER.concat([{ urls: ['stun:stun.l.google.com:19302', 'stun:stun.cloudflare.com:3478'] }, { urls: ['turn:eu-0.turn.peerjs.com:3478', 'turn:us-0.turn.peerjs.com:3478', 'turn:eu-0.turn.peerjs.com:3478?transport=tcp', 'turn:us-0.turn.peerjs.com:3478?transport=tcp'], username: 'peerjs', credential: 'peerjsp' }]) };
+// joinfix: room codes from chat apps arrive as ' abcde ', 'A B C D E', 'abc-de', 'vxm-abcde' or a link with ?room=; reduce them to the bare code
+function netNormCode(raw) { let c = String(raw == null ? '' : raw); try { c = c.normalize('NFKC'); } catch (e) {} c = c.replace(/^.*[?#&](?:room|code|join)=/i, '').replace(/[&#].*$/, '').trim(); c = c.replace(/^(?:room\s*)?code\s*[:=#-]?\s*/i, '').replace(/^vxm[-_\s.:]+/i, ''); return c.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 12); }
+G.netNormCode = netNormCode;
 G.net = { active: false, role: null, links: [], players: new Map(), avatars: new Map(), proxies: new Map(), outSets: [], inSets: [], code: '', status: '', manual: {}, chatLog: [], nextNet: 1, nextPid: 1, pid: 0 };
 const N = G.net;
 function mpName() { let n = ''; try { n = localStorage.getItem(NAME_KEY) || ''; } catch (e) {} return n || (G.S && G.S.name) || 'Player'; }
@@ -4244,7 +4250,7 @@ G.netHost = function () {
 G.netStop = function (silent) {
   for (const L of N.links.slice()) { if (N.role === 'host') L.send({ t: 'bye' }); L.onclose = null; L.close(); }
   if (N.host) { N.host.onclose = null; N.host.close(); } N.host = null; N.links = [];
-  if (N.peer) { try { N.peer.destroy(); } catch (e) {} } N.peer = null; for (const pc of Object.values(N.manual)) { if (pc && pc.close) try { pc.close(); } catch (e) {} } N.manual = {};
+  N.join = null; if (N.peer) { try { N.peer.destroy(); } catch (e) {} } N.peer = null; for (const pc of Object.values(N.manual)) { if (pc && pc.close) try { pc.close(); } catch (e) {} } N.manual = {};
   for (const a of N.avatars.values()) removeEnt(a); N.avatars.clear(); for (const p of N.proxies.values()) removeEnt(p); N.proxies.clear();
   N.players.clear(); N.active = false; N.role = null; N.code = ''; N.status = ''; G.netGuest = false; netBar(); if (!silent) toast('🌐 Multiplayer stopped', '');
 };
@@ -4311,16 +4317,36 @@ function hostGone(why) {
   G.ui.modal('Disconnected', why + (free ? ' You can keep exploring a copy of this world offline (saved to an empty slot) or return to the title.' : ' All world slots are full, so return to the title.'), btns);
 }
 G.netJoin = function (codeIn, manualLink) {
-  if (N.active) G.netStop(true); const code = String(codeIn || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+  if (N.active) G.netStop(true); const code = netNormCode(codeIn);
   const start = L => { N.host = L; N.active = true; N.role = 'guest'; L.onmsg = guestOnMsg; L.onclose = () => hostGone('The connection to the host was lost.'); N.refused = false; L.send({ t: 'hello', ver: NET_VER, fv: NET_FEAT, uid: G.mpUid(), name: mpName() }); netStatus('Connected! Downloading the world…'); };
   if (manualLink) { start(manualLink); return; }
-  if (code.length < 4) { netStatus('Enter the room code your friend gave you.'); return; }
+  if (N.join && N.peer) { try { N.peer.destroy(); } catch (e) {} N.peer = null; } N.join = null;
+  if (code.length < 4) { netStatus('Enter the room code your friend gave you — 5 letters/numbers, like ABCDE.'); return; }
   if (typeof window.Peer !== 'function') { netStatus('Online matchmaking library unavailable — use the manual invite.'); return; }
-  netStatus('Looking for room ' + code + '…'); let peer; try { peer = new window.Peer(undefined, { debug: 0, config: ICE }); } catch (e) { netStatus('Could not start (' + e.message + ').'); return; } N.peer = peer;
-  const to = setTimeout(() => { if (!N.host) { netStatus('Could not reach room ' + code + '. Check the code, or try the manual invite.'); try { peer.destroy(); } catch (e) {} N.peer = null; } }, 20000);
-  peer.on('open', () => { const conn = peer.connect(NET_PREFIX + code.toLowerCase(), { reliable: true, serialization: 'raw' }); wirePeerConn(conn, L => { clearTimeout(to); start(L); }); });
-  peer.on('error', err => { const t = err && err.type; if (t === 'peer-unavailable') { clearTimeout(to); netStatus('No world is hosted with code ' + code + ' right now.'); try { peer.destroy(); } catch (e) {} N.peer = null; } else if (!N.host && (t === 'network' || t === 'server-error' || t === 'socket-error')) { clearTimeout(to); netStatus('The PeerJS matchmaking server is unreachable. Use the manual invite instead.'); try { peer.destroy(); } catch (e) {} N.peer = null; } });
+  N.lastCode = code; const J = N.join = { code, tries: 0, done: false, log: [] }, MAXT = 3, odd = /[O0I1L]/.test(code.replace(/G\d+$/, ''));
+  const MSG_NONE = 'No world is hosted with code ' + code + ' right now. Check the code' + (odd ? ' (codes never use the letters O, I or L or the digits 0 or 1)' : '') + ' and that your friend is still hosting, then try again.';
+  const MSG_REACH = 'Couldn’t reach host — check the code or try again. (Room ' + code + ' did not answer. The host should keep the game open and in front while friends join.)';
+  const MSG_P2P = 'Found room ' + code + ', but couldn’t open a connection to the host — a network (often mobile data, school or work Wi-Fi) is blocking direct play. Try again, try another network or a phone hotspot, or use the manual invite below.';
+  const MSG_SRV = 'Couldn’t reach the free matchmaking server (PeerJS). Check your internet connection and try again, or use the manual invite below.';
+  const attempt = () => { if (N.join !== J || J.done) return; J.tries++; const relay = J.tries >= MAXT; let peer, conn = null, found = false, over = false;
+    netStatus(J.tries === 1 ? 'Looking for room ' + code + '…' : 'Still trying to reach room ' + code + ' (attempt ' + J.tries + ' of ' + MAXT + (relay ? ', via relay' : '') + ')…');
+    const fail = (why, final, tag) => { if (over) return; if (tag === 'unavailable') J.unav = true; else if (J.unav && tag === 'timeout') { why = MSG_NONE; final = true; } if (!found && conn && conn.peerConnection && conn.peerConnection.remoteDescription) { found = true; if (why === MSG_REACH) why = MSG_P2P; } over = true; J.found = J.found || found; clearTimeout(to); J.log.push(J.tries + ':' + tag); try { peer && peer.destroy(); } catch (e) {} if (N.peer === peer) N.peer = null; if (N.join !== J || J.done) return;
+      if (!final && J.tries < MAXT) { setTimeout(attempt, 800 * J.tries); return; } J.done = true; N.join = null; netStatus(why === MSG_REACH && J.found ? MSG_P2P : why); };
+    try { peer = new window.Peer(undefined, { debug: 0, config: relay ? Object.assign({}, ICE, { iceTransportPolicy: 'relay' }) : ICE }); } catch (e) { J.done = true; N.join = null; netStatus('Could not start (' + e.message + ').'); return; } N.peer = peer;
+    const to = setTimeout(() => fail(found ? MSG_P2P : MSG_REACH, false, found ? 'ice-timeout' : 'timeout'), relay ? 22000 : 16000);
+    peer.on('open', () => { if (over) return; conn = peer.connect(NET_PREFIX + code.toLowerCase(), { reliable: true, serialization: 'raw' }); if (!conn) return fail(MSG_SRV, false, 'noconn');
+      conn.on('iceStateChanged', st => { if (st === 'checking' || st === 'connected' || st === 'completed') found = true; if (st === 'failed') fail(MSG_P2P, false, 'ice-failed'); });
+      wirePeerConn(conn, L => { if (over || N.join !== J || J.done) { try { conn.close(); } catch (e) {} return; } over = true; clearTimeout(to); J.done = true; N.join = null; start(L); }); });
+    peer.on('error', err => { const t = err && err.type;
+      if (t === 'peer-unavailable') fail(MSG_NONE, J.tries >= 2, 'unavailable'); // one quick retry: the host may be re-registering after a network blip
+      else if (t === 'network' || t === 'server-error' || t === 'socket-error' || t === 'socket-closed' || t === 'disconnected') fail(MSG_SRV, false, t);
+      else if (t === 'webrtc' || t === 'negotiation-failed' || t === 'connection-closed') fail(found ? MSG_P2P : MSG_REACH, false, t);
+      else if (t === 'browser-incompatible') fail('This browser can’t do peer-to-peer play. Try an up-to-date Chrome, Edge, Firefox or Safari.', true, t); }); };
+  attempt();
 };
+// joinfix: Enter in the room-code box joins; a host whose tab was backgrounded re-registers its code when it comes back
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target && e.target.id === 'mpCode') { e.preventDefault(); e.stopPropagation(); G.uiActions.mpJoin(); } }, true);
+document.addEventListener('visibilitychange', () => { const p = N.peer; if (!document.hidden && N.role === 'host' && p && p.disconnected && !p.destroyed) { try { p.reconnect(); } catch (e) {} } });
 
 // ---------- manual WebRTC (copy/paste) ----------
 const enc = o => btoa(unescape(encodeURIComponent(JSON.stringify(o)))), dec = s => JSON.parse(decodeURIComponent(escape(atob(String(s).trim().replace(/\s+/g, '')))));
@@ -4379,7 +4405,7 @@ G.ui.p_mp = function () {
     h += '<p style="font-size:13px">Players here: ' + (N.players.size ? [...N.players.values()].map(p => esc(p.name)).join(', ') : 'just you so far') + '</p><button class="btn small ghost" data-act="mpStop">Stop hosting</button>';
   } else if (N.role === 'guest') { h += '<p>Connected to <b>' + esc(N.hostName || 'host') + '</b>. Your inventory travels with you; the world is the host’s.</p><button class="btn small ghost" data-act="mpLeave">Leave & return to title</button>'; }
   else if (inGame) { h += '<h3>Host this world</h3><p style="font-size:13px;color:#c9d3ff">Opens your world to friends over a direct peer-to-peer connection. You get a short room code to share.</p><button class="btn gold" data-act="mpHost">🌐 Host & get a room code</button>'; h += '<p style="font-size:12px;color:#8f9bd0;margin-top:10px">To join someone else, save & quit to the title and press 🌐 Multiplayer there.</p>'; }
-  else { h += '<h3>Join a friend</h3><p>Room code: <input type="text" id="mpCode" maxlength="8" style="text-transform:uppercase;letter-spacing:3px;width:120px" placeholder="ABCDE"> <button class="btn gold" data-act="mpJoin">Join</button></p><p style="font-size:12px;color:#8f9bd0">To host, load a world and choose 🌐 Host in the pause menu (Esc).</p>'; }
+  else { h += '<h3>Join a friend</h3><p>Room code: <input type="text" id="mpCode" maxlength="40" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" aria-label="Room code" value="' + esc(N.lastCode || '') + '" style="text-transform:uppercase;letter-spacing:3px;width:130px" placeholder="ABCDE"> <button class="btn gold" data-act="mpJoin">Join</button></p><p style="font-size:12px;color:#8f9bd0">To host, load a world and choose 🌐 Host in the pause menu (Esc).</p>'; }
   // manual fallback
   h += '<details style="margin-top:12px"' + (N.offerCode || N.answerCode ? ' open' : '') + '><summary style="cursor:pointer">🔧 Manual invite (no matchmaking server needed)</summary><div style="font-size:12px;color:#c9d3ff;margin:6px 0">Copy-paste codes through any chat app. One invite per friend.</div>';
   if (inGame && N.role !== 'guest') { h += '<p><b>Host:</b> 1) <button class="btn small" data-act="mpOffer">Create invite code</button></p>';

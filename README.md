@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2.7 “Realms and Ruins”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.6 saves load in v2.7 unchanged (same storage keys; v2.7 only adds new sections for the realm, banners and the dig record). Existing worlds keep their land: ruins and the Strata layers appear only in chunks generated after the update. A v2.7 world still opens in v2.6 and older: the realm and dig record are kept but ignored, and the new v2.7 blocks appear as a familiar stand-in such as stone, bricks, cobble or dirt instead of disappearing.
+A living voxel sandbox (v2.7-hotfix1 “Realms and Ruins”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.6 saves load in v2.7 unchanged (same storage keys; v2.7 only adds new sections for the realm, banners and the dig record). Existing worlds keep their land: ruins and the Strata layers appear only in chunks generated after the update. A v2.7 world still opens in v2.6 and older: the realm and dig record are kept but ignored, and the new v2.7 blocks appear as a familiar stand-in such as stone, bricks, cobble or dirt instead of disappearing.
 
 ## Play
 
@@ -91,6 +91,17 @@ New in v2.6: `/bucket [level N|all|empty]` `/ww [stats|settle (creative)|on|off]
 New in v2.7: `/realm [council|vote N|found <name>|stance <choice>]` `/banner` `/strata` `/friends`
 
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
+
+## v2.7-hotfix1 — Join fix
+
+Friends behind a strict NAT, or on mobile data, can connect. The game now uses TURN relay servers when a direct peer connection cannot get through.
+
+- Pasted room codes are cleaned up: spaces, dashes, a `vxm-` prefix, and links are stripped before the join.
+- A failed join retries up to 3 times.
+- Error messages say more clearly what went wrong.
+- Pressing Enter joins.
+
+Saves and worlds are unchanged from v2.7. v2 through v2.7 players can still play together.
 
 ## What's new in v2.7 — Realms and Ruins
 
