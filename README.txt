@@ -1,14 +1,12 @@
-v2.7-hotfix1 (NOT PUBLISHED): v2.7 + join-by-code fix only (src/13_net.js changes: TURN relays, code normalization, 3-try join, clear errors, Enter-to-join). See notes/joinfix.md.
-
-VOXEL MYTHOS — a living voxel sandbox (v2.7 “Realms and Ruins”)
-===============================================================
+VOXEL MYTHOS — a living voxel sandbox (v2.7.1 “Fellowship”)
+===========================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.6 saves load in v2.7 unchanged (same storage keys;
-v2.7 only adds new sections for the realm, banners and the dig record). Existing worlds keep their land: ruins and the
-Strata layers appear only in chunks generated after the update. A v2.7 world still opens in v2.6 and older: the realm
-and dig record are kept but ignored, and the new v2.7 blocks (deepstone, ores, ancient bricks, plinths) appear as a
-familiar stand-in such as stone, bricks, cobble or dirt instead of disappearing.
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.7 saves (including v2.7 hotfix 1) load in v2.7.1 unchanged (same storage keys;
+v2.7.1 only adds small new sections for shared waypoints, travel cooldowns, the multiplayer home record, voting-bloc history,
+duo-tamed companions and the party Codex record, plus backups kept separately in the browser). A v2.7.1 world still opens in v2.7 and older: the new sections are kept but ignored. Existing worlds keep
+their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update. In v2.6 and older, the v2.7 blocks
+(deepstone, ores, ancient bricks, plinths) appear as a familiar stand-in such as stone, bricks, cobble or dirt instead of disappearing.
 
 FIRST STEPS: click the game view ("🖱 Click to play") to capture the mouse, then move the mouse to look around.
 Esc releases the mouse and pauses; click again to carry on.
@@ -34,6 +32,8 @@ CONTROLS — desktop (most keys can be rebound in Esc → Settings → Accessibi
     R mount / dismount / land   V thermal vision (Stress View while holding the Engineer's Hammer)   X weapon ability   B armory   N tech tree   J Story Journal (Shift+J creature codex)
     O Living Codex (Shift+O party)   U Field Journal (Shift+U trophies)   Y gallery   H Hearth claim view (airship camera on a ship)
     .  (period) Celestial Almanac — while looking up at the night sky it toggles star & planet labels instead
+    ;  (semicolon) or middle-click: ping the spot you look at for your party (Shift: everyone) — multiplayer, v2.7.1
+    ' (apostrophe) quick-chat wheel   [ emote wheel — hold, steer with the mouse, let go — multiplayer, v2.7.1
     L spellbook   I journal   Z blueprints   K save now   Esc pause   F3 performance overlay
     E while facing a villager, worker, mage or caravan: Kindred talk menu    Bard's Lute in hand: 1-9 play notes
 
@@ -64,7 +64,91 @@ USEFUL COMMANDS (T or /)
   New in v2.5: /eco [stats|rewild|days N (creative)]  /sky [next|labels|goto <event> (creative)]
   New in v2.6: /bucket [level N|all|empty]  /ww [stats|settle (creative)|on|off]  /ls [view|physics on|off (creative)]
   New in v2.7: /realm [council|vote N|found <name>|stance <choice>]  /banner (Banner tab)  /strata (Field Journal)  /friends (where your friends are)
+  New in v2.7.1: /party [invite <name>|accept|leave] (Esc → 👥 Party)  /ping [look|danger|loot|dig|help] [all]  /wp [add <name>|list|del <name>]
+    /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.7.1 — FELLOWSHIP
+  👥 PARTIES OF UP TO 8: in a multiplayer world, Esc → 👥 Party (or /party) invites friends. Quests a party member accepts
+    are shared: everyone's progress counts and everyone gets the full reward. The Party log keeps the story. Party members
+    stay on your minimap, map and party frames wherever they are; a friend in another dimension shows with a hint to the
+    portal that leads there.
+  📍 PINGS: middle-click or ; pings the spot you look at — Look here, Danger, Loot, Dig site or Need help. Your party sees it
+    in the world, on the new compass strip, the minimap and the map; Shift pings everyone. Pings are rate-limited and work
+    up to 120 blocks away.
+  📌 SHARED WAYPOINTS: up to 20 per world (8 per player), shown as light beacons, on the compass and on both maps. Add them
+    from the Party panel or with /wp add <name>. Only the player who placed one, or the host, can rename or remove it.
+    Waypoints are saved with the host's world.
+  ✨ TRAVEL TO A FRIEND: hold still for 2 seconds and arrive beside a party member. A trip costs 20 coins and has a 5-minute
+    cooldown, or is free with a Kinstone (gold + essence, used up on arrival). Not during a fight, never into a Hearth claim
+    where you aren't trusted, and every player chooses in the Party panel who may travel to them (party, anyone, nobody).
+  🖌️ DIG TOGETHER: brush the same Buried Find with friends. Every stroke counts toward one shared find, it goes faster with
+    more hands (up to ×2.8 with four), and everyone nearby gets Lore and their name in the Field Journal.
+  ⚔️ FAIR FIGHTS FOR GROUPS: hostile creatures near a party grow with its size (more health, slightly more damage, a few
+    extra foes for big groups), so a group of friends still meets a challenge. Solo play is unchanged; falls, fire and
+    drowning are never scaled.
+  🛟 BACKUPS: every world keeps its last 6 snapshots (one every 5 minutes of saving) and one per day for 7 days, stored
+    separately in the browser. Esc → Worlds & backups → 🛟 Backups restores one; a damaged save offers the newest backup
+    on the title screen. Restoring also rolls each Hearth ledger back to the same moment, so the Rewind history matches the
+    world. The game asks the browser to keep its storage (persistent storage) where that is allowed.
+  🔗 STURDIER MULTIPLAYER: every message is checked and rate-limited, oversized or malformed traffic is dropped, and a
+    peer that keeps misbehaving is disconnected. If the host leaves or loses connection, the world passes to the next
+    player and everyone carries on, within seconds. When the original host comes back, the world goes home to them with
+    everything that was built in the meantime. Manual-invite games survive a host change too. A world is tested with 8 players (bigger groups depend on the host's upload and are not yet tested):
+    snapshots are binary and delta-coded, each guest gets what is near them, within a per-guest budget.
+  🚩 REALM REFINEMENTS: one merged faction list on the map, banners standing in the world as real 3D cloth flags, more
+    varied ruin inscriptions (no more repeats at one site), a proper 3D Museum Plinth, and the Council clock shows the right
+    time for players who join in the middle of a council.
+  🤝 CO-OP-ONLY QUESTS: while a party of 2 or more is online, the quest board offers jobs no one can do alone. Only a
+    player in a party can accept them, and the whole party shares them. Twin-Lever Vault: two levers 22 blocks apart
+    spring back after 2.5 seconds, so two friends must hold them at the same moment. Jacketed fossil: a plaster-jacketed
+    find moves only while two friends carry it together, at walking pace, to the camp lamp. Primeval: tame one together
+    (below).
+  🦣 DUO TAMING: Primeval grazers (big, calm elk, yak, tortoise or deer) trust only two tamers at once. One friend
+    stands at its head holding food it likes and feeds it on its heartbeat (right-click), while the other soothes it
+    from behind, moving gently. After four beats each it bonds: the feeder keeps it, and the friend is named its co-owner
+    on the companion card.
+  ⚑ COUNCIL VOTING BLOCS: a party can vote as one at the Grand Council. The leader forms the bloc and picks the edict it
+    backs; members join with one click. Every member's own vote weight counts (a member without standing still adds a
+    voice of 1), and a united bloc of two or more adds +1 per member. Bloc results are remembered in the realm log and the
+    Party panel.
+  📖 PARTY CODEX CREDIT: when anyone in your party discovers a new Codex page, every member gets the page too, marked
+    "discovered by <friend> (party credit)". Friends who join the party later catch up on what it has found. Common block
+    and item pages arrive quietly with one summary line.
+  👋 EMOTES & QUICK CHAT: hold ' (apostrophe) for the quick-chat wheel or [ for the emote wheel, steer with the mouse and
+    let go (tap for a wheel that stays open; 1-8 or click picks). 16 emotes use the existing character animations: wave,
+    cheer, point, bow, three dances, sit, laugh, clap, facepalm, thumbs up, shrug, salute, kneel and sleep. Wave, cheer,
+    thumbs up or clap facing a friend for a high five; dance together and you fall in sync. Quick chat has 40 phrases
+    (8 on the wheel, chosen in the Party panel) and fills in [ping], [held item] and [here] for you. It only sends set
+    phrases, so it is safe in any group. /emote <name> and /qc 1-8 do the same from chat.
+  🌐 JOIN CODE BY YOUR COINS: the room code now sits right next to the coins counter. Hosting shows your code with a
+    one-click 📋 Copy button (tooltip: "Share this code so friends can join"); a guest sees the code of the world they
+    joined; in single-player a compact 🌐 Host button opens the world to friends and then shows the code. It follows a host
+    change or a new code, hides in photo mode, can be reached with Tab while the mouse is free (Esc) and has screen-reader
+    labels. It never covers a menu: in the pause menu it moves into the menu's empty top corner (still one click to copy),
+    and it steps aside while any other menu or a dialog is open. A manual-invite session has no room code, so it shows the host's name and an Invite button instead.
+  NOT IN THIS RELEASE (moved to v2.8, named so nothing is dropped silently):
+    • Co-op escort and siege-parley quests: v2.7.1 ships three co-op quest types (Twin-Lever Vault, jacketed fossil,
+      Primeval). The other two need escort pathing and council hooks that were not ready to the same standard.
+    • Co-op builds and Wonders hooks, and a shared party museum: group digs ship; building together and a shared museum
+      come with Fellowship part B.
+    • The co-owner of a duo-tamed Primeval is named on its card but cannot yet command or ride it; only the feeder can.
+    • Relay assist for bigger groups: host + 7 (8 players) is what the release is tested with; bigger groups depend on
+      the host's upload, and a relay fallback comes later.
+    • Emotes use the existing character animations; blended emote animation arrives with the Living Flesh update.
+    • If the host leaves while you are still loading into their world (the first few seconds after joining), your game
+      does not follow the new host yet; rejoin with the room code.
+
+WHAT'S NEW IN v2.7 HOTFIX 1 — JOINING BY CODE (included in v2.7.1)
+  🔗 Joining a friend by room code works on far more networks. Before, the game only used STUN servers, so two players
+    behind strict or carrier-grade NAT (mobile data, hotspots, school or work Wi-Fi, many home routers) could find the room
+    but never connect. The game now also uses PeerJS's free public TURN relays (over UDP and TCP).
+  🔗 The code box accepts a code however it was pasted: lowercase, with spaces or dashes, "vxm-abcde", "Room code: ABCDE"
+    or a link ending in ?room=ABCDE. It keeps the last code you typed, and Enter joins.
+  🔗 Join tries 3 times (the last try goes through a relay) and says what went wrong: no world hosted with that code
+    (codes never use O, I, L, 0 or 1), the room was found but your network blocked the connection, the host didn't answer,
+    or the free matchmaking server couldn't be reached. A host whose tab was in the background registers its code
+    again when you come back to it.
 
 WHAT'S NEW IN v2.7 — REALMS AND RUINS
   🚩 BANNERS OF THE REALM: five fictional factions now hold regions of the world, each with a capital, borders, values and a
@@ -301,8 +385,13 @@ WHAT'S NEW IN v2 (highlights)
 SAVING
   Autosave every 30 s, on dimension change, and when you close or hide the tab ("saved Ns ago" chip top-right).
   Esc → Worlds & backups: 4 named world slots + the Daily slot, Export (.json backup file), Import, rename, delete.
+  v2.7.1: 🛟 Backups per world (last 6 snapshots + one per day for 7 days), restore from that list or from the damaged-save prompt.
 
 PLAYING WITH FRIENDS (peer-to-peer, free, no accounts)
+  v2.1 through v2.7.1 play together (v2 still connects too). Parties, pings, waypoints, travel, digging together and host
+  hand-over need v2.7.1 on both sides: v2.7 and older guests still join a v2.7.1 host and play normally, see "everyone" pings as
+  chat lines, and are left out of parties; if the host leaves, they are disconnected and rejoin with the new room code the new host
+  sees (v2.7.1 guests follow the hand-over automatically).
   v2.1 through v2.7 play together (v2 still connects too). The realm and the dig record need a v2.7 host; v2.7 players
   at the same host see the same ruins (computed from the seed) and the same politics. v2.6 and older guests join a v2.7
   game and just don't see these features (new blocks they meet appear as stand-ins; the v2.7-only realm and dig data are left out of what they receive); a v2.7 guest at an older host is
@@ -325,10 +414,11 @@ PLAYING WITH FRIENDS (peer-to-peer, free, no accounts)
   Each friend:
     1. They need the same voxel-sandbox.html file (send them the zip) and an internet connection.
     2. Open it → on the title screen press "🌐 Multiplayer — join a friend".
-    3. Type a name, enter the room code, press Join. They spawn next to you within a few seconds.
+    3. Type a name, enter or paste the room code, press Join (or Enter). They spawn next to you within a few seconds.
+       If the first try fails the game retries twice by itself, the last time through a relay.
   In game: T to chat; you see each other's names, building, sprinting, spells, Light/Dark auras and mobs.
   A Light player and a Dark player fighting side by side form an uneasy alliance (+10 % power, /path twilight combo).
-  If "Join" can't find the room (strict network, or the free PeerJS server is down), use the manual invite:
+  If "Join" still can't connect (a very strict network, or the free PeerJS server is down), the message says which, and you can use the manual invite:
     Host: Esc → Host for friends → "🔧 Manual invite" → Create invite code → Copy, send it to the friend.
     Friend: title screen → Multiplayer → "🔧 Manual invite" → paste it → Make reply code → Copy, send it back.
     Host: paste the reply code → Connect. (One invite per friend.)
@@ -353,4 +443,10 @@ TECH NOTES
   and ruins add about 10 % to chunk generation. Guests get the realm and dig record as small host snapshots.
   Frame rate vs v2.6 on the same machine and seeds (3 alternating runs): idle 106 %, crowd 110 %, night sky 105 %,
   flooding water 96 %, deep-layer room 103 %. Friends on the map cost about 0.03 ms per minimap draw and add no network traffic.
-  Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites).
+  v2.7.1 multiplayer: per-link token buckets with per-message-type caps, size and shape checks on every message and capped
+  chunk reassembly; snapshots are binary and delta-coded with area-of-interest filtering and a per-guest byte budget, so
+  one host's upload carries 8 players in testing (bigger groups are not yet tested). The host keeps a ranked successor list; on a host loss the successor reopens the
+  room (code rooms) or takes over pre-opened standby links (manual invites). Backups live in IndexedDB, separate from the save.
+  Frame rate vs v2.7 (v2.7 hotfix 1 has identical rendering code) on the same machine and seeds (alternating runs): idle 99 %, crowd 98 %, night sky 98 %, flooding water 100 %, deep-layer room 98 %.
+  Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites), STUN, and PeerJS's
+  public TURN relays as a fallback.

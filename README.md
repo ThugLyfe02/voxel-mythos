@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2.7-hotfix1 “Realms and Ruins”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.6 saves load in v2.7 unchanged (same storage keys; v2.7 only adds new sections for the realm, banners and the dig record). Existing worlds keep their land: ruins and the Strata layers appear only in chunks generated after the update. A v2.7 world still opens in v2.6 and older: the realm and dig record are kept but ignored, and the new v2.7 blocks appear as a familiar stand-in such as stone, bricks, cobble or dirt instead of disappearing.
+A living voxel sandbox (v2.7.1 “Fellowship”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.7 saves (including v2.7 hotfix 1) load in v2.7.1 unchanged. The join fix from hotfix 1 is kept. A v2.7.1 world still opens in v2.7 and older: the new sections are kept but ignored.
 
 ## Play
 
@@ -42,6 +42,8 @@ Most keys can be rebound in **Esc → Settings → Accessibility → Key binding
 - **R** mount / dismount / land · **V** thermal vision (Stress View while holding the Engineer's Hammer) · **X** weapon ability · **B** armory · **N** tech tree · **J** Story Journal (Shift+J creature codex)
 - **O** Living Codex (Shift+O party) · **U** Field Journal (Shift+U trophies) · **Y** gallery · **H** Hearth claim view (airship camera on a ship)
 - **.** (period) Celestial Almanac — while looking up at the night sky it toggles star and planet labels instead
+- **;** (semicolon) or middle-click: ping the spot you look at for your party (Shift: everyone)
+- **'** (apostrophe) quick-chat wheel · **[** emote wheel — hold, steer with the mouse, let go
 - **L** spellbook · **I** journal · **Z** blueprints · **K** save now · **Esc** pause · **F3** performance overlay
 - **E** while facing a villager, worker, mage or caravan: Kindred talk menu
 - **Bard's Lute** in hand: **1–9** play notes
@@ -90,7 +92,19 @@ New in v2.6: `/bucket [level N|all|empty]` `/ww [stats|settle (creative)|on|off]
 
 New in v2.7: `/realm [council|vote N|found <name>|stance <choice>]` `/banner` `/strata` `/friends`
 
+New in v2.7.1: `/party [invite <name>|accept|leave]` `/ping [look|danger|loot|dig|help] [all]` `/wp [add <name>|list|del <name>]` `/travel <name>` `/emote <name>|stop` `/qc 1-8` `/fellow social on|off`
+
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
+
+## What's new in v2.7.1 — Fellowship
+
+The join fix from hotfix 1 is kept: TURN relays, cleaned-up room codes, up to 3 join tries, clearer errors, and Enter to join.
+
+- **Join-code chip:** in every world the room code sits next to the coins. Hosting shows the code with a one-click Copy button; a guest sees the code of the world they joined; single-player shows a compact Host button. It follows a host change, hides in photo mode, and moves aside so it never covers a menu. In the pause menu it sits in the menu's empty top corner. A manual-invite session shows the host's name and an Invite button instead.
+- **Fellowship A:** emotes and quick chat, extra party-panel tools, pings and shared waypoints, travel to a party member, co-dig, duo taming and co-op quests, council voting blocs, and Codex party credit. Esc → Party, or `/party`. Middle-click or **;** pings; hold **'** for quick chat and **[** for emotes.
+- When the original host comes back, merge-back asks for the world only after the welcome, so a guest who is still loading is not left behind.
+- Heir snapshots no longer freeze players.
+- Party actions are rate-limited. Going too fast gets a "Slow down" reply instead of the action being dropped silently.
 
 ## v2.7-hotfix1 — Join fix
 
@@ -208,7 +222,7 @@ Autosave every 30 s, on dimension change, and when you close or hide the tab ("s
 
 ## Playing with friends (peer-to-peer, free, no accounts)
 
-v2.1 through v2.7 play together (v2 still connects too). The realm and the dig record need a v2.7 host; v2.7 players at the same host see the same ruins and the same politics. v2.6 and older guests join a v2.7 game and just don't see these features. A v2.7 guest at an older host is told that world has no Strata. In a v2.6+ game the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.7 games (or host for them): the game refuses politely and explains who should update.
+v2.1 through v2.7.1 play together (v2 still connects too). The v2.7-hotfix1 join fix is kept in v2.7.1. Parties, pings, waypoints, and travel need a v2.7.1 host. The realm and the dig record need a v2.7 host; v2.7 players at the same host see the same ruins and the same politics. v2.6 and older guests join a v2.7 game and just don't see these features. A v2.7 guest at an older host is told that world has no Strata. In a v2.6+ game the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.7 games (or host for them): the game refuses politely and explains who should update.
 
 Kindred memories, the Chronicler, quests, the market, the ecology, water, structures, the realm, the dig record and the music are run by the host and saved in the host's world.
 
