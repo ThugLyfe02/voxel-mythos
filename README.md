@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2.9 “True World”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9 unchanged. The join fix from hotfix 1 is kept. v2.9 adds only a few True World settings. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe).
+A living voxel sandbox (v2.9.1 “Wild Waters”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.1 unchanged. The join fix from hotfix 1 is kept. v2.9.1 adds small sections for drops, new creatures, and the Feature Atlas. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe).
 
 ## Play
 
@@ -99,6 +99,20 @@ New in v2.7.1: `/party [invite <name>|accept|leave]` `/ping [look|danger|loot|di
 New in v2.8: `/report` `/diag` `/firstnight` `/votekick <name>` `/mute <name>`
 
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
+
+## What's new in v2.9.1 — Wild Waters
+
+Switches are in **Settings → Living Currents** and the Lens.
+
+- **Flowing water and lava:** hillside springs feed streams that run downhill, with ripples, foam, and waterfalls where a stream reaches a cliff. Ember Vents push lava in pulses; it creeps downhill, pours over ledges as lavafalls, and crusts as it cools.
+- **Currents that push:** step into a stream and the current carries you downstream. Swimming upstream is harder. Creatures and dropped items drift with it too.
+- **Fluid sound:** streams babble, waterfalls roar, and lava bubbles, placed left or right as you turn. With subtitles on, captions name them.
+- **Visible drops (Spoils):** knocked-out hostile mobs burst into coins and items that bounce, glint, float on water, and fly to you when you walk close.
+- **Six new mobs:** Gloamstalker, Sludgeback, Cinderling Swarm, Brinejaw, Clockwork Scuttler, and Slag Golem. Each warns before it strikes, and each has a way to beat it. Defeated creatures are knocked out, not killed.
+- **Feature Atlas:** Esc → Feature Atlas lists everything running in your game, with NEW badges and a Show me button.
+- **Look-At Lens:** look at a block, fluid, or creature and a card by the crosshair shows its name, the tool it needs, what it drops, which way water or lava flows, and a creature's health and Spoils. Hold Alt for more. Turn it off in Settings.
+
+New creatures and visible drops appear in solo play for now. In co-op, coins still go straight to your purse.
 
 ## What's new in v2.9 — True World
 
@@ -249,7 +263,7 @@ Autosave every 30 s, on dimension change, and when you close or hide the tab ("s
 
 ## Playing with friends (peer-to-peer, free, no accounts)
 
-v2.1 through v2.9 play together (v2 still connects too). True World lighting follows each player's own graphics settings. Watch Bells, Defense Nights, and the Frontier need a v2.8 host. The v2.7-hotfix1 join fix is kept in v2.7.1. Parties, pings, waypoints, and travel need a v2.7.1 host. The realm and the dig record need a v2.7 host; v2.7 players at the same host see the same ruins and the same politics. v2.6 and older guests join a v2.7 game and just don't see these features. A v2.7 guest at an older host is told that world has no Strata. In a v2.6+ game the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.7 games (or host for them): the game refuses politely and explains who should update.
+v2.1 through v2.9.1 play together (v2 still connects too). True World lighting follows each player's own graphics settings. Watch Bells, Defense Nights, and the Frontier need a v2.8 host. The v2.7-hotfix1 join fix is kept in v2.7.1. Parties, pings, waypoints, and travel need a v2.7.1 host. The realm and the dig record need a v2.7 host; v2.7 players at the same host see the same ruins and the same politics. v2.6 and older guests join a v2.7 game and just don't see these features. A v2.7 guest at an older host is told that world has no Strata. In a v2.6+ game the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.7 games (or host for them): the game refuses politely and explains who should update.
 
 Kindred memories, the Chronicler, quests, the market, the ecology, water, structures, the realm, the dig record and the music are run by the host and saved in the host's world.
 

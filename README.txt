@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9 “True World”)
-==========================================================
+VOXEL MYTHOS — a living voxel sandbox (v2.9.1 “Living Currents”)
+==================================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.1 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -76,6 +76,35 @@ USEFUL COMMANDS (T or /)
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.1 — LIVING CURRENTS
+  🌊 FLOWING WATER: Rill Springs on hillsides feed streams that run downhill. Moving water shows ripples that travel
+    with the flow and white foam where it runs fast, and a stream that reaches a cliff pours off it as a waterfall with
+    spray where it lands.
+  🌋 FLOWING LAVA: Ember Vents push out lava in pulses. It creeps downhill in glowing tongues, pours over ledges as
+    lavafalls, crusts dark as it cools and cracks open with light. (Lava also spreads properly now when you are far
+    from it.)
+  ↪ CURRENTS THAT PUSH: step into a stream and the current carries you downstream; swimming upstream is harder.
+    Creatures and dropped items drift with it too.
+  🔊 FLUID SOUND: streams babble, waterfalls roar and lava bubbles, placed left or right as you turn. With Subtitles
+    on, captions name them ("[waterfall, ahead-left]").
+  💰 DROPS YOU CAN SEE: knocked-out hostile mobs burst into Spoils: coins and items that bounce, glint, float on water
+    and fly to you when you walk close (Settings → "Drops fly to you when close"). 19 new Spoils items.
+  👾 SIX NEW HOSTILE CREATURES, each with a warning before it strikes and a way to beat it:
+    Gloamstalker (night; freezes when you look at it or hold a light), Sludgeback (splits when knocked out; currents
+    wash it away), Cinderling Swarm (rises from lava; water scatters it), Brinejaw (deep water; the wake stops before
+    it lunges), Clockwork Scuttler (climbs walls; block its tangle-thread with Guard) and Slag Golem (near lava; water
+    quenches its armor). Nothing dies: defeated creatures are knocked out and disperse in motes of light.
+  🗺 FEATURE ATLAS: Esc → Feature Atlas lists everything running in your game as cards, with NEW badges for this
+    update and a Show me button (it points you to the nearest spring or vent, drops a sample Spoil, or calls up a new
+    creature to meet).
+  🔍 LOOK-AT LENS: look at any block, fluid or creature for a moment and a card by the crosshair shows its name, the
+    tool it needs, what it drops, which way water or lava flows and how fast, and a creature's health and Spoils.
+    Hold Alt for more detail. Turn it off in Settings.
+  💫 "KNOCKED OUT": when you fall in a fight, the screen now says Knocked Out (it used to say You Fell and Slain by).
+  Settings → 🌊 Living Currents and the Lens has switches for the moving water and lava visuals, the Lens and drop magnet.
+  Co-op: new creatures and visible drops appear in solo play for now; in co-op sessions coins still go straight to your purse.
+
 
 WHAT'S NEW IN v2.9 — TRUE WORLD
   🌍 TRUE WORLD LIGHTING (every quality level): the sky now lights the world the way it looks. Land under a floating island

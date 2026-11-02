@@ -167,7 +167,7 @@ input[type=range]{accent-color:#7aa2ff;width:100%}
   <div class="foot">Works offline · autosaves in this browser · play with friends via 🌐 Multiplayer<br>A living world: it grows, remembers and evolves while you play.</div>
 </div></div>
 <div id="loading" class="screen hidden"><div style="font-weight:800;letter-spacing:3px">SHAPING THE WORLD</div><div class="bar"><i id="loadBar"></i></div><div id="loadTxt" style="font-size:12px;color:#8f9bd0">Generating terrain…</div></div>
-<div id="death" class="screen hidden"><h1>YOU FELL</h1><div id="deathTxt"></div><button class="btn gold" id="respawnBtn">Respawn</button></div>
+<div id="death" class="screen hidden"><h1>KNOCKED OUT</h1><div id="deathTxt"></div><button class="btn gold" id="respawnBtn">Respawn</button></div>
 <div id="panelWrap" class="hidden"><div id="panel"></div></div>
 <div id="cmdWrap" class="hidden"><div id="cmdLog"></div><input id="cmd" type="text" autocomplete="off" spellcheck="false" placeholder="/build castle of bricks glowing   ·   /help"></div>
 <div id="modal2" class="hidden"><div class="box"><h3 id="m2t"></h3><p id="m2p"></p><div id="m2b" style="display:flex;gap:8px;justify-content:center"></div></div></div>
@@ -189,7 +189,7 @@ function(t,e){"object"==typeof exports&&"undefined"!=typeof module?e(exports):"f
 
 </script>
 <script>(function(){"use strict";
-window.__vxMods=[["01_core.js",194],["01_core2.js",536],["02_world.js",586],["03_build.js",1196],["04_fx.js",1270],["05_game.js",1462],["06_ui.js",2111],["07_render.js",2391],["08_main.js",2590],["09_extras.js",3113],["10_dims.js",3450],["11_creatures.js",3651],["12_systems.js",3898],["13_net.js",4226],["14_slots.js",4656],["15_v2core.js",4714],["16_weather2.js",4973],["17_thermal.js",5119],["18_seasons.js",5194],["19_farm.js",5295],["20_dungeons.js",5393],["21_bossevo.js",5549],["22_airships.js",5659],["23_cinema.js",5762],["24_weaver.js",5851],["25_weapons.js",5961],["26_enchant.js",6253],["27_eras.js",6422],["28_logic.js",6485],["29_automatons.js",6807],["30_creatures.js",7037],["31_companions.js",7372],["32_achievements.js",7706],["33_access.js",7874],["34_blueprints.js",7990],["35_wayfarers.js",8388],["36_magic.js",8632],["37_ultra.js",9066],["38_chaos.js",9318],["39_controls.js",9475],["40_paths.js",9568],["41_stamina.js",9802],["42_guestsave.js",9837],["43_beasts.js",9874],["44_duel.js",9976],["45_hearth.js",10050],["46_codex.js",10367],["47_chronicler.js",10921],["48_score.js",11275],["49_kin_text.js",11678],["49_kindred.js",11687],["50_news22.js",12047],["51_zoo.js",12069],["52_rig_core.js",12140],["53_rig_human.js",12372],["54_rig_quad.js",12597],["55_rig_bird.js",12876],["56_rig_crawl.js",12989],["57_rig_aqua.js",13108],["58_rig_boss.js",13237],["58_rig_construct.js",13436],["59_rig_main.js",13534],["60_rig_abfxnet.js",13719],["60_rig_abilityfx.js",13746],["60_rig_netdesc.js",13830],["61_rig_codex.js",13862],["61_rig_fpmount.js",13895],["61_rig_mechnet.js",13922],["62_combatfx.js",13937],["63_news23.js",13965],["64_questforge.js",13987],["65_market2.js",14494],["66_news24.js",15123],["67_r25.js",15146],["68_ecology.js",15162],["69_almanac.js",15603],["70_news25.js",15986],["71_r26.js",16008],["72_ww_a_core.js",16037],["72_ww_b_save.js",16196],["72_ww_c_nature.js",16236],["72_ww_d_machines.js",16324],["72_ww_e_net.js",16385],["72_ww_f_ui.js",16421],["73_ls_a_solver.js",16482],["73_ls_b_collapse.js",16557],["73_ls_c_tools.js",16670],["74_news26.js",16750],["75_r27_a_moss.js",16777],["75_r27_b_level.js",16804],["76_realm_a_core.js",16827],["76_realm_b_player.js",17024],["76_realm_c_ui.js",17191],["76_realm_d_net.js",17325],["77_strata_a_hist.js",17364],["77_strata_b_world.js",17474],["77_strata_c_dig.js",17598],["77_strata_d_ui.js",17717],["77_strata_e_net.js",17781],["77_strata_f_ties.js",17819],["78_news27.js",17861],["79_friends27.js",17892],["80_fellow_a_circle.js",17928],["80_fellow_b_backup.js",18168],["80_fellow_c_wire.js",18248],["80_fellow_d_party.js",18345],["80_fellow_e_banners.js",18457],["80_fellow_f_plinth.js",18517],["80_fellow_g_extras.js",18583],["80_fellow_h_social.js",18875],["81_news271.js",19302],["82_joincode.js",19334],["100_keystone.js",19410],["101_bedrock_core.js",19478],["101_bedrock_ui.js",19723],["103_endless.js",19816],["105_mem_a_record.js",19973],["110_lighthouse.js",20037],["135_fellow_e_succession.js",20171],["190_truelight.js",20311],["530_hl_access.js",20420],["700_vo2_grade.js",20525],["701_vo2_emissive.js",20761],["702_vo2_rain.js",20794],["720_rf_combat.js",20817],["721_rf_inv.js",20858],["731_vo2_parry.js",20931],["780_df_alarm.js",20957],["781_df_sandcastle.js",21023],["782_df_guard.js",21130],["790_df_coop.js",21217],["800_news28.js",21285],["910_tw_core.js",21314],["913_tw_sky.js",21450],["914_tw_exposure.js",21483],["915_tw_wind.js",21514],["917_tw_shadow.js",21550],["918_tw_taa.js",21589],["919_tw_phys.js",21638],["920_tw_cloth.js",21707],["99_boot.js",21769]];
+window.__vxMods=[["01_core.js",194],["01_core2.js",536],["02_world.js",586],["03_build.js",1196],["04_fx.js",1270],["05_game.js",1462],["06_ui.js",2111],["07_render.js",2391],["08_main.js",2590],["09_extras.js",3113],["10_dims.js",3450],["11_creatures.js",3651],["12_systems.js",3898],["13_net.js",4226],["14_slots.js",4656],["15_v2core.js",4714],["16_weather2.js",4973],["17_thermal.js",5119],["18_seasons.js",5194],["19_farm.js",5295],["20_dungeons.js",5393],["21_bossevo.js",5549],["22_airships.js",5659],["23_cinema.js",5762],["24_weaver.js",5851],["25_weapons.js",5961],["26_enchant.js",6253],["27_eras.js",6422],["28_logic.js",6485],["29_automatons.js",6807],["30_creatures.js",7037],["31_companions.js",7372],["32_achievements.js",7706],["33_access.js",7874],["34_blueprints.js",7990],["35_wayfarers.js",8388],["36_magic.js",8632],["37_ultra.js",9066],["38_chaos.js",9318],["39_controls.js",9475],["40_paths.js",9568],["41_stamina.js",9802],["42_guestsave.js",9837],["43_beasts.js",9874],["44_duel.js",9976],["45_hearth.js",10050],["46_codex.js",10367],["47_chronicler.js",10921],["48_score.js",11275],["49_kin_text.js",11678],["49_kindred.js",11687],["50_news22.js",12047],["51_zoo.js",12069],["52_rig_core.js",12140],["53_rig_human.js",12372],["54_rig_quad.js",12597],["55_rig_bird.js",12876],["56_rig_crawl.js",12989],["57_rig_aqua.js",13108],["58_rig_boss.js",13237],["58_rig_construct.js",13436],["59_rig_main.js",13534],["60_rig_abfxnet.js",13719],["60_rig_abilityfx.js",13746],["60_rig_netdesc.js",13830],["61_rig_codex.js",13862],["61_rig_fpmount.js",13895],["61_rig_mechnet.js",13922],["62_combatfx.js",13937],["63_news23.js",13965],["64_questforge.js",13987],["65_market2.js",14494],["66_news24.js",15123],["67_r25.js",15146],["68_ecology.js",15162],["69_almanac.js",15603],["70_news25.js",15986],["71_r26.js",16008],["72_ww_a_core.js",16037],["72_ww_b_save.js",16197],["72_ww_c_nature.js",16237],["72_ww_d_machines.js",16325],["72_ww_e_net.js",16386],["72_ww_f_ui.js",16422],["73_ls_a_solver.js",16483],["73_ls_b_collapse.js",16558],["73_ls_c_tools.js",16671],["74_news26.js",16751],["75_r27_a_moss.js",16778],["75_r27_b_level.js",16805],["76_realm_a_core.js",16828],["76_realm_b_player.js",17025],["76_realm_c_ui.js",17192],["76_realm_d_net.js",17326],["77_strata_a_hist.js",17365],["77_strata_b_world.js",17475],["77_strata_c_dig.js",17599],["77_strata_d_ui.js",17718],["77_strata_e_net.js",17782],["77_strata_f_ties.js",17820],["78_news27.js",17862],["79_friends27.js",17893],["80_fellow_a_circle.js",17929],["80_fellow_b_backup.js",18169],["80_fellow_c_wire.js",18249],["80_fellow_d_party.js",18346],["80_fellow_e_banners.js",18458],["80_fellow_f_plinth.js",18518],["80_fellow_g_extras.js",18584],["80_fellow_h_social.js",18876],["81_news271.js",19303],["82_joincode.js",19335],["100_keystone.js",19411],["101_bedrock_core.js",19479],["101_bedrock_ui.js",19724],["103_endless.js",19817],["105_mem_a_record.js",19974],["110_lighthouse.js",20038],["135_fellow_e_succession.js",20172],["190_truelight.js",20312],["482_sp_core.js",20421],["483_sp_tables.js",20482],["530_hl_access.js",20527],["700_vo2_grade.js",20632],["701_vo2_emissive.js",20868],["702_vo2_rain.js",20901],["720_rf_combat.js",20924],["721_rf_inv.js",20965],["731_vo2_parry.js",21038],["780_df_alarm.js",21064],["781_df_sandcastle.js",21130],["782_df_guard.js",21237],["790_df_coop.js",21324],["800_news28.js",21392],["810_lc_wake.js",21421],["811_lc_flowvis.js",21512],["812_lc_current.js",21554],["813_lc_lava.js",21588],["814_lc_falls.js",21652],["815_lc_sound.js",21716],["820_ux_atlas.js",21751],["821_ux_lens.js",21805],["830_bx_core.js",21865],["831_bx_wave1.js",21931],["910_tw_core.js",22072],["913_tw_sky.js",22208],["914_tw_exposure.js",22241],["915_tw_wind.js",22272],["917_tw_shadow.js",22308],["918_tw_taa.js",22347],["919_tw_phys.js",22396],["920_tw_cloth.js",22465],["99_boot.js",22527]];
 // ==== 01_core.js
 // ======================================================================
 // VOXEL MYTHOS — core: constants, math, noise, registries, textures
@@ -1890,7 +1890,7 @@ function damagePlayer(n, src) {
 function die(src) {
   const S = G.S; G.dead = true; S.stats.deaths++; G.director.deaths.push(G.t);
   const lost = Math.floor(S.coins * 0.1); S.coins -= lost;
-  if (S.stats.deaths <= 3 || S.stats.deaths % 5 === 0) addMythos('💀', S.name + ' fell to ' + (src || 'the world') + ' on Day ' + S.day + '.');
+  if (S.stats.deaths <= 3 || S.stats.deaths % 5 === 0) addMythos('💫', S.name + ' was knocked out by ' + (src || 'the world') + ' on Day ' + S.day + '.');
   runHooks('death', src, lost);
   G.ui.showDeath(src, lost); try { document.exitPointerLock && document.exitPointerLock(); } catch (e) {}
 }
@@ -2361,7 +2361,7 @@ G.ui = {
     for (const [label, fn, cls] of buttons) { const b = document.createElement('button'); b.className = 'btn ' + (cls || ''); b.textContent = label; b.onclick = () => { $('modal2').classList.add('hidden'); try { fn(); } catch (e) { logErr('modal', e); } }; bb.appendChild(b); }
     $('modal2').classList.remove('hidden');
   },
-  showDeath(src, lost) { $('deathTxt').textContent = 'Slain by ' + (src || 'the world') + '. You dropped ' + lost + ' coins. The Director eases off a little…'; $('death').classList.remove('hidden'); },
+  showDeath(src, lost) { $('deathTxt').textContent = 'Knocked out by ' + (src || 'the world') + '. You dropped ' + lost + ' coins. The Director eases off a little…'; $('death').classList.remove('hidden'); },
   hideDeath() { $('death').classList.add('hidden'); },
   // ---------------- Command box ----------------
   openCmd(prefill) { if (G.state !== 'play') return; G.panel = 'cmd'; this.unlockPointer(); $('cmdWrap').classList.remove('hidden'); const c = $('cmd'); c.value = prefill || ''; setTimeout(() => c.focus(), 0); },
@@ -4223,7 +4223,7 @@ G.hook('worldMade', () => { if (G.aurora) { G.scene.remove(G.aurora); G.aurora =
 })();
 
 // ==== 13_net.js
-const NET_VER = 'vm2', NET_VER_LABEL = 'v2.9', NET_FEAT = '2.9'; // v2.1 … v2.9 keep the vm2 wire protocol (v2 <-> v2.1 compatible); NET_FEAT gates v2.1-only features
+const NET_VER = 'vm2', NET_VER_LABEL = 'v2.9.1', NET_FEAT = '2.9.1'; // v2.1 … v2.9 keep the vm2 wire protocol (v2 <-> v2.1 compatible); NET_FEAT gates v2.1-only features
 G.NET_FEAT = NET_FEAT;
 // v2.7.1: dotted feature-level compare ('2.7.1' > '2.7'); parseFloat-based checks elsewhere still read '2.7.1' as 2.7
 const fvGE = (fv, want) => { if (typeof fv !== 'string') return false; const a = fv.split('.').map(n => parseInt(n, 10) || 0), b = String(want).split('.').map(n => parseInt(n, 10) || 0); for (let i = 0; i < Math.max(a.length, b.length); i++) { const x = a[i] || 0, y = b[i] || 0; if (x !== y) return x > y; } return true; };
@@ -16118,7 +16118,7 @@ function react(x, y, z, id, nx, ny, nz, nid) { for (const f of WW.hooks.react) i
 const DX4 = [1, 0, -1, 0], DZ4 = [0, 1, 0, -1];
 // one cell update; returns true if anything moved
 function stepCell(k) {
-  const w = G.world, D = store(); const x = kx(k), y = ky(k), z = kz(k);
+  const w = G.world, D = store(); const x = kx(k), y = ky(k), z = kz(k); WW.offBeat = false;
   if (!w.isLoaded(x, z)) { WW.frozen.add(k); return false; }
   const id = w.get(x, y, z); const F = FLD[id]; if (!F) { if (D.lv.delete(k) && chSet(D, x, y, z, 0)) dirtyAt(x, z); return false; }
   const inf = infinite(x, y, z, id, k, D); let L = inf ? 15 : (D.lv.get(k) ?? 15); const L0 = L; let moved = false;
@@ -16131,7 +16131,8 @@ function stepCell(k) {
     else if (isFluid(bid)) { if (react(x, y, z, id, x, y - 1, z, bid)) return true; }
   }
   // 2) sideways, only when supported and on this fluid's viscosity beat
-  if (L > 0 && (WW.tick + ((x * 7 + z * 13) & 7)) % F.visc === 0) {
+  const beat = WW.farCell || (WW.tick + ((x * 7 + z * 13) & 7)) % F.visc === 0; if (L > 0 && !beat) WW.offBeat = true; // v2.9.1: a slow fluid off its beat stays awake (it used to fall asleep and only move when woken on its beat)
+  if (L > 0 && beat) { // v2.9.1: far cells already run at 1 Hz; without this, slow fluids with an odd beat never moved there
     const bid = w.get(x, y - 1, z); const supported = y <= 1 || (bid !== 0 && !enterable(bid, x, y - 1, z) && !(bid === id && (D.lv.get(pk(x, y - 1, z)) ?? 15) < 15));
     if (supported) { const r0 = (WW.tick + x + z) & 3;
       for (let j = 0; j < 4 && L > 0; j++) { const d = (r0 + j) & 3; const nx = x + DX4[d], nz = z + DZ4[d]; const nid = w.get(nx, y, nz);
@@ -16156,8 +16157,8 @@ function stepCell(k) {
     }
   }
   if (!inf && L !== L0) put(x, y, z, id, L);
-  if (moved) { wakeAround(x, y, z); wake(x, y, z); WW.st.moved++; }
-  return moved;
+  if (moved) { wakeAround(x, y, z); wake(x, y, z); WW.st.moved++; } else if (WW.offBeat) wake(x, y, z);
+  WW.offBeat = false; return moved;
 }
 WW.stepCell = stepCell;
 // river memory: where water keeps flowing, the bed remembers (feeds erosion, rain refill, the Hydrology view)
@@ -16172,7 +16173,7 @@ WW.step = function () {
   const list = Array.from(WW.act); WW.act.clear(); let n = 0, i = 0;
   for (; i < list.length; i++) { const k = list[i]; const d2 = nearest2(P, kx(k), kz(k));
     if (d2 > R2) { WW.frozen.add(k); continue; } if (d2 > rN2 && !far) { WW.act.add(k); continue; }
-    if (n >= WW.perTick) break; n++; stepCell(k); }
+    if (n >= WW.perTick) break; n++; WW.farCell = d2 > rN2; stepCell(k); WW.farCell = false; }
   for (; i < list.length; i++) WW.act.add(list[i]); // over budget: carry to the next tick, in order
   // frozen cells thaw when a player comes back in range (1 Hz)
   if (far && WW.frozen.size) { let m = 0; for (const k of WW.frozen) { if (m++ > 4000) break; if (G.world.isLoaded(kx(k), kz(k)) && nearest2(P, kx(k), kz(k)) <= R2) { WW.frozen.delete(k); wake(kx(k), ky(k), kz(k)); } } }
@@ -20416,6 +20417,112 @@ if (G.ui && typeof G.ui.p_settings === 'function') { const _pS = G.ui.p_settings
   return h + blk; }; }
 }
 
+// ==== 482_sp_core.js
+// ===== v2.9.1 MP-83 Spoils of the Wild · 482 the drop kernel =====
+// Defeated mobs now visibly shed their spoils: coins, essence and table items pop out, bounce, bob and wait for you. Walk within 2.5 m
+// and they fly to you. Same coin and essence amounts as before, only visible. Stacks merge within 1 m, currents carry them, water floats
+// them, lava takes them (with a sizzle). Despawn after 5 min. ≤ 256 drops, pooled sprites. In co-op (net session) the purse payout is
+// unchanged for now. Kill switch G.FLAGS.sp (off = coins straight to the purse, as v2.9).
+{
+const FL = G.FLAGS; if (FL.sp === undefined) FL.sp = true;
+const SP = G.sp = { drops: [], stats: { spawned: 0, picked: 0, coins: 0, merged: 0, lost: 0 }, tables: {}, MAX: 256 };
+G.migrate_sp = S => { S.v2 = S.v2 || {}; const o = S.v2.sp; S.v2.sp = Object.assign({ v: 1, picked: 0, tip: 0 }, o && typeof o === 'object' ? o : {}); return S.v2.sp; };
+G.hook('load', S => G.migrate_sp(S || G.S)); G.hook('newGame', S => G.migrate_sp(S || G.S));
+G.hook('worldMade', () => { for (const d of SP.drops) free(d); SP.drops.length = 0; });
+// ---- icons: emoji glyph on a rarity-tinted disc ----
+const TEX = new Map();
+function tex(k) { const it = ITEMS[k]; const glyph = k === '$' ? '🪙' : (it && it.glyph) || (typeof ICONS !== 'undefined' && ICONS[k]) || '✦'; const col = k === '$' ? '#ffd24a' : (it && it.color) || '#cfd8e8'; const key = glyph + col;
+  let t = TEX.get(key); if (t) return t; const c = document.createElement('canvas'); c.width = c.height = 64; const x = c.getContext('2d');
+  const g = x.createRadialGradient(32, 32, 4, 32, 32, 31); g.addColorStop(0, col + 'cc'); g.addColorStop(0.6, col + '55'); g.addColorStop(1, col + '00'); x.fillStyle = g; x.beginPath(); x.arc(32, 32, 31, 0, 7); x.fill();
+  x.font = '38px "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", sans-serif'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(glyph, 32, 35);
+  t = new THREE.CanvasTexture(c); t.minFilter = THREE.LinearFilter; TEX.set(key, t); return t; }
+const POOL = [];
+function sprite(k) { let s = POOL.pop(); if (!s) { s = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: true, depthWrite: false, fog: false })); s.renderOrder = 2; }
+  s.material.map = tex(k); s.material.needsUpdate = true; s.visible = true; if (G.scene && !s.parent) G.scene.add(s); return s; }
+function free(d) { if (!d.spr) return; d.spr.visible = false; POOL.push(d.spr); d.spr = null; }
+const rarity = k => k === '$' ? 0 : ((ITEMS[k] && ITEMS[k].rarity) || 1);
+SP.drop = function (x, y, z, k, n, o) { if (!n || (k !== '$' && !ITEMS[k])) return null; o = o || {}; if (SP.drops.length >= SP.MAX) { const old = SP.drops.shift(); if (old.k === '$') collect(old, true); else free(old); }
+  const a = Math.random() * 6.283, sp = 1.2 + Math.random() * 1.6; const d = { k, n, x, y: y + 0.6, z, vx: Math.cos(a) * sp, vy: 4.2 + Math.random() * 1.8, vz: Math.sin(a) * sp, t0: G.t || 0, b: 0, rest: false, ph: Math.random() * 6.28, life: (G.claimAt && G.claimAt(x, z)) ? 1800 : 300, src: o.src || '' };
+  d.spr = sprite(k); const sc = k === '$' ? 0.42 + Math.min(0.25, n * 0.012) : (rarity(k) >= 3 ? 0.62 : 0.52); d.spr.scale.set(sc, sc, 1); d.spr.position.set(x, d.y, z); SP.drops.push(d); SP.stats.spawned++; return d; };
+SP.burst = function (x, y, z, list, src) { for (const [k, n] of list) { if (k === '$') { let left = n; const piles = Math.min(4, Math.max(1, Math.ceil(n / 4))); for (let i = 0; i < piles; i++) { const v = i === piles - 1 ? left : Math.max(1, Math.round(n / piles)); left -= v; if (v > 0) SP.drop(x, y, z, '$', v, { src }); } } else SP.drop(x, y, z, k, n, { src }); }
+  if (G.S.v2 && G.S.v2.sp && !G.S.v2.sp.tip) { G.S.v2.sp.tip = 1; toast('⬇ Spoils! Walk over them to collect.', 'good'); } };
+function collect(d, silent) { const S = G.S; if (d.k === '$') { S.coins += d.n; SP.stats.coins += d.n; if (!silent) { pickupFeed('$', d.n); G.audio.coin(); } } else { invAdd(d.k, d.n); if (!silent) { pickupFeed(d.k, d.n); if (G.audio.pickup) G.audio.pickup(); else G.audio.coin(); } }
+  if (!silent && G.particles) G.particles.spawn(d.x, d.y + 0.3, d.z, d.k === '$' ? '#ffe27a' : ((ITEMS[d.k] && ITEMS[d.k].color) || '#ffffff'), 6, 2, 0.4);
+  SP.stats.picked++; if (S.v2 && S.v2.sp) S.v2.sp.picked++; G.hudDirty = true; free(d); }
+const solidAt = (x, y, z) => { const b = G.world.get(Math.floor(x), Math.floor(y), Math.floor(z)); return b > 0 && BLOCKS[b] && BLOCKS[b].solid; };
+let mergeAcc = 0;
+G.hook('tick', function spTick(dt) { const L = SP.drops; if (!L.length || !G.world) return; dt = Math.min(0.05, dt || 0.016); const p = G.S.player; const now = G.t || 0; const rm = G.settings && G.settings.reduceMotion; const mag = G.settings && G.settings.lootMagnet === false ? 0 : 2.5;
+  for (let i = L.length - 1; i >= 0; i--) { const d = L[i]; if (now - d.t0 > d.life) { if (d.k === '$' && Math.hypot(d.x - p.x, d.z - p.z) < 48) collect(d, true); else { free(d); SP.stats.lost++; } L.splice(i, 1); continue; }
+    const age = now - d.t0; const dx = p.x - d.x, dy = (p.y + 0.9) - d.y, dz = p.z - d.z, dist = Math.hypot(dx, dy, dz);
+    if (age > 0.6 && !G.dead && dist < mag) { if (dist < 0.9) { collect(d); L.splice(i, 1); continue; } const s = 9 / Math.max(0.4, dist); d.vx += dx * s * dt; d.vy += dy * s * dt; d.vz += dz * s * dt; d.vx *= 0.9; d.vy *= 0.9; d.vz *= 0.9; d.x += d.vx * dt; d.y += d.vy * dt; d.z += d.vz * dt; d.rest = false; }
+    else { const fid = G.world.get(Math.floor(d.x), Math.floor(d.y), Math.floor(d.z)); const fluid = G.ww && G.ww.isFluid(fid);
+      if (fid === B.LAVA) { if (G.particles) G.particles.spawn(d.x, d.y + 0.2, d.z, '#5a4a44', 6, 1.2, 0.8); if (G.subtitle && dist < 16) G.subtitle('[spoils sizzle in lava]', 'fx'); free(d); SP.stats.lost++; L.splice(i, 1); continue; }
+      if (fluid) { d.vy += (d.y % 1 < 0.75 ? 6 : -4) * dt; d.vy *= 0.92; const P = G.lc && G.lc.pushOf && G.lc.pushOf(d.x, d.y - 0.3, d.z, 0.4); if (P) { d.vx += P[0] * dt * 0.8; d.vz += P[1] * dt * 0.8; } d.vx *= 0.97; d.vz *= 0.97; d.rest = false; }
+      else if (!d.rest) d.vy -= 18 * dt;
+      if (!d.rest) { const nx = d.x + d.vx * dt, nz = d.z + d.vz * dt; if (solidAt(nx, d.y, d.z)) d.vx *= -0.3; else d.x = nx; if (solidAt(d.x, d.y, nz)) d.vz *= -0.3; else d.z = nz;
+        const ny = d.y + d.vy * dt; if (d.vy < 0 && solidAt(d.x, ny - 0.05, d.z)) { d.y = Math.floor(ny - 0.05) + 1.05; if (d.b < 2 && d.vy < -2) { d.vy *= -0.38; d.b++; d.vx *= 0.6; d.vz *= 0.6; } else if (!fluid) { d.vy = 0; d.vx = 0; d.vz = 0; d.rest = true; } } else if (d.vy > 0 && solidAt(d.x, ny + 0.3, d.z)) d.vy = 0; else d.y = ny; }
+      else if (!solidAt(d.x, d.y - 0.1, d.z)) d.rest = false; }
+    const bob = d.rest ? 0.22 + (rm ? 0 : Math.sin(now * 2.4 + d.ph) * 0.07) : 0.22; d.spr.position.set(d.x, d.y + bob, d.z);
+    if (rarity(d.k) >= 3 && G.glowP && Math.random() < dt * 3) G.glowP.spawn(d.x, d.y + 0.5, d.z, (ITEMS[d.k] && ITEMS[d.k].color) || '#9fd0ff', 1, 0.6, 0.8, 0, 0.1); }
+  mergeAcc += dt; if (mergeAcc > 0.5) { mergeAcc = 0; for (let i = 0; i < L.length; i++) { const a = L[i]; if (!a.rest) continue; for (let j = L.length - 1; j > i; j--) { const b = L[j]; if (b.k !== a.k || !b.rest) continue; if (Math.abs(a.x - b.x) + Math.abs(a.z - b.z) < 1 && Math.abs(a.y - b.y) < 0.6) { a.n += b.n; free(b); L.splice(j, 1); SP.stats.merged++; } } } } });
+// ---- convert the KO payout into visible spoils ----
+{ const hm0 = hitMob; hitMob = function (e, dmgOv, src) { if (!FL.sp || G.netGuest || (G.net && G.net.active) || !e || !(e.hp > 0) || !G.world) return hm0.apply(this, arguments);
+    const S = G.S, p = G.S.player; const near = Math.hypot(e.pos.x - p.x, e.pos.z - p.z) < 28; if (!near) return hm0.apply(this, arguments);
+    const c0 = S.coins, e0 = (S.inv && S.inv.essence) || 0, ce0 = S.stats.coinsEarned; const pf = pickupFeed, ac = G.audio.coin; let r;
+    pickupFeed = function (k, n) { if (k === '$' || k === 'essence') return; return pf.apply(this, arguments); }; G.audio.coin = function () {};
+    try { r = hm0.apply(this, arguments); } finally { pickupFeed = pf; G.audio.coin = ac; }
+    if (e.hp <= 0) { const dc = S.coins - c0, de = ((S.inv && S.inv.essence) || 0) - e0; const list = []; if (dc > 0) { S.coins -= dc; list.push(['$', dc]); } if (de > 0) { invAdd('essence', -de); list.push(['essence', de]); }
+      const T = SP.tableFor ? SP.tableFor(e) : null; if (T) for (const it of T) list.push(it); SP.burst(e.pos.x, e.pos.y + (e.h ? e.h * 0.3 : 0.4), e.pos.z, list, e.bx || 'mob'); SP.last = { list, coins: dc, ce: S.stats.coinsEarned - ce0 }; }
+    else if (S.coins !== c0) { /* non-KO coin changes stay as they were */ }
+    return r; }; }
+SP.state = () => ({ on: !!FL.sp, n: SP.drops.length, stats: Object.assign({}, SP.stats), last: SP.last || null, resting: SP.drops.filter(d => d.rest).length });
+}
+
+// ==== 483_sp_tables.js
+// ===== v2.9.1 MP-83 Spoils of the Wild · 483 drop tables =====
+// Every mob sheds its own spoils on defeat: what it carried, shed or was made of (never body parts). Night strains drop Shadow Pith,
+// armored strains drop Plate Flakes, and each of the six new v2.9.1 mobs has its own table. Coins and essence are unchanged (482).
+{
+const SP = G.sp;
+const IT = [
+  ['shadow_pith', 'Shadow Pith', 6, 1, '#6b5a9e', '🌑', 'Soft dark pith left when a night strain disperses.'],
+  ['plate_flake', 'Plate Flake', 8, 1, '#9aa6b8', '🛡️', 'A flake of armor shed by a plated night strain.'],
+  ['gloam_silk', 'Gloam Silk', 18, 2, '#8a7cff', '🕸️', 'Dusky silk a Gloamstalker trails as it hunts.'],
+  ['night_eye_gem', 'Night-Eye Gem', 90, 3, '#a8f0ff', '💠', 'A gem that glows brighter in the dark.'],
+  ['sludge_gel', 'Sludge Gel', 5, 1, '#6aa84f', '🟢', 'Sticky gel from a dispersed Sludgeback.'],
+  ['river_grit', 'River Grit', 4, 1, '#b59a6a', '🪨', 'Coarse grit a Sludgeback picked up in the shallows.'],
+  ['glimmer_gel', 'Glimmer Gel', 85, 3, '#9fffe0', '✨', 'Gel that holds a little captured light.'],
+  ['cinder_spark', 'Cinder Spark', 7, 1, '#ff9a3a', '🔸', 'A still-warm spark from a Cinderling swarm.'],
+  ['ember_jar_shard', 'Ember Jar Shard', 20, 2, '#ff6a2a', '🏺', 'A shard of the jar a swarm was nesting in.'],
+  ['living_ember', 'Living Ember', 95, 3, '#ffd04a', '🔥', 'An ember that never quite goes out.'],
+  ['brine_scale', 'Brine Scale', 9, 1, '#4fb3c8', '🐚', 'A shed scale, salt-crusted. Brinejaws molt often.'],
+  ['brine_pearl', 'Brine Pearl', 30, 2, '#e8f4ff', '⚪', 'A pearl a Brinejaw was carrying in its cheek.'],
+  ['abyssal_pearl', 'Abyssal Pearl', 110, 3, '#3a4fd0', '🔵', 'A deep-water pearl, faintly humming.'],
+  ['brass_gear', 'Brass Gear', 8, 1, '#d4a640', '⚙️', 'A gear from a Clockwork Scuttler.'],
+  ['clock_spring', 'Clock Spring', 22, 2, '#c8c8d0', '🌀', 'A tightly wound spring.'],
+  ['mainspring_core', 'Mainspring Core', 100, 3, '#ffd77a', '🕰️', 'The heart-spring of a clockwork. Still ticking.'],
+  ['slag_core', 'Slag Core', 16, 1, '#7a5040', '🟤', 'The cooled core a Slag Golem formed around.'],
+  ['glassy_slag', 'Glassy Slag', 26, 2, '#3a2a40', '🔮', 'Slag fused into dark glass.'],
+  ['magma_gem', 'Magma Gem', 120, 3, '#ff4a1a', '♦️', 'A gem with molten light inside.'] ];
+for (const [k, n, v, r, c, g, d] of IT) if (!ITEMS[k]) defItem(k, n, { value: v, rarity: r, color: c, glyph: g, desc: d });
+// rows: [key, min, max, chance]
+const T = SP.tables;
+T.night = [['shadow_pith', 1, 1, 0.35]];
+T.armored = [['plate_flake', 1, 2, 0.45], ['shadow_pith', 1, 1, 0.2]];
+T.gloamstalker = [['shadow_pith', 1, 2, 1], ['gloam_silk', 1, 1, 0.25], ['night_eye_gem', 1, 1, 0.03]];
+T.sludgeback = [['sludge_gel', 1, 3, 1], ['river_grit', 2, 2, 0.4], ['glimmer_gel', 1, 1, 0.02]];
+T.sludgelet = [['sludge_gel', 1, 1, 0.6]];
+T.cinderling = [['cinder_spark', 1, 2, 1], ['ember_jar_shard', 1, 1, 0.08], ['living_ember', 1, 1, 0.01]];
+T.brinejaw = [['brine_scale', 2, 2, 1], ['brine_pearl', 1, 1, 0.3], ['abyssal_pearl', 1, 1, 0.02]];
+T.scuttler = [['brass_gear', 1, 3, 1], ['clock_spring', 1, 1, 0.35], ['mainspring_core', 1, 1, 0.03]];
+T.slaggolem = [['slag_core', 1, 1, 1], ['iron', 1, 3, 0.8], ['glassy_slag', 1, 1, 0.25], ['magma_gem', 1, 1, 0.02]];
+SP.roll = function (rows) { const out = []; for (const [k, a, b, ch] of rows) if (ITEMS[k] && Math.random() < ch) out.push([k, a + Math.floor(Math.random() * (b - a + 1))]); return out; };
+SP.rowsFor = function (e) { if (!e) return null; if (e.bx && T[e.bx]) return T[e.bx]; if (e.kind !== 'mob' || e.tame || e.pet) return null; return (e.g && e.g.armor > 0.25) ? T.armored : T.night; };
+SP.tableFor = function (e) { if (!e) return null; if (e.bx && T[e.bx]) return SP.roll(T[e.bx]); if (e.kind !== 'mob' || e.tame || e.pet) return null; return SP.roll((e.g && e.g.armor > 0.25) ? T.armored : T.night); };
+// lint: nothing in any table may be labeled as a body part (Kin Rule)
+SP.lint = () => { const bad = /\b(bone|skull|flesh|meat|blood|eye(?!-)|heart|claw|fang|tooth|teeth|skin|hide|organ|tail|horn|limb|corpse|carcass)\b/i; const hits = []; for (const t in T) for (const [k] of T[t]) { const it = ITEMS[k]; if (!it || bad.test(it.name) || bad.test(k.replace(/_/g, '-'))) hits.push(t + ':' + k); } return hits; };
+}
+
 // ==== 530_hl_access.js
 // ======================================================================
 // v2.8 Bedrock · MP-65 Everyone Plays A (extends 33_access.js): caption coverage, comfort, high contrast
@@ -21309,6 +21416,657 @@ G.hook('worldMade', function news28() { let seen = true; try { seen = !!localSto
 { const ui = G.ui; if (ui && typeof ui.p_help === 'function' && !ui._help28) { ui._help28 = true; const orig = ui.p_help;
   ui.p_help = function () { const h = orig.apply(this, arguments); const add = '<h3>🛡 Bedrock (v2.8)</h3><p style="font-size:13px;line-height:1.5;color:var(--vm-env,#c9d3ff)"><b>Esc → 🛡 Save safety</b> restores an earlier version or exports a .vmworld file. <b>Hold right mouse</b> to block; block just before a hit to <b>parry</b>, then strike to counter; <b>Left Alt</b> dodges. Place a <b>Watch Bell</b> with tripwires or pressure plates nearby to hear what is coming. Defense Nights are off until you turn them on; <b>/firstnight</b> starts a gentle one. Hold <b>;</b> for the ping wheel. <b>Shift+F8</b> or <b>/report</b> opens Report a problem.</p>';
     const i = h.indexOf('<h3>👥 Fellowship'); return i >= 0 ? h.slice(0, i) + add + h.slice(i) : h + add; }; } }
+
+// ==== 810_lc_wake.js
+// ===== v2.9.1 MP-80 Living Currents · 810 wake: rill springs, ember vents, sinks, cooling =====
+// Wild hillsides get Rill Springs and high peaks get Ember Vents (seeded in World.POST, only in chunks with no edits, never near spawn);
+// they feed the Waterworks solver a steady trickle, so streams really run downhill, spill off ledges as falls and end in the sea
+// (water reaching the open sea is absorbed there). Ember Vents pulse lava that creeps, crusts and finally cools to basalt.
+// Host / solo authoritative; guests see it through the normal Waterworks diffs. Save: S.v2.lc (prefs + tutorial flags, < 200 B).
+// Kill switches: G.FLAGS.lc (all), lc_wake (springs, vents, sinks, cooling).
+{
+const FL = G.FLAGS = G.FLAGS || {}; for (const k of ['lc', 'lc_wake', 'lc_flowvis', 'lc_current', 'lc_lava', 'lc_falls', 'lc_sound']) if (FL[k] === undefined) FL[k] = true;
+const WW = G.ww; const LC = G.lc = G.lc || {};
+LC.stats = { springs: 0, vents: 0, emitW: 0, emitL: 0, absorbed: 0, cooled: 0, skipped: 0 };
+const on = k => FL.lc && FL[k] !== false;
+G.migrate_lc = function (s) { if (!s || typeof s !== 'object' || Array.isArray(s)) s = {}; if (!(s.v >= 1)) s.v = 1; if (!s.ft || typeof s.ft !== 'object' || Array.isArray(s.ft)) s.ft = {};
+  for (const k in s.ft) if (typeof s.ft[k] !== 'number') delete s.ft[k]; s.snd = s.snd !== false; s.cap = s.cap !== false; return s; };
+LC.save = () => { const S = G.S; if (!S || !S.v2) return G.migrate_lc(null); return (S.v2.lc = G.migrate_lc(S.v2.lc)); };
+G.hook('load', () => LC.save()); G.hook('newGame', () => LC.save());
+LC.tip = (k, text, kind) => { const s = LC.save(); if (s.ft[k]) return false; s.ft[k] = 1; toast(text, kind || ''); return true; };
+// ---- blocks ----
+const T_RILL = G.v2tile(H => { H.noiseFill([104, 112, 104], 0.16); H.speck([70, 130, 70], 26, 0.12); for (let y = 5; y < 11; y++) for (let x = 5; x < 11; x++) H.px(x, y, H.vary([80, 170, 235], 0.12)); H.speck([220, 245, 255], 4, 0.05); });
+const T_VENT = G.v2tile(H => { H.noiseFill([46, 38, 40], 0.2); for (let y = 4; y < 12; y++) for (let x = 4; x < 12; x++) if ((x - 7.5) * (x - 7.5) + (y - 7.5) * (y - 7.5) < 12) H.px(x, y, H.vary([255, 120, 30], 0.15)); H.speck([255, 210, 90], 5, 0.05); });
+const RILL = 174, VENT = 175;
+if (!BLOCKS[RILL]) defBlock(RILL, 'rill_spring', 'Rill Spring', { tiles: [T_RILL, T_RILL, T_RILL], hard: 2.2, tier: 1, sound: 'stone', value: 0, drop: 'cobble', xp: 4 });
+if (!BLOCKS[VENT]) defBlock(VENT, 'ember_vent', 'Ember Vent', { tiles: [T_VENT, T_VENT, T_VENT], hard: 3, tier: 2, sound: 'stone', value: 0, drop: 'obsidian', xp: 12, emit: 0.8 });
+Object.assign(G.blockFallback, { [RILL]: B.COBBLE, [VENT]: B.OBSIDIAN });
+LC.RILL = RILL; LC.VENT = VENT;
+// ---- seeding (deterministic per chunk; wild chunks only) ----
+const SRC = LC.src = new Map(); // "cx,cz" -> {x,y,z,kind}
+const spawnXZ = () => { const p = G.S && G.S.player; const s = p && (p.spawn || p.home); return s ? [s[0], s[2]] : [0, 0]; };
+function nearClaim(x, z, r) { if (!G.claimAt) return false; for (const [dx, dz] of [[0, 0], [r, 0], [-r, 0], [0, r], [0, -r]]) { const c = G.claimAt(x + dx, z + dz); if (c && !c.natural) return true; } return false; }
+LC.site = function (world, c) { // pure: where would this chunk's source go?  -> {x,y,z,kind,i} or null
+  const bx = c.cx * 16, bz = c.cz * 16, s = world.seed | 0; const r = hash3(c.cx, 7, c.cz, s + 8101); const d = c.data;
+  const wantV = r < 0.07, wantR = !wantV && r < 0.30; if (!wantV && !wantR) return null;
+  let best = null; for (let k = 0; k < 10; k++) { const lx = 2 + Math.floor(hash3(c.cx, k, c.cz, s + 8102) * 12), lz = 2 + Math.floor(hash3(c.cx, k, c.cz, s + 8103) * 12);
+    let y = WH - 2; while (y > 2 && !d[lx + (lz << 4) + (y << 8)]) y--; const b = d[lx + (lz << 4) + (y << 8)]; const bd = BLOCKS[b];
+    if (!bd || !bd.solid || bd.liquid || b === B.LOG || b === B.LEAVES || (B.ICE && b === B.ICE)) continue; if (d[lx + (lz << 4) + ((y + 1) << 8)]) continue;
+    if (!best || y > best.y) best = { lx, lz, y }; }
+  if (!best) return null; const y = best.y;
+  if (wantV && y < SEA + 24) return wantR ? null : (y >= SEA + 9 ? { x: bx + best.lx, y, z: bz + best.lz, kind: 'w', i: best.lx + (best.lz << 4) + (y << 8) } : null);
+  if (!wantV && y < SEA + 9) return null;
+  // a hillside: some column 3 blocks away is at least 2 lower
+  let down = 0; for (const [dx, dz] of [[3, 0], [-3, 0], [0, 3], [0, -3]]) { const lx = best.lx + dx, lz = best.lz + dz; if (lx < 0 || lz < 0 || lx > 15 || lz > 15) continue; let yy = y; while (yy > 1 && !d[lx + (lz << 4) + (yy << 8)]) yy--; if (y - yy >= 2) down++; }
+  if (!down) return null; return { x: bx + best.lx, y, z: bz + best.lz, kind: wantV ? 'l' : 'w', i: best.lx + (best.lz << 4) + (y << 8) };
+};
+World.POST.push(function lcSprings(c) { if (this.dim !== 'over' || !on('lc_wake')) return;
+  try { const st = LC.site(this, c); if (!st) return; const sp = spawnXZ(); const dd = Math.hypot(st.x - sp[0], st.z - sp[1]); if (dd < (st.kind === 'l' ? 96 : 40)) return;
+    const dm = this.deltas.get(c.key); const above = st.i + 256; if (dm && dm.size && !dm.has(above) && !dm.has(st.i)) { LC.stats.skipped++; return; } // an edited (lived-in) chunk: leave it alone
+    if (st.kind === 'l' && nearClaim(st.x, st.z, 64)) return; if (nearClaim(st.x, st.z, 8)) return;
+    c.data[st.i] = st.kind === 'l' ? VENT : RILL; SRC.set(c.key, st); if (st.kind === 'l') LC.stats.vents++; else LC.stats.springs++; } catch (e) { logErr && logErr('lcSprings', e); } });
+// ---- feeding (host / solo) ----
+const isGuest = () => !!G.netGuest; let tick = 0;
+function feed() { if (!on('lc_wake') || isGuest() || !WW.on || !G.world || G.world.dim !== 'over') return; tick++; const w = G.world, p = G.S.player, D = WW.store(); const busy = D.lv.size > 24000 || WW.act.size > 20000;
+  for (const [ck, st] of SRC) { if (!w.chunks.has(ck)) { SRC.delete(ck); continue; } const b = w.get(st.x, st.y, st.z); if (b !== RILL && b !== VENT) { SRC.delete(ck); continue; }
+    const dist = Math.hypot(st.x + 0.5 - p.x, st.z + 0.5 - p.z); if (dist > Math.max(48, WW.R)) continue; if (busy) continue;
+    const id = b === VENT ? B.LAVA : B.WATER; const ay = st.y + 1, a = w.get(st.x, ay, st.z);
+    if (b === VENT && !st.hot) { // pulses: 45 s flowing, 75 s resting (lava fronts crust while it rests)
+      const ph = ((G.t || 0) + (st.x * 13 + st.z * 7) % 120 + 120) % 120; if (ph > 45) continue; if (tick % 2) continue; }
+    if (a === 0) { WW.put(st.x, ay, st.z, id, b === VENT ? 10 : 15); WW.wake(st.x, ay, st.z); }
+    else if (a === id) { const L = WW.levelAt(st.x, ay, st.z, id); if (L < 15) { WW.put(st.x, ay, st.z, id, b === VENT ? Math.min(15, L + 6) : 15); } WW.wake(st.x, ay, st.z); }
+    else continue; if (b === VENT) LC.stats.emitL++; else LC.stats.emitW++;
+    if (b === RILL && dist < 22) LC.tip('flow', '💧 Water runs downhill now. Drop something in and watch it go.');
+    if (b === VENT && dist < 30) LC.tip('lava', '🔥 Lava creeps and crusts. Cracks mean it\u2019s still hot underneath.', 'warn'); } }
+G.sched.add('lcFeed', () => safe('lcFeed', feed), { hz: 2, budgetMs: 0.6, priority: 2 });
+// ---- the sea drinks streams: water that arrives on top of the open sea is absorbed next tick ----
+const SINK = []; WW.hooks.arrive.push(function lcSink(x, y, z, id) { if (!FL.lc || !on('lc_wake') || id !== B.WATER || y !== SEA + 1) return; if (SINK.length < 4000 && WW.infinite(x, y - 1, z)) SINK.push(x, y, z); });
+G.hook('tick', function lcSinkTick() { if (!SINK.length || isGuest()) return; const w = G.world; const n = Math.min(SINK.length, 600);
+  for (let i = 0; i < n; i += 3) { const x = SINK[i], y = SINK[i + 1], z = SINK[i + 2]; if (w.get(x, y, z) !== B.WATER || w.placed.has(x + ',' + y + ',' + z)) continue; WW.put(x, y, z, B.WATER, 0); WW.wakeAround(x, y, z); LC.stats.absorbed++; }
+  SINK.splice(0, n); });
+// ---- cooling: thin lava that has not moved for a while turns to basalt (so vents build rock instead of flooding forever) ----
+const LAST = LC.lavaLast = new Map(); // packed key -> G.t when it last changed
+WW.hooks.arrive.push(function lcLavaArrive(x, y, z, id) { if (id === B.LAVA && LAST.size < 20000) LAST.set(WW.pk(x, y, z), G.t || 0); });
+{ const t0 = WW.touch; WW.touch = k => { if (t0) t0(k); if (LAST.has(k)) LAST.set(k, G.t || 0); }; }
+G.sched.add('lcCool', () => safe('lcCool', () => { if (!on('lc_wake') || isGuest() || !LAST.size) return; const w = G.world, t = G.t || 0; let n = 0;
+  for (const [k, t1] of LAST) { if (++n > 300) break; const x = WW.kx(k), y = WW.ky(k), z = WW.kz(k); if (!w.isLoaded(x, z)) continue; if (w.get(x, y, z) !== B.LAVA) { LAST.delete(k); continue; }
+    if (t - t1 < 60 || WW.act.has(k) || WW.infinite(x, y, z)) continue; const L = WW.levelAt(x, y, z, B.LAVA); if (L > 7 && t - t1 < 150) continue;
+    WW.put(x, y, z, B.LAVA, 0); const ar = G.applyingRemote; G.applyingRemote = true; WW.self++; try { w.set(x, y, z, 146, { eco: true, ww: 1 }); } finally { WW.self--; G.applyingRemote = ar; } WW.out.push(x, y, z, 146, 0);
+    LAST.delete(k); LC.stats.cooled++; if (Math.random() < 0.3) G.particles.spawn(x + 0.5, y + 1, z + 0.5, '#777', 4, 0.8, 1.2, -1); } }), { hz: 1, budgetMs: 0.6, priority: 4 });
+// ---- reference scenes for checks and shots: G.lc.scene('hill' | 'lava' | 'falls') builds a vignette next to you ----
+function fill(x1, y1, z1, x2, y2, z2, id) { const W = G.world; for (let y = y1; y <= y2; y++) for (let z = z1; z <= z2; z++) for (let x = x1; x <= x2; x++) W.set(x, y, z, id); }
+LC.scene = function (name) { const p = G.S.player; const ox = Math.floor(p.x) + 6, oz = Math.floor(p.z) - 6, g = Math.max(SEA + 2, Math.min(WH - 40, G.world.surfaceY(Math.floor(p.x), Math.floor(p.z)))); const W = G.world;
+  fill(ox - 18, g + 1, oz - 18, ox + 30, g + 30, oz + 18, 0); fill(ox - 18, g - 3, oz - 18, ox + 30, g, oz + 18, B.GRASS);
+  const kind = name === 'lava' ? 'l' : 'w';
+  // a stepped hillside that climbs away from you (+x), with a channel down its middle and a pool at the foot
+  for (let x = ox + 4; x <= ox + 30; x++) { const h = g + Math.min(22, Math.floor((x - ox - 4) * (name === 'falls' ? 0.5 : 0.75))); for (let z = oz - 14; z <= oz + 14; z++) { const ch = Math.abs(z - oz) <= 1 ? 1 : 0; fill(x, g + 1, z, x, h - ch, z, name === 'lava' ? B.STONE : B.DIRT); if (h - ch > g) W.set(x, h - ch, z, name === 'lava' ? (B.BASALT || B.STONE) : B.GRASS); } }
+  if (name === 'falls') { fill(ox + 14, g + 1, oz - 14, ox + 30, g + 18, oz + 14, B.STONE); for (let z = oz - 1; z <= oz + 1; z++) fill(ox + 14, g + 17, z, ox + 30, g + 18, z, 0); }
+  for (let x = ox - 3; x <= ox + 3; x++) for (let z = oz - 4; z <= oz + 4; z++) W.set(x, g, z, kind === 'l' ? B.STONE : 0); // pool hollow
+  const sx = name === 'falls' ? ox + 17 : name === 'lava' ? ox + 19 : ox + 29, sz = oz; let sy = WH - 2; while (sy > 1 && !W.get(sx, sy, sz)) sy--; W.set(sx, sy, sz, kind === 'l' ? VENT : RILL);
+  SRC.set((sx >> 4) + ',' + (sz >> 4), { x: sx, y: sy, z: sz, kind, hot: kind === 'l' }); LC.lastScene = { ox, oz, g, sx, sy, sz, kind }; G.yaw = Math.atan2(-(sx - p.x), -(sz - p.z)); G.pitch = 0.12; return { src: [sx, sy, sz], ox, oz, g }; };
+LC.sceneDiag = () => { const s = LC.lastScene; if (!s) return null; const W = G.world; let w = 0, l = 0, maxY = -1, minY = 999; for (let x = s.ox - 4; x <= s.ox + 30; x++) for (let z = s.oz - 6; z <= s.oz + 6; z++) for (let y = s.g - 2; y <= s.g + 26; y++) { const b = W.get(x, y, z); if (b === B.WATER || b === B.LAVA) { if (b === B.WATER) w++; else l++; if (y > maxY) maxY = y; if (y < minY) minY = y; } } return { w, l, minY, maxY, src: W.get(s.sx, s.sy, s.sz), above: W.get(s.sx, s.sy + 1, s.sz), lvAbove: G.ww.levelAt(s.sx, s.sy + 1, s.sz) }; };
+LC.state = () => ({ on: !!FL.lc, src: SRC.size, act: WW.act.size, lv: WW.store().lv.size, stats: Object.assign({}, LC.stats), save: LC.save() });
+}
+
+// ==== 811_lc_flowvis.js
+// ===== v2.9.1 MP-80 Living Currents · 811 flow look: moving water you can see =====
+// Patches the water material only (terrain is untouched): wherever the water surface slopes (a stream, a spill, a level step) bright
+// flow streaks travel downhill, and steep faces (falls) get fast downward streaks and a whiter sheet. The slope comes from screen-space
+// derivatives with the ambient bob removed analytically, so still lakes stay calm. No texture reads; Low runs one streak layer, Medium+
+// adds a second (foam). "Reduce motion" slows the streaks by 70%. Kill switch G.FLAGS.lc_flowvis; setting gfx.lcFlow.
+{
+const FL = G.FLAGS; const LC = G.lc; LC.vis = { patches: 0, reverts: 0, err: '' };
+if (G.migrate_gfx && !G.migrate_gfx._lc) { const m0 = G.migrate_gfx; G.migrate_gfx = function (s) { const g = m0.apply(this, arguments); if (g && typeof g.lcFlow !== 'boolean') g.lcFlow = true; return g; }; G.migrate_gfx._lc = 1; }
+const gfx = () => (G.tw && G.tw.gfx ? G.tw.gfx() : (G.settings && G.settings.gfx) || {});
+const tier = () => { const n = String(G.qualityName || 'high').replace('auto:', ''); return ['low', 'medium', 'high', 'ultra'].includes(n) ? n : 'high'; };
+const ANCH = '  vec3 vd = normalize(vW - (cameraPosition - uRO));';
+const PARS = 'uniform vec4 uLcK;\n';
+const CODE = `
+#ifdef VM_LC_FLOW
+  if (uWater > 0.5 && uThermal < 0.5 && uLcK.w > 0.5) { vec3 lcN = normalize(cross(dFdx(vW), dFdy(vW))); if (lcN.y < 0.0) lcN = -lcN;
+    vec2 lcB = vec2(0.039 * cos(vW.x * 1.3 + uTime * 1.5), -0.033 * sin(vW.z * 1.1 + uTime * 1.2));
+    float lcFall = 1.0 - smoothstep(0.35, 0.6, lcN.y); vec2 lcG = -lcN.xz / max(lcN.y, 0.2) - lcB; float lcS = length(lcG);
+    float lcK = max(lcFall, smoothstep(0.07, 0.13, lcS));
+    if (lcK > 0.01) { vec2 lcD = lcFall > 0.5 ? normalize(lcN.xz + vec2(1e-4)) : lcG / max(lcS, 1e-4); vec2 lcP = vec2(-lcD.y, lcD.x); float lcT = uTime * uLcK.x;
+      float al = mix(dot(vW.xz, lcD) * 1.6 - lcT * (1.4 + 4.0 * min(lcS, 1.0)), vW.y * 1.25 + lcT * 5.5, lcFall); float ac = dot(vW.xz, lcP) * 2.2;
+      float st = sin(al * 6.2832 + sin(ac * 1.7) * 2.2 + sin(ac * 4.9 + al) * 0.7); float fo = smoothstep(0.5, 0.97, st);
+#ifdef VM_LC_FOAM
+      float st2 = sin(al * 11.9 + 0.37 + sin(ac * 2.9 + 1.3) * 1.8); fo = max(fo, smoothstep(0.72, 1.0, st2) * 0.75);
+#endif
+      float lit = (0.3 + 0.7 * uDaylight) * (0.55 + 0.45 * vL.y); col = mix(col, vec3(0.86, 0.94, 1.0) * lit, clamp(lcK * (fo * (0.42 + 0.3 * lcFall) * uLcK.y + lcFall * 0.24), 0.0, 0.82)); } }
+#endif
+`;
+function patch(m) { if (!m || !m.userData.vo2) return false; let fs = m.fragmentShader; if (fs.indexOf('uLcK') >= 0) return true; const i = fs.lastIndexOf(ANCH); if (i < 0) { LC.vis.err = 'anchor missing'; return false; }
+  fs = fs.replace('void main(){', PARS + 'void main(){'); const j = fs.lastIndexOf(ANCH); fs = fs.slice(0, j) + CODE + fs.slice(j);
+  m.uniforms.uLcK = m.uniforms.uLcK || { value: new THREE.Vector4(1, 1, 0, 1) }; m.fragmentShader = fs; m.needsUpdate = true; LC.vis.patches++; return true; }
+LC.vis.patched = () => !!(G.matW && G.matW.fragmentShader.indexOf('uLcK') >= 0);
+let failAt = 0, failed = false;
+G.hook('frame', function lcFlowFrame() { const Wm = G.matW; if (!Wm || G.state !== 'play' || failed) return; const want = FL.lc && FL.lc_flowvis !== false && gfx().lcFlow !== false;
+  if (!want) { if (Wm.defines && Wm.defines.VM_LC_FLOW !== undefined && G.vo2 && G.vo2.setDef) G.vo2.setDef(Wm, 'VM_LC_FLOW', false); return; }
+  if (Wm.fragmentShader.indexOf('uLcK') < 0) { if (!patch(Wm)) return; failAt = performance.now() + 1500; }
+  if (failAt && performance.now() > failAt) { failAt = 0; try { const R = G.renderer; for (const p of (R && R.info && R.info.programs) || []) if (p.diagnostics && p.diagnostics.runnable === false) { failed = true; LC.vis.err = 'compile failed'; G.vo2.setDef(Wm, 'VM_LC_FLOW', false); return; } } catch (e) { } }
+  if (G.vo2 && G.vo2.setDef) { G.vo2.setDef(Wm, 'VM_LC_FLOW', true); G.vo2.setDef(Wm, 'VM_LC_FOAM', tier() !== 'low'); }
+  const U = Wm.uniforms.uLcK; if (U) U.value.set(G.settings && G.settings.reduceMotion ? 0.3 : 1, 1, tier() === 'low' ? 0 : 1, 1); });
+LC.vis.state = () => ({ patched: LC.vis.patched(), err: LC.vis.err, defs: G.matW ? Object.keys(G.matW.defines || {}).filter(k => /^VM_LC/.test(k)) : [], patches: LC.vis.patches });
+}
+
+// ==== 812_lc_current.js
+// ===== v2.9.1 MP-80 Living Currents · 812 currents that push =====
+// LC.flowAt(x, y, z) reads the Waterworks levels around a cell and returns the local flow: horizontal direction and speed (0..1), and
+// whether the fluid is falling. Anything standing or swimming in moving fluid is pushed along it: force = flow × speed × depth × weight
+// (water 1, mud 0.5, lava 0.25, honey 0.15). You, creatures and dropped spoils all drift; still water never pushes.
+// Kill switch G.FLAGS.lc_current.
+{
+const FL = G.FLAGS; const LC = G.lc; const WW = G.ww;
+const WEIGHT = { water: 1, mud: 0.5, lava: 0.25, honey: 0.15, mana: 1, tar: 0.15 };
+const DX4 = [1, 0, -1, 0], DZ4 = [0, 1, 0, -1];
+const enter = (b) => { if (b === 0) return true; const d = BLOCKS[b]; return !!(d && d.cross && !d.solid); };
+LC.flowAt = function (x, y, z) { const w = G.world; if (!w) return null; x = Math.floor(x); y = Math.floor(y); z = Math.floor(z); const id = w.get(x, y, z); const F = WW.FLD[id]; if (!F) return null;
+  const L = WW.levelAt(x, y, z, id); const below = w.get(x, y - 1, z); const kind = F.k;
+  if (y > 1 && (enter(below) || (below === id && WW.levelAt(x, y - 1, z, id) < 15 && w.get(x, y + 1, z) === id))) return { fx: 0, fz: 0, s: 1, fall: true, k: kind, L };
+  let fx = 0, fz = 0;
+  for (let d = 0; d < 4; d++) { const nx = x + DX4[d], nz = z + DZ4[d]; const nb = w.get(nx, y, nz); let Ln;
+    if (nb === id) Ln = WW.levelAt(nx, y, nz, id); else if (enter(nb)) { const nbb = w.get(nx, y - 1, nz); Ln = (enter(nbb) || nbb === id) ? -8 : (L >= 2 ? 0 : L); } else continue;
+    const diff = L - Ln; if (diff > 0) { fx += DX4[d] * diff; fz += DZ4[d] * diff; } else if (diff < 0) { fx += DX4[d] * diff * 0.5; fz += DZ4[d] * diff * 0.5; } }
+  // a full cell whose top neighbour is the same fluid is part of a deep body: flow from the surface above it, damped
+  const m = Math.hypot(fx, fz); let s = Math.min(1, m / 10); if (s < 0.1) s = 0; return { fx: m ? fx / m : 0, fz: m ? fz / m : 0, s, fall: false, k: kind, L }; };
+LC.stats.pushes = 0;
+function pushOf(x, y, z, h) { // sample feet and waist; returns [ax, az, ay] acceleration
+  let ax = 0, az = 0, ay = 0, n = 0; for (const dy of [0.2, Math.min(h * 0.6, 1.0)]) { const f = LC.flowAt(x, y + dy, z); if (!f) continue; n++; const wt = WEIGHT[f.k] || 1; const dep = Math.min(1, (f.L || 15) / 15 + 0.25);
+    if (f.fall) { ay -= 6 * wt; continue; } if (!f.s) continue; ax += f.fx * f.s * wt * dep * 13; az += f.fz * f.s * wt * dep * 13; }
+  return n ? [ax / Math.max(1, n * 0.75), az / Math.max(1, n * 0.75), ay] : null; }
+LC.pushOf = pushOf;
+G.hook('tick', function lcCurrent(dt) { if (!FL.lc || FL.lc_current === false || G.state !== 'play' || !G.world || G.flying || G.dead) return; dt = Math.min(0.1, G.realDt || dt || 0.016);
+  const p = G.S.player; const P = pushOf(p.x, p.y, p.z, 1.8); if (P && (P[0] || P[1])) { p.vx = (p.vx || 0) + P[0] * dt; p.vz = (p.vz || 0) + P[1] * dt; LC.stats.pushes++; if (Math.hypot(P[0], P[1]) > 4) LC.tip && LC.tip('cur', '🌊 The current carries you. Swim across it, or ride it downstream.'); }
+  if (P && P[2] && G.pe && G.pe.vel) G.pe.vel.y = Math.max(-9, G.pe.vel.y + P[2] * dt);
+  if (G.netGuest) return; const ENTS = G.ENTS || []; let k = 0;
+  for (const e of ENTS) { if (!e || !e.pos || !e.vel || e.fly || e.kind === 'npc') continue; if (Math.abs(e.pos.x - p.x) + Math.abs(e.pos.z - p.z) > 64) continue; if (++k > 40) break;
+    const Q = pushOf(e.pos.x, e.pos.y, e.pos.z, e.h || 1.6); if (!Q) continue; const wk = e.bxHeavy ? 0.25 : 1; e.vel.x += Q[0] * dt * wk * 1.6; e.vel.z += Q[1] * dt * wk * 1.6; } });
+}
+
+// ==== 813_lc_lava.js
+// ===== v2.9.1 MP-80 Living Currents · 813 Lava 2.0: lava that visibly creeps, crusts and glows through cracks =====
+// A light overlay mesh over the lava near you (≤ 48 blocks, ≤ 5,000 faces), rebuilt only when lava changes or you move a chunk:
+// molten lava churns and slides along its flow direction; lava that has stopped moving darkens to a crust over ~20 s with glowing
+// cracks that pulse; lavafalls stream downward. Its own small shader (no terrain shader change). Kill switch G.FLAGS.lc_lava.
+{
+const FL = G.FLAGS; const LC = G.lc; const WW = G.ww;
+const LV = LC.lava = { faces: 0, builds: 0, ms: 0, chunks: 0, err: '' };
+const VS = `attribute vec4 aLv; varying vec3 vP; varying vec4 vF; varying float vD;
+void main(){ vec4 wp = modelMatrix * vec4(position, 1.0); vP = wp.xyz; vF = aLv; vec4 mv = viewMatrix * wp; vD = length(mv.xyz); gl_Position = projectionMatrix * mv; }`;
+const FS = `uniform float uNow; uniform float uT; uniform vec3 uFogColor; uniform float uFogNear; uniform float uFogFar; uniform float uSpd;
+varying vec3 vP; varying vec4 vF; varying float vD;
+float h21(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
+float vn(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(h21(i), h21(i + vec2(1.0, 0.0)), f.x), mix(h21(i + vec2(0.0, 1.0)), h21(i + vec2(1.0, 1.0)), f.x), f.y); }
+void main(){ float side = vF.w; float t = uT * uSpd;
+  vec2 uv = side > 0.5 ? vec2(vP.x + vP.z, vP.y + t * 0.9) : vP.xz - vF.xy * t * 0.45;
+  float n = vn(uv * 1.25) * 0.55 + vn(uv * 2.9 + 7.0) * 0.3 + vn(uv * 6.7 - 3.0) * 0.15;
+  float crust = side > 0.5 ? 0.0 : smoothstep(2.0, 20.0, uNow - vF.z);
+  float cm = crust * smoothstep(0.38, 0.6, n + 0.22 * crust);
+  vec3 hot = mix(vec3(0.95, 0.26, 0.02), vec3(1.0, 0.8, 0.3), smoothstep(0.42, 0.82, n + 0.08 * sin(t * 1.3 + n * 9.0)));
+  vec3 cr = vec3(0.11, 0.075, 0.065) * (0.55 + 0.7 * n);
+  float ck = 1.0 - smoothstep(0.015, 0.06, abs(fract(n * 3.0) - 0.5) * (0.6 + crust));
+  vec3 c = mix(hot * 1.2, cr, cm * 0.94) + vec3(1.0, 0.42, 0.06) * ck * cm * (0.85 + 0.35 * sin(t * 2.1 + n * 14.0));
+  if (side > 0.5) c = mix(c, vec3(1.0, 0.72, 0.3), 0.25 * smoothstep(0.6, 0.9, n));
+  gl_FragColor = vec4(mix(c, uFogColor, smoothstep(uFogNear, uFogFar, vD) * 0.9), 1.0); }`;
+let mat = null, mesh = null;
+function ensure() { if (mesh || !G.scene) return !!mesh; mat = new THREE.ShaderMaterial({ uniforms: { uNow: { value: 0 }, uT: { value: 0 }, uFogColor: { value: new THREE.Color(0.6, 0.7, 0.9) }, uFogNear: { value: 40 }, uFogFar: { value: 120 }, uSpd: { value: 1 } }, vertexShader: VS, fragmentShader: FS, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
+  mesh = new THREE.Mesh(new THREE.BufferGeometry(), mat); mesh.frustumCulled = false; mesh.renderOrder = 1; mesh.visible = false; G.scene.add(mesh); return true; }
+// ---- per-chunk lava surface cache ----
+const CACHE = new Map(); let dirty = true; const DIRTY = new Set();
+const markXZ = (x, z) => { DIRTY.add((x >> 4) + ',' + (z >> 4)); dirty = true; };
+G.hook('worldMade', () => { const w = G.world; CACHE.clear(); dirty = true; if (!w || w._lcLava) return; w._lcLava = true; const o = w.onChange;
+  w.onChange = function (x, y, z, old, id) { const r = o ? o.apply(this, arguments) : undefined; if (old === B.LAVA || id === B.LAVA) markXZ(x, z); else if (id === 0 || old === 0) { const b = this.get(x, y - 1, z); if (b === B.LAVA) markXZ(x, z); } return r; }; });
+{ const t0 = WW.touch; WW.touch = k => { if (t0) t0(k); const x = WW.kx(k), z = WW.kz(k); if (G.world && G.world.get(x, WW.ky(k), z) === B.LAVA) markXZ(x, z); }; }
+function scan(c) { const d = c.data, out = []; const LAVA = B.LAVA, top = c.maxY ? Math.min(WH - 2, c.maxY + 1) : WH - 2; for (let y = 1; y <= top; y++) for (let i = 0; i < 256; i++) { const j = i + (y << 8); if (d[j] === LAVA) out.push(c.cx * 16 + (i & 15), y, c.cz * 16 + (i >> 4)); } return out; }
+const DX4 = [1, 0, -1, 0], DZ4 = [0, 1, 0, -1];
+function cellH(w, x, y, z) { if (w.get(x, y + 1, z) === B.LAVA) return 1; const L = WW.levelAt(x, y, z, B.LAVA); return L >= 15 ? 0.88 : Math.max(0.07, 0.88 * L / 15); }
+function cornerH(w, x, y, z, cx, cz) { let s = 0, n = 0; for (let a = 0; a < 2; a++) for (let c = 0; c < 2; c++) { const xx = x + cx - 1 + a, zz = z + cz - 1 + c; if (w.get(xx, y, zz) !== B.LAVA) continue; const h = cellH(w, xx, y, zz); if (h >= 1) return 1; s += h; n++; } return n ? s / n : cellH(w, x, y, z); }
+const OPQ = id => id > 0 && BLOCKS[id] && BLOCKS[id].opaque;
+function build() { const t0 = performance.now(); const w = G.world, p = G.S.player; const pcx = Math.floor(p.x) >> 4, pcz = Math.floor(p.z) >> 4; const P = [], A = [], I = []; let faces = 0, nch = 0;
+  const LAST = LC.lavaLast || new Map();
+  for (let dz = -3; dz <= 3; dz++) for (let dx = -3; dx <= 3; dx++) { const ck = (pcx + dx) + ',' + (pcz + dz); const c = w.chunks.get(ck); if (!c) continue; let e = CACHE.get(ck);
+    if (!e || e.c !== c || DIRTY.has(ck)) { e = { c, cells: scan(c) }; CACHE.set(ck, e); DIRTY.delete(ck); } if (!e.cells.length) continue; nch++;
+    const L = e.cells; for (let i = 0; i < L.length && faces < 5000; i += 3) { const x = L[i], y = L[i + 1], z = L[i + 2]; if (Math.abs(y - p.y) > 40) continue;
+      const tc = LAST.get(WW.pk(x, y, z)); const tch = tc === undefined ? -1e5 : tc; const f = LC.flowAt ? LC.flowAt(x, y, z) : null; const fx = f && !f.fall ? f.fx * f.s : 0, fz = f && !f.fall ? f.fz * f.s : 0;
+      const up = w.get(x, y + 1, z);
+      if (up !== B.LAVA && !OPQ(up)) { const b = P.length / 3; const h00 = cornerH(w, x, y, z, 0, 0), h10 = cornerH(w, x, y, z, 1, 0), h11 = cornerH(w, x, y, z, 1, 1), h01 = cornerH(w, x, y, z, 0, 1);
+        P.push(x, y + h00 + 0.015, z, x + 1, y + h10 + 0.015, z, x + 1, y + h11 + 0.015, z + 1, x, y + h01 + 0.015, z + 1); for (let k = 0; k < 4; k++) A.push(fx, fz, tch, 0); I.push(b, b + 2, b + 1, b, b + 3, b + 2); faces++; }
+      for (let d = 0; d < 4; d++) { const nx = x + DX4[d], nz = z + DZ4[d]; const nb = w.get(nx, y, nz); if (nb === B.LAVA || OPQ(nb)) continue; const b = P.length / 3; const o = 0.015;
+        const hA = up === B.LAVA ? 1 : cornerH(w, x, y, z, d === 0 ? 1 : d === 2 ? 0 : (d === 1 ? 1 : 0), d === 1 ? 1 : d === 3 ? 0 : (d === 0 ? 0 : 1)), hB = up === B.LAVA ? 1 : cornerH(w, x, y, z, d === 0 ? 1 : d === 2 ? 0 : (d === 1 ? 0 : 1), d === 1 ? 1 : d === 3 ? 0 : (d === 0 ? 1 : 0));
+        let ax, az, bx, bz; if (d === 0) { ax = x + 1 + o; az = z; bx = x + 1 + o; bz = z + 1; } else if (d === 2) { ax = x - o; az = z + 1; bx = x - o; bz = z; } else if (d === 1) { ax = x + 1; az = z + 1 + o; bx = x; bz = z + 1 + o; } else { ax = x; az = z - o; bx = x + 1; bz = z - o; }
+        P.push(ax, y, az, bx, y, bz, bx, y + hB, bz, ax, y + hA, az); for (let k = 0; k < 4; k++) A.push(0, 0, tch, 1); I.push(b, b + 1, b + 2, b, b + 2, b + 3); faces++; } } }
+  const g = new THREE.BufferGeometry(); if (faces) { g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3)); g.setAttribute('aLv', new THREE.Float32BufferAttribute(A, 4)); g.setIndex(I); }
+  mesh.geometry.dispose(); mesh.geometry = g; mesh.visible = faces > 0; mat.side = THREE.DoubleSide; LV.faces = faces; LV.chunks = nch; LV.builds++; LV.ms = +(performance.now() - t0).toFixed(2); }
+let acc = 0, lastC = '';
+G.hook('frame', function lcLavaFrame(dt) { if (!G.world || G.state !== 'play') return; const want = FL.lc && FL.lc_lava !== false && (!G.tw || !G.tw.gfx || G.tw.gfx().lcFlow !== false);
+  if (!want) { if (mesh) mesh.visible = false; return; } if (!ensure()) return; const p = G.S.player; const ck = (Math.floor(p.x) >> 4) + ',' + (Math.floor(p.z) >> 4) + ',' + (Math.floor(p.y) >> 3);
+  acc += dt || 0; if ((dirty || ck !== lastC) && acc > 0.35) { acc = 0; dirty = false; lastC = ck; safe('lcLavaBuild', build); }
+  const U = mat.uniforms; U.uNow.value = G.t || 0; U.uT.value = performance.now() / 1000 % 3600; U.uSpd.value = G.settings && G.settings.reduceMotion ? 0.3 : 1;
+  const O = G.matO && G.matO.uniforms; if (O && O.uFogColor) { U.uFogColor.value.copy(O.uFogColor.value); U.uFogNear.value = O.uFogNear.value; U.uFogFar.value = O.uFogFar.value; } });
+LV.state = () => Object.assign({}, LV, { visible: !!(mesh && mesh.visible), cache: CACHE.size });
+LV.rebuild = () => { dirty = true; CACHE.clear(); if (ensure()) build(); return LV.faces; };
+}
+
+// ==== 814_lc_falls.js
+// ===== v2.9.1 MP-80 Living Currents · 814 falls: mist and splash where water lands, embers where lava pours =====
+// Every 0.8 s it looks at the moving fluid near you (≤ 4,000 cells) for the foot of a falling column, keeps the 4 nearest, and puffs
+// mist/spray (water) or embers (lava) there. ≤ ~60 particles alive from this. Calmer with Reduce Motion. Kill switch G.FLAGS.lc_falls.
+{
+const FL = G.FLAGS; const LC = G.lc; const WW = G.ww; const F = LC.falls = { n: 0, list: [], scans: 0 };
+const DX4 = [1, 0, -1, 0], DZ4 = [0, 1, 0, -1];
+const open = b => b === 0 || (BLOCKS[b] && !BLOCKS[b].solid && !WW.isFluid(b));
+function scan() { const w = G.world, p = G.S.player; const D = WW.store(); const out = []; let n = 0;
+  for (const k of D.lv.keys()) { if (++n > 4000) break; const x = WW.kx(k), y = WW.ky(k), z = WW.kz(k); const dx = x - p.x, dz = z - p.z, dy = y - p.y; const d2 = dx * dx + dz * dz + dy * dy; if (d2 > 1600) continue;
+    const id = w.get(x, y, z); if (!WW.isFluid(id)) continue; if (w.get(x, y + 1, z) !== id || w.get(x, y + 2, z) !== id) continue; let air = 0; for (let d = 0; d < 4; d++) if (open(w.get(x + DX4[d], y + 1, z + DZ4[d]))) air++; if (air < 2) continue;
+    const bl = w.get(x, y - 1, z); if (bl === 0) continue; let h = 2; while (h < 12 && w.get(x, y + h + 1, z) === id) h++; out.push({ x, y, z, id, d2, h }); }
+  out.sort((a, b) => a.d2 - b.d2); F.list = out.slice(0, 4); F.n = F.list.length; F.scans++; }
+let acc = 0, pacc = 0;
+G.hook('tick', function lcFalls(dt) { if (!FL.lc || FL.lc_falls === false || !G.world || !G.particles) return; acc += dt; pacc += dt;
+  if (acc > 0.8) { acc = 0; safe('lcFallsScan', scan); if (F.n && LC.tip) LC.tip('falls', '💦 Falling water sprays where it lands. Lava sheds embers.'); }
+  const rm = G.settings && G.settings.reduceMotion; if (pacc < (rm ? 0.3 : 0.12)) return; pacc = 0;
+  for (const f of F.list) { const cx = f.x + 0.5, cz = f.z + 0.5, cy = f.y + 0.9;
+    if (f.id === B.LAVA) { if (G.glowP) G.glowP.spawn(cx, cy, cz, '#ff8a2a', 2, 2.2, 0.9, 0, 0.5); G.particles.spawn(cx, cy + 0.2, cz, '#3a2c26', 1, 0.8, 1.6); }
+    else { G.particles.spawn(cx, cy, cz, '#eef7ff', rm ? 2 : 3, 2.4 + Math.min(2, f.h * 0.2), 0.7); if (Math.random() < 0.5) G.particles.spawn(cx, cy + 0.6, cz, '#cfe6ff', 1, 1.2, 1.2); } } });
+}
+// ---- falling sheets: where a stream pours off an edge, the sim moves water in packets (it would read as a string of beads), so we draw
+// the fall itself as a continuous translucent sheet with streaks scrolling down (water) or a glowing molten ribbon (lava), from the lip to
+// where it lands. ≤ 24 columns within 40 blocks, rebuilt with the 0.8 s scan; a column lingers 2.5 s after its lip was last seen.
+{
+const FL = G.FLAGS; const LC = G.lc; const WW = G.ww; const F = LC.falls; F.sheets = 0; F.cols = 0;
+const DX4 = [1, 0, -1, 0], DZ4 = [0, 1, 0, -1]; const COL = new Map(); let mesh = null, mat = null;
+const open = b => b === 0 || (BLOCKS[b] && !BLOCKS[b].solid && !WW.isFluid(b) && !BLOCKS[b].liquid);
+const VS = `attribute vec3 aS; varying vec3 vP; varying vec3 vS; varying float vD; void main(){ vec4 wp = modelMatrix * vec4(position, 1.0); vP = wp.xyz; vS = aS; vec4 mv = viewMatrix * wp; vD = length(mv.xyz); gl_Position = projectionMatrix * mv; }`;
+const FS = `uniform float uT; uniform vec3 uFogColor; uniform float uFogNear; uniform float uFogFar; uniform float uSpd; varying vec3 vP; varying vec3 vS; varying float vD;
+float h1(float n){ return fract(sin(n) * 43758.5453); }
+void main(){ float u = vS.x; float lava = vS.z; float y = vP.y; float sp = (lava > 0.5 ? 1.6 : 7.0) * uSpd; float col = floor(u * 9.0);
+  float s1 = fract((y + uT * sp) * 0.55 + h1(col) * 7.0); float s2 = fract((y + uT * sp * 1.3) * 1.1 + h1(col + 17.0) * 5.0);
+  float streak = smoothstep(0.75, 1.0, s1) * 0.8 + smoothstep(0.86, 1.0, s2) * 0.6; float edge = smoothstep(0.0, 0.08, u) * (1.0 - smoothstep(0.92, 1.0, u));
+  float foot = 1.0 - smoothstep(0.0, 1.4, vS.y); vec3 c; float a;
+  if (lava > 0.5) { float cr = smoothstep(0.55, 0.95, fract((y + uT * sp) * 0.8 + h1(col) * 3.0)); c = mix(vec3(1.0, 0.42, 0.06), vec3(1.0, 0.85, 0.35), streak) * mix(1.0, 0.35, cr * 0.6); a = 0.97; }
+  else { c = mix(vec3(0.42, 0.66, 0.95), vec3(0.93, 0.97, 1.0), clamp(streak + foot * 0.7, 0.0, 1.0)); a = (0.62 + streak * 0.3 + foot * 0.2) * edge; }
+  float fg = smoothstep(uFogNear, uFogFar, vD); c = mix(c, uFogColor, fg); gl_FragColor = vec4(c, a); }`;
+function ensure() { if (mesh || !G.scene) return !!mesh; mat = new THREE.ShaderMaterial({ uniforms: { uT: { value: 0 }, uFogColor: { value: new THREE.Color(0.6, 0.7, 0.9) }, uFogNear: { value: 40 }, uFogFar: { value: 120 }, uSpd: { value: 1 } }, vertexShader: VS, fragmentShader: FS, transparent: true, depthWrite: false, side: THREE.DoubleSide });
+  mesh = new THREE.Mesh(new THREE.BufferGeometry(), mat); mesh.frustumCulled = false; mesh.renderOrder = 2; mesh.visible = false; G.scene.add(mesh); return true; }
+function landing(w, x, y, z, id) { let ys = y; while (ys > 1 && y - ys < 48) { const b = w.get(x, ys, z); if (!open(b) && b !== id) break; ys--; } if (y - ys >= 48 || ys <= 1) return null; let yy = ys + 1; while (yy <= y && w.get(x, yy, z) === id) yy++; if (yy === ys + 1) return ys + 1; return yy - 1 + Math.min(0.88, 0.88 * WW.levelAt(x, yy - 1, z, id) / 15); }
+function lips() { const w = G.world, p = G.S.player, D = WW.store(); const now = G.t || 0; let n = 0; const seen = new Set();
+  const visit = k => { if (seen.has(k)) return; seen.add(k); const x = WW.kx(k), y = WW.ky(k), z = WW.kz(k); const dx = x - p.x, dz = z - p.z; if (dx * dx + dz * dz > 1600 || Math.abs(y - p.y) > 30) return; const id = w.get(x, y, z); if (id !== B.WATER && id !== B.LAVA) return;
+    const below = w.get(x, y - 1, z); const top = y + Math.min(0.88, 0.88 * WW.levelAt(x, y, z, id) / 15);
+    if (open(below)) { if (w.get(x, y + 1, z) === id) return; const bot = landing(w, x, y - 1, z, id); if (bot !== null && top - bot >= 1.5) add(x, z, top, bot, id, now); return; }
+    for (let d = 0; d < 4; d++) { const nx = x + DX4[d], nz = z + DZ4[d]; if (!open(w.get(nx, y, nz)) || !open(w.get(nx, y - 1, nz))) continue; const bot = landing(w, nx, y - 1, nz, id); if (bot !== null && y + 0.5 - bot >= 1.5) add(nx, nz, y + 0.55, bot, id, now, x, z); } };
+  for (const k of D.lv.keys()) { if (++n > 4000) break; visit(k); } for (const k of WW.act) { if (++n > 6000) break; visit(k); }
+  for (const [k, c] of COL) if (now - c.t > 2.5) COL.delete(k); }
+function add(x, z, top, bot, id, now, fx, fz) { const k = x + ',' + z; const c = COL.get(k); if (c && c.top > top + 0.01 && now - c.t < 0.5) { c.t = now; return; } COL.set(k, { x, z, top, bot, id, t: now, fx, fz }); }
+function build() { const P = [], A = [], I = []; const p = G.S.player; const L = Array.from(COL.values()).sort((a, b) => Math.hypot(a.x - p.x, a.z - p.z) - Math.hypot(b.x - p.x, b.z - p.z)).slice(0, 24);
+  for (const c of L) { const lv = c.id === B.LAVA ? 1 : 0; const i0 = 0.12, i1 = 0.88; const x0 = c.x + i0, x1 = c.x + i1, z0 = c.z + i0, z1 = c.z + i1; const H = c.top - c.bot;
+    const quad = (ax, az, bx, bz) => { const b = P.length / 3; P.push(ax, c.bot, az, bx, c.bot, bz, bx, c.top, bz, ax, c.top, az); A.push(0, 0, lv, 1, 0, lv, 1, H, lv, 0, H, lv); I.push(b, b + 1, b + 2, b, b + 2, b + 3); };
+    quad(x0, z0, x1, z0); quad(x1, z0, x1, z1); quad(x1, z1, x0, z1); quad(x0, z1, x0, z0); }
+  const g = new THREE.BufferGeometry(); if (L.length) { g.setAttribute('position', new THREE.Float32BufferAttribute(P, 3)); g.setAttribute('aS', new THREE.Float32BufferAttribute(A, 3)); g.setIndex(I); }
+  mesh.geometry.dispose(); mesh.geometry = g; mesh.visible = L.length > 0; F.sheets = L.length; F.cols = COL.size;
+  // feet of the sheets join the mist/ember list (nearest first)
+  const feet = L.slice(0, 4).map(c => ({ x: c.x, y: Math.floor(c.bot), z: c.z, id: c.id, d2: 0, h: Math.round(c.top - c.bot) })); if (feet.length) { F.list = feet.concat(F.list.filter(f => !feet.some(q => q.x === f.x && q.z === f.z))).slice(0, 4); F.n = F.list.length; } }
+let acc = 0;
+G.hook('frame', function lcSheets(dt) { if (!G.world || G.state !== 'play') return; const want = FL.lc && FL.lc_falls !== false && (!G.tw || !G.tw.gfx || G.tw.gfx().lcFlow !== false);
+  if (!want) { if (mesh) mesh.visible = false; return; } if (!ensure()) return; acc += dt || 0; if (acc > 0.8) { acc = 0; safe('lcSheets', () => { lips(); build(); }); }
+  const U = mat.uniforms; U.uT.value = performance.now() / 1000 % 3600; U.uSpd.value = G.settings && G.settings.reduceMotion ? 0.3 : 1; const O = G.matO && G.matO.uniforms; if (O && O.uFogColor) { U.uFogColor.value.copy(O.uFogColor.value); U.uFogNear.value = O.uFogNear.value; U.uFogFar.value = O.uFogFar.value; } });
+F.sheetState = () => ({ sheets: F.sheets, cols: F.cols, visible: !!(mesh && mesh.visible), list: Array.from(COL.values()).slice(0, 6).map(c => [c.x, +c.top.toFixed(1), +c.bot.toFixed(1), c.id === B.LAVA ? 'l' : 'w']) });
+}
+
+// ==== 815_lc_sound.js
+// ===== v2.9.1 MP-80 Living Currents · 815 fluid sound =====
+// Moving water and lava now sound like it: up to 6 soft looping voices (filtered noise) placed at the nearest flowing clusters, panned and
+// faded by distance: a babble for streams, a roar for falls, a low bubbling rumble for lava. Captions name them with a direction
+// ("[stream, ahead-left]") when Subtitles are on. Kill switch G.FLAGS.lc_sound.
+{
+const FL = G.FLAGS; const LC = G.lc; const WW = G.ww; const SND = LC.snd = { voices: 0, clusters: 0, caps: 0 };
+let noise = null; const V = [];
+function ctx() { const A = G.audio; return A && A.ok && A.ctx && A.sfx ? A : null; }
+function buf(A) { if (noise) return noise; const c = A.ctx, n = c.sampleRate * 2; noise = c.createBuffer(1, n, c.sampleRate); const d = noise.getChannelData(0); let b = 0; for (let i = 0; i < n; i++) { b = b * 0.6 + (Math.random() * 2 - 1) * 0.4; d[i] = b; } return noise; }
+function voice(A, kind) { const c = A.ctx; const s = c.createBufferSource(); s.buffer = buf(A); s.loop = true; s.playbackRate.value = 0.8 + Math.random() * 0.4; const f = c.createBiquadFilter(); const g = c.createGain(); g.gain.value = 0; const p = c.createStereoPanner ? c.createStereoPanner() : null;
+  if (kind === 'lava') { f.type = 'lowpass'; f.frequency.value = 260; } else if (kind === 'fall') { f.type = 'lowpass'; f.frequency.value = 1500; } else { f.type = 'bandpass'; f.frequency.value = 900 + Math.random() * 500; f.Q.value = 0.8; }
+  s.connect(f); f.connect(g); if (p) { g.connect(p); p.connect(A.sfx); } else g.connect(A.sfx); s.start(); return { s, f, g, p, kind, x: 0, y: 0, z: 0, on: false }; }
+const dirWord = (dx, dz) => { const a = Math.atan2(-dx, -dz) - G.yaw; const r = ((a + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI; const ab = Math.abs(r); const fb = ab < 0.6 ? 'ahead' : ab > 2.5 ? 'behind' : ''; const lr = ab < 0.35 || ab > 2.8 ? '' : (r > 0 ? 'left' : 'right'); return [fb, lr].filter(Boolean).join('-') || 'nearby'; };
+let acc = 0; const heard = new Map();
+function pick() { const p = G.S.player, w = G.world, D = WW.store(); const cl = new Map(); let n = 0;
+  for (const k of D.lv.keys()) { if (++n > 3000) break; const x = WW.kx(k), y = WW.ky(k), z = WW.kz(k); const dx = x - p.x, dz = z - p.z; if (dx * dx + dz * dz > 900 || Math.abs(y - p.y) > 16) continue; const id = w.get(x, y, z); if (!WW.isFluid(id)) continue;
+    const ck = (x >> 3) + ',' + (y >> 3) + ',' + (z >> 3) + (id === B.LAVA ? 'l' : 'w'); let c = cl.get(ck); if (!c) { c = { x: 0, y: 0, z: 0, n: 0, lava: id === B.LAVA }; cl.set(ck, c); } c.x += x; c.y += y; c.z += z; c.n++; }
+  const out = []; for (const [k, c] of cl) { if (c.n < 4) continue; c.x /= c.n; c.y /= c.n; c.z /= c.n; c.k = k; c.kind = c.lava ? 'lava' : 'stream'; c.d = Math.hypot(c.x - p.x, c.y - p.y, c.z - p.z); out.push(c); }
+  if (LC.falls) for (const f of LC.falls.list) out.push({ x: f.x, y: f.y, z: f.z, kind: f.id === B.LAVA ? 'lava' : 'fall', k: 'f' + f.x + ',' + f.z, d: Math.hypot(f.x - p.x, f.y - p.y, f.z - p.z), n: 20 });
+  out.sort((a, b) => a.d - b.d); SND.clusters = out.length; return out.slice(0, 6); }
+G.hook('frame', function lcSound(dt, paused) { const A = ctx(); const want = A && FL.lc && FL.lc_sound !== false && !paused && G.state === 'play' && G.world && (!G.S.v2 || !G.S.v2.lc || G.S.v2.lc.snd !== false);
+  if (!want) { for (const v of V) if (v.on) { v.g.gain.value = 0; v.on = false; } return; }
+  acc += dt || 0; const p = G.S.player;
+  if (acc > 0.6) { acc = 0; const L = pick(); while (V.length < Math.min(6, L.length)) V.push(voice(A, 'stream'));
+    for (let i = 0; i < V.length; i++) { const v = V[i], c = L[i]; if (!c) { v.on = false; continue; }
+      if (v.kind !== c.kind) { if (c.kind === 'lava') { v.f.type = 'lowpass'; v.f.frequency.value = 260; } else if (c.kind === 'fall') { v.f.type = 'lowpass'; v.f.frequency.value = 1500; } else { v.f.type = 'bandpass'; v.f.frequency.value = 900 + Math.random() * 500; } v.kind = c.kind; }
+      v.x = c.x; v.y = c.y; v.z = c.z; v.on = true; v.amp = c.kind === 'fall' ? 0.16 : c.kind === 'lava' ? 0.13 : Math.min(0.09, 0.02 + c.n * 0.002);
+      if (c.d < 14 && G.subtitle && G.settings.subs) { const last = heard.get(c.k) || -99; if ((G.t || 0) - last > 25) { heard.set(c.k, G.t || 0); G.subtitle('[' + (c.kind === 'fall' ? 'waterfall' : c.kind === 'lava' ? 'lava bubbling' : 'stream') + ', ' + dirWord(c.x - p.x, c.z - p.z) + ']', 'amb'); SND.caps++; } } } }
+  const sy = Math.sin(G.yaw), cy = Math.cos(G.yaw); let on = 0;
+  for (const v of V) { const tgt = v.on ? v.amp / (1 + Math.hypot(v.x - p.x, v.y - p.y, v.z - p.z) / 5) : 0; v.g.gain.value += (tgt - v.g.gain.value) * Math.min(1, (dt || 0.016) * 3); if (v.p) { const dx = v.x - p.x, dz = v.z - p.z, d = Math.hypot(dx, dz) || 1; v.p.pan.value = Math.max(-1, Math.min(1, (dx * cy - dz * sy) / d)); } if (v.on) on++; }
+  SND.voices = on; });
+SND.state = () => Object.assign({}, SND, { ctx: !!ctx() });
+}
+
+// ==== 820_ux_atlas.js
+// ===== v2.9.1 MP-81 Clear Glass · 820 the Feature Atlas =====
+// Esc → 🗺 Feature Atlas: every live feature as a card (name, one line, key or command, the version it shipped in), grouped by category,
+// each with a safe "Show me" demo. Cards come from a registry (G.atlas.add) and each card carries a live check, so a card only shows when the
+// code behind it is actually running in this build. Seen flags live in S.v2.ux (adds keys only). Kill switch G.FLAGS.ux_atlas.
+{
+const FL = G.FLAGS; const AT = G.atlas = { list: [], byId: {}, shows: 0, opens: 0 };
+const CATS = [['all', 'All'], ['world', 'World'], ['creatures', 'Creatures'], ['combat', 'Combat'], ['build', 'Build'], ['ui', 'Interface']];
+G.migrate_ux = S => { S.v2 = S.v2 || {}; const o = S.v2.ux; S.v2.ux = Object.assign({ v: 1, seen: {}, ft: {} }, o && typeof o === 'object' ? o : {}); if (!S.v2.ux.seen || typeof S.v2.ux.seen !== 'object') S.v2.ux.seen = {}; if (!S.v2.ux.ft || typeof S.v2.ux.ft !== 'object') S.v2.ux.ft = {}; return S.v2.ux; };
+G.hook('load', S => G.migrate_ux(S || G.S)); G.hook('newGame', S => G.migrate_ux(S || G.S));
+const ux = () => { const S = G.S; if (!S) return { seen: {}, ft: {} }; return S.v2 && S.v2.ux ? S.v2.ux : G.migrate_ux(S); };
+AT.add = (id, o) => { const c = Object.assign({ id, cat: 'world', icon: '✨', name: id, line: '', key: '', ver: '', need: null, show: null }, o); if (!AT.byId[id]) AT.list.push(c); AT.byId[id] = c; return c; };
+AT.mark = id => { const u = ux(); if (!u.seen[id]) u.seen[id] = 1; };
+AT.live = () => AT.list.filter(c => { try { return !c.need || !!c.need(); } catch (e) { return false; } });
+AT.isNew = c => c.ver === '2.9.1' && !ux().seen[c.id];
+const near = kind => { const p = G.S.player; let best = null, bd = 1e9; const L = G.lc && G.lc.src; if (!L) return null; for (const s of L.values()) { if (s.kind !== kind) continue; const d = Math.hypot(s.x - p.x, s.z - p.z); if (d < bd) { bd = d; best = s; } } return best ? { s: best, d: bd } : null; };
+const compass = (dx, dz) => { const a = (Math.atan2(dx, -dz) * 180 / Math.PI + 360) % 360; return ['north', 'north-east', 'east', 'south-east', 'south', 'south-west', 'west', 'north-west'][Math.round(a / 45) % 8]; };
+function pointAt(kind, label) { const n = near(kind); if (!n) { toast('🗺 No ' + label + ' loaded nearby yet. Explore a little and try again.', 'warn'); return; } const p = G.S.player; G.yaw = Math.atan2(-(n.s.x - p.x), -(n.s.z - p.z)); G.pitch = Math.max(-0.6, Math.min(0.3, Math.atan2(n.s.y - p.y, n.d) * 0.6)); toast('🗺 Nearest ' + label + ': ' + Math.round(n.d) + ' m ' + compass(n.s.x - p.x, n.s.z - p.z) + '. You are now facing it.', 'good'); }
+function spawnAhead(k) { const BX = G.bx; if (!BX) return; if (G.net && G.net.active) { toast('🗺 Creature demos are off in co-op sessions.', 'warn'); return; } const sp = BX.SPEC[k]; const p = G.S.player; const d = 9; let x = p.x - Math.sin(G.yaw) * d, z = p.z - Math.cos(G.yaw) * d;
+  if (sp.night && G.daylight > 0.55) { toast('🗺 ' + sp.icon + ' ' + sp.name + ' only comes out at night. Look for it after dark.', 'warn'); return; }
+  let y; if (sp.where === 'land') { const ix = Math.floor(x), iz = Math.floor(z); y = G.world.surfaceY(ix, iz) + 1; x = ix + 0.5; z = iz + 0.5; } else { const st = BX.site && BX.site(sp.where); if (!st) { toast('🗺 ' + sp.icon + ' ' + sp.name + ' needs ' + (sp.where === 'water' ? 'deep water' : 'lava') + ' nearby. Try again near some.', 'warn'); return; } x = st[0]; y = st[1]; z = st[2]; }
+  const e = BX.spawn(k, x, y, z); if (e) { G.yaw = Math.atan2(-(e.pos.x - p.x), -(e.pos.z - p.z)); toast('🗺 ' + sp.icon + ' A ' + sp.name + ' appears ahead. ' + (sp.first || ''), 'warn'); } }
+// ---- registry: v2.9.1 features (each with a live check)
+AT.add('lc_flow', { cat: 'world', icon: '🌊', name: 'Flowing water', line: 'Streams run downhill from Rill Springs, with moving ripples, foam on fast water and waterfalls off cliffs.', key: 'Look for springs on hillsides', ver: '2.9.1', need: () => FL.lc && G.lc && G.lc.src, show: () => pointAt('w', 'Rill Spring (stream source)') });
+AT.add('lc_lava', { cat: 'world', icon: '🌋', name: 'Lava flow', line: 'Lava creeps in glowing tongues from Ember Vents, crusts dark as it cools and cracks open with light.', key: 'Ember Vents pulse every few seconds', ver: '2.9.1', need: () => FL.lc && G.lc && G.lc.lava, show: () => pointAt('l', 'Ember Vent (lava source)') });
+AT.add('lc_current', { cat: 'world', icon: '↪', name: 'Currents that push', line: 'Moving water carries you, creatures and dropped items downstream. Swim against it and you feel it.', key: 'Step into a stream', ver: '2.9.1', need: () => FL.lc_current !== false && G.lc && G.lc.flowAt, show: () => pointAt('w', 'stream source') });
+AT.add('lc_sound', { cat: 'world', icon: '🔊', name: 'Fluid sound', line: 'Streams babble, waterfalls roar and lava bubbles, placed left and right as you turn. Captions name them when Subtitles are on.', key: 'Settings → Subtitles for captions', ver: '2.9.1', need: () => G.lc && G.lc.snd, show: () => pointAt('w', 'stream (listen as you walk up)') });
+AT.add('lc_falls', { cat: 'world', icon: '💦', name: 'Waterfalls and lavafalls', line: 'Fluid pouring off an edge falls as a sheet, with spray mist at the foot (embers for lava).', key: 'Find a stream that reaches a cliff', ver: '2.9.1', need: () => G.lc && G.lc.falls, show: () => pointAt('w', 'Rill Spring') });
+AT.add('sp_drops', { cat: 'creatures', icon: '💰', name: 'Visible drops (Spoils)', line: 'Knocked-out hostile mobs burst into coins and items that bounce, glint and fly to you when you walk close.', key: 'Walk over drops to collect', ver: '2.9.1', need: () => FL.sp !== false && G.sp, show: () => { const p = G.S.player; const x = p.x - Math.sin(G.yaw) * 3, z = p.z - Math.cos(G.yaw) * 3; G.sp.drop(x, p.y + 1.2, z, 'river_grit', 1); toast('🗺 A sample of River Grit drops in front of you. Walk over it to pick it up.', 'good'); } });
+AT.add('ux_atlas', { cat: 'ui', icon: '🗺', name: 'Feature Atlas', line: 'This list. Only features that are running in your build appear here.', key: 'Esc → Feature Atlas', ver: '2.9.1', show: () => toast('🗺 You are looking at it. Cards marked NEW arrived in v2.9.1.', 'good') });
+AT.add('ux_lens', { cat: 'ui', icon: '🔍', name: 'Look-At Lens', line: 'Look at any block, fluid or creature for a moment to see its name, the tool it needs, what it drops, and which way water flows.', key: 'Hold Alt for more detail', ver: '2.9.1', need: () => G.lens, show: () => { G.ui.closePanel(); toast('🔍 Look at any block, fluid or creature for a moment. Hold Alt for more.', 'good'); } });
+// ---- earlier shipped features (cards appear only if their systems are live)
+AT.add('df_guard', { cat: 'combat', icon: '🛡', name: 'Guard and parry', line: 'Hold right mouse to block. Watch for the glow and sound before a creature strikes, then block or sidestep.', key: 'Right mouse', ver: '2.8', need: () => G.dfGuard });
+AT.add('ww', { cat: 'world', icon: '💧', name: 'Waterworks', line: 'Water and lava spread level by level, fill holes and mix into stone and obsidian.', key: 'Pour a bucket', ver: '2.7', need: () => G.ww });
+AT.add('codex', { cat: 'creatures', icon: '📖', name: 'Bestiary', line: 'Every creature you have met, in Inventory → Bestiary.', key: 'E → Bestiary', ver: '2.x', show: () => G.ui.openPanel('inv', 'best') });
+AT.add('market', { cat: 'build', icon: '🪙', name: 'Market', line: 'Buy and sell with in-game coins.', key: 'Esc → Market', ver: '2.x', show: () => G.ui.openPanel('market') });
+AT.add('crafting', { cat: 'build', icon: '🔨', name: 'Crafting', line: 'Turn materials into tools, blocks and gear.', key: 'E → Items & Crafting', ver: '1.x', show: () => G.ui.openPanel('inv', 'items') });
+AT.add('settings', { cat: 'ui', icon: '⚙', name: 'Settings', line: 'Graphics quality, Subtitles, controls and more.', key: 'Esc → Settings', ver: '1.x', show: () => G.ui.openPanel('settings') });
+AT.gen = () => { const BX = G.bx; if (!BX || !BX.SPEC) return; for (const k in BX.SPEC) { const sp = BX.SPEC[k]; if (AT.byId['bx_' + k]) continue; AT.add('bx_' + k, { cat: 'creatures', icon: sp.icon, name: sp.name, line: (sp.atlas || sp.first || 'A new hostile creature.') + (sp.night ? ' Night only.' : ''), key: sp.where === 'water' ? 'Lives in deep water' : sp.where === 'lava' ? 'Rises from lava' : sp.where === 'lavaedge' ? 'Found by lava' : 'Roams the land', ver: '2.9.1', need: () => FL.bx !== false && G.bx, show: () => { G.ui.closePanel(); spawnAhead(k); } }); } };
+// ---- panel
+const css = 'display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;max-height:58vh;overflow:auto;padding:2px';
+G.ui.p_atlas = function () { AT.gen(); AT.opens++; const cat = AT.cat || 'all'; const L = AT.live(); const fresh = L.filter(AT.isNew).length;
+  let h = this.head('🗺 Feature Atlas'); h += '<p style="margin:2px 0 8px;color:#b8c3ef;font-size:13px">Everything that is running in your game right now. ' + (fresh ? '<b style="color:#ffd76a">' + fresh + ' new in v2.9.1.</b> ' : '') + 'Press <b>Show me</b> to try one.</p>';
+  h += '<div class="tabs">' + CATS.map(([k, n]) => '<button class="tab' + (cat === k ? ' on' : '') + '" data-act="atlasCat" data-arg="' + k + '">' + n + ' (' + L.filter(c => k === 'all' || c.cat === k).length + ')</button>').join('') + '</div>';
+  const shown = L.filter(c => cat === 'all' || c.cat === cat).sort((a, b) => (AT.isNew(b) - AT.isNew(a)) || (b.ver > a.ver ? 1 : b.ver < a.ver ? -1 : 0));
+  h += '<div id="atlasGrid" style="' + css + '">' + shown.map(c => '<div class="atlasCard" data-id="' + c.id + '" style="background:rgba(30,38,72,.85);border:1px solid ' + (AT.isNew(c) ? '#ffd76a' : '#3a4680') + ';border-radius:10px;padding:8px 10px;display:flex;flex-direction:column;gap:4px"><div style="display:flex;align-items:center;gap:8px"><span style="font-size:22px">' + c.icon + '</span><b style="flex:1">' + esc(c.name) + '</b>' + (AT.isNew(c) ? '<span style="background:#ffd76a;color:#2a2000;border-radius:6px;padding:0 6px;font-size:11px;font-weight:700">NEW</span>' : '') + '<span style="color:#8f9bd0;font-size:11px">v' + esc(c.ver) + '</span></div><div style="font-size:12.5px;color:#d6dcf5;line-height:1.35">' + esc(c.line) + '</div><div style="display:flex;align-items:center;gap:6px;margin-top:auto"><span style="flex:1;font-size:11.5px;color:#9fb0e8">⌨ ' + esc(c.key) + '</span>' + (c.show ? '<button class="btn small" data-act="atlasShow" data-arg="' + c.id + '">▶ Show me</button>' : '') + '</div></div>').join('') + '</div>';
+  setTimeout(() => { for (const c of shown) AT.mark(c.id); }, 0); return h; };
+G.uiActions.atlasCat = arg => { AT.cat = arg; G.ui.refreshPanel(); };
+G.uiActions.atlasShow = arg => { const c = AT.byId[arg]; if (!c || !c.show) return; AT.shows++; AT.mark(arg); const keep = arg === 'ux_atlas'; if (!keep && G.panel === 'atlas') G.ui.closePanel(); try { c.show(); } catch (e) { logErr('atlasShow:' + arg, e); } };
+{ const pe = G.pauseExtra; G.pauseExtra = function () { if (FL.ux_atlas === false) return pe ? pe.apply(this, arguments) : ''; AT.gen(); const n = AT.live().filter(AT.isNew).length; return '<button class="btn" data-act="open" data-arg="atlas"' + (n ? ' style="box-shadow:0 0 0 2px #ffd76a inset"' : '') + '>🗺 Feature Atlas' + (n ? ' <span style="background:#ffd76a;color:#2a2000;border-radius:6px;padding:0 5px;font-size:11px">' + n + ' NEW</span>' : '') + '</button>' + (pe ? pe.apply(this, arguments) : ''); }; }
+const atlasTip = () => setTimeout(() => { const u = ux(); if (FL.ux_atlas === false || u.ft.atlas) return; u.ft.atlas = 1; toast('🗺 New: the Feature Atlas. Everything in your game, with a Show me button (press Esc).', 'good'); }, 4000); G.hook('load', atlasTip); G.hook('newGame', atlasTip);
+AT.state = () => { AT.gen(); const L = AT.live(); return { cards: AT.list.length, live: L.length, fresh: L.filter(AT.isNew).length, shows: AT.shows, opens: AT.opens, noDemo: L.filter(c => !c.show).map(c => c.id) }; };
+}
+
+// ==== 821_ux_lens.js
+// ===== v2.9.1 MP-81 Clear Glass · 821 the Look-At Lens =====
+// Look at a block, fluid or creature for 300 ms and a small card appears by the crosshair: name and icon, the tool it needs, what it drops,
+// and for water or lava the flow direction and speed (MP-80). Creatures show health, temper and Spoils (MP-83). Hold Alt for more detail.
+// Off in photo mode and while a panel is open; fades for 3 s after you take a hit. Kill switch G.FLAGS.ux_lens. Settings: settings.lens.
+{
+const FL = G.FLAGS; const LN = G.lens = { shows: 0, last: null, ms: 0, tips: 0 }; let el = null, cur = '', since = 0, acc = 0, alt = false;
+addEventListener('keydown', e => { if (e.key === 'Alt') { alt = true; if (G.state === 'play') e.preventDefault(); acc = 1; } });
+addEventListener('keyup', e => { if (e.key === 'Alt') { alt = false; acc = 1; } }); addEventListener('blur', () => { alt = false; });
+function box() { if (el) return el; el = document.createElement('div'); el.id = 'lensCard'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite');
+  el.style.cssText = 'position:fixed;left:calc(50% + 26px);top:calc(50% + 14px);min-width:170px;max-width:290px;background:rgba(14,18,38,.86);border:1px solid #4a5aa0;border-radius:9px;padding:6px 9px;color:#e8ecff;font:12.5px/1.35 system-ui,sans-serif;pointer-events:none;z-index:30;opacity:0;transition:opacity .18s;box-shadow:0 4px 14px rgba(0,0,0,.4)';
+  document.body.appendChild(el); return el; }
+const V = new THREE.Vector3();
+function rayBlock(max) { const c = G.camera, w = G.world; const o = c.position; c.getWorldDirection(V); const dx = V.x, dy = V.y, dz = V.z; let x = Math.floor(o.x), y = Math.floor(o.y), z = Math.floor(o.z);
+  const sx = dx > 0 ? 1 : -1, sy = dy > 0 ? 1 : -1, sz = dz > 0 ? 1 : -1; const tdx = Math.abs(1 / (dx || 1e-9)), tdy = Math.abs(1 / (dy || 1e-9)), tdz = Math.abs(1 / (dz || 1e-9));
+  let tx = (dx > 0 ? x + 1 - o.x : o.x - x) * tdx, ty = (dy > 0 ? y + 1 - o.y : o.y - y) * tdy, tz = (dz > 0 ? z + 1 - o.z : o.z - z) * tdz; let t = 0;
+  const startFluid = !!(WW_ && WW_.isFluid(w.get(x, y, z)));
+  for (let i = 0; i < 64 && t <= max; i++) { const id = w.get(x, y, z); if (id && !(startFluid && i === 0)) return { id, x, y, z, t };
+    if (tx < ty && tx < tz) { x += sx; t = tx; tx += tdx; } else if (ty < tz) { y += sy; t = ty; ty += tdy; } else { z += sz; t = tz; tz += tdz; } }
+  return null; }
+const WW_ = G.ww;
+const EK = new WeakMap(); let ekN = 0; function entKey(e) { if (e.uid) return e.uid; let k = EK.get(e); if (!k) { k = 'w' + (++ekN); EK.set(e, k); } return k; }
+function rayEnt(max) { const o = G.camera.position; G.camera.getWorldDirection(V); let best = null, bt = max; for (const e of ENTS) { if (!e.pos || !e.grp || !e.grp.visible) continue; const cx = e.pos.x - o.x, cy = e.pos.y + (e.h || 1.6) * 0.5 - o.y, cz = e.pos.z - o.z; const t = cx * V.x + cy * V.y + cz * V.z; if (t < 0.3 || t > bt) continue;
+  const px = cx - V.x * t, py = cy - V.y * t, pz = cz - V.z * t; const r = Math.max(0.45, (e.hw || 0.4) + 0.2), ry = Math.max(0.5, (e.h || 1.6) * 0.55); if ((px * px + pz * pz) / (r * r) + (py * py) / (ry * ry) > 1) continue; best = e; bt = t; } return best ? { e: best, t: bt } : null; }
+const cmp = ['north', 'north-east', 'east', 'south-east', 'south', 'south-west', 'west', 'north-west'];
+const dirName = (fx, fz) => cmp[Math.round(((Math.atan2(fx, -fz) * 180 / Math.PI + 360) % 360) / 45) % 8];
+const itemName = k => (ITEMS[k] && ITEMS[k].name) || (BLOCKS[B[String(k).toUpperCase()]] && BLOCKS[B[String(k).toUpperCase()]].name) || k;
+function entName(e) { if (e.bx && G.bx) { const s = G.bx.SPEC[e.bx]; return [s.icon, s.name, 'hostile']; } if (e.kind === 'mob') return ['👾', genomeName(e.g), 'hostile'];
+  if (e.kind === 'wild' || e.kind === 'pet') { const s = SPECIES[e.sp]; return ['🐾', (e.kind === 'pet' && e.data && e.data.name ? e.data.name + ' · ' : '') + (s ? s.name : e.sp), e.kind === 'pet' ? 'your companion' : 'wild, calm']; }
+  const n = (e.data && (e.data.name || e.data.title)) || e.name || (e.kind ? e.kind[0].toUpperCase() + e.kind.slice(1) : 'Creature'); return ['🙂', String(n), e.kind === 'villager' || e.kind === 'npc' ? 'friendly' : '']; }
+function cardBlock(r) { const d = BLOCKS[r.id]; if (!d) return null; const L = []; let icon = '🧱'; const fl = WW_ && WW_.isFluid(r.id);
+  if (fl) { icon = r.id === B.LAVA ? '🌋' : '🌊'; const f = G.lc && G.lc.flowAt ? G.lc.flowAt(r.x, r.y, r.z) : null; if (f && f.fall) L.push('<b style="color:#9fe0ff">Falling</b> · pours straight down'); else if (f && f.s > 0) L.push('Flows <b>' + dirName(f.fx, f.fz) + '</b> · ' + (f.s > 0.66 ? 'fast' : f.s > 0.33 ? 'steady' : 'slow') + ' <span style="display:inline-block;width:46px;height:5px;background:#2a335e;border-radius:3px;vertical-align:middle"><span style="display:block;height:5px;width:' + Math.round(f.s * 100) + '%;background:#7fd0ff;border-radius:3px"></span></span>'); else L.push('Still');
+    if (r.id === B.LAVA) L.push('<span style="color:#ff9a6a">Burns. Water turns it to stone.</span>'); else L.push('Currents carry you and dropped items.'); if (alt && f) L.push('<span style="color:#8f9bd0">level ' + f.L + (f.k ? ' · ' + f.k : '') + '</span>'); }
+  else { if (r.id === (G.lc && G.lc.RILL)) { icon = '💧'; L.push('Feeds a stream that runs downhill'); } else if (r.id === (G.lc && G.lc.VENT)) { icon = '🔥'; L.push('Pushes out lava in pulses'); }
+    const tool = d.hard <= 0 ? 'Breaks instantly' : d.tier > 0 ? 'Needs ' + tierReqName(d.tier) : 'Any tool or by hand'; L.push('⛏ ' + tool); const dr = d.drop; L.push('Drops: ' + (dr ? esc(itemName(dr)) : 'nothing'));
+    if (alt) L.push('<span style="color:#8f9bd0">hardness ' + d.hard + (d.emit ? ' · glows ' + d.emit : '') + ' · worth ' + (d.value || 0) + ' coins</span>'); }
+  return { key: 'b' + r.id, html: '<div style="font-weight:700;font-size:13.5px">' + icon + ' ' + esc(d.name) + '</div>' + L.map(s => '<div>' + s + '</div>').join('') }; }
+function cardEnt(e) { const [icon, name, temper] = entName(e); const L = []; if (e.maxHp) { const f = Math.max(0, Math.min(1, e.hp / e.maxHp)); L.push('<span style="display:inline-block;width:110px;height:6px;background:#3a2030;border-radius:3px;vertical-align:middle"><span style="display:block;height:6px;width:' + Math.round(f * 100) + '%;background:' + (f > 0.5 ? '#6ad06a' : f > 0.25 ? '#e8c04a' : '#e86a5a') + ';border-radius:3px"></span></span> ' + Math.ceil(e.hp) + ' / ' + Math.ceil(e.maxHp)); }
+  if (temper) L.push(temper === 'hostile' ? '<span style="color:#ff9a8a">Hostile</span>' : temper);
+  if (e.bx && G.bx) { const s = G.bx.SPEC[e.bx]; if (s.first) L.push('<span style="color:#ffd99a">' + esc(alt ? s.first : s.first.split('.')[0] + '.') + '</span>'); }
+  const SP = G.sp; if (SP && SP.rowsFor && temper === 'hostile') { const t = SP.rowsFor(e); if (t && t.length) L.push('Spoils: ' + t.slice(0, alt ? 9 : 3).map(r => esc(itemName(r[0])) + (alt ? ' ' + Math.round(r[3] * 100) + '%' : '')).join(', ') + (!alt && t.length > 3 ? '…' : '') + (temper === 'hostile' && !alt ? ' + coins' : '')); }
+  return { key: 'e' + entKey(e) + (alt ? 'a' : ''), html: '<div style="font-weight:700;font-size:13.5px">' + icon + ' ' + esc(name) + '</div>' + L.map(s => '<div>' + s + '</div>').join('') }; }
+G.hook('frame', function lensTick(dt) { const on = FL.ux_lens !== false && G.settings.lens !== false && G.state === 'play' && !G.panel && !G.photo && !G.dead && G.world && G.camera;
+  if (!on) { if (el && el.style.opacity !== '0') el.style.opacity = '0'; cur = ''; return; }
+  acc += dt || 0.016; if (acc < 0.1) return; acc = 0; const t0 = performance.now();
+  const hb = rayBlock(8), he = rayEnt(hb ? hb.t + 0.4 : 12); let c = null; try { c = he ? cardEnt(he.e) : hb ? cardBlock(hb) : null; } catch (er) { logErr('lens', er); c = null; }
+  const k = c ? c.key + (alt ? '+' : '') : ''; if (k !== cur) { cur = k; since = G.t || 0; if (el) el.style.opacity = '0'; }
+  const hurt = G.t - (G.lastHurt || -99) < 3; if (c && (G.t || 0) - since >= 0.3) { const b = box(); if (b.dataset.k !== k || b._h !== c.html) { b.innerHTML = c.html + (alt ? '' : '<div style="color:#7f8bc0;font-size:10.5px;margin-top:2px">Hold Alt for more</div>'); b.dataset.k = k; b._h = c.html; } b.style.opacity = hurt ? '0.25' : '1'; if (LN.last !== k) { LN.shows++; LN.last = k; }
+    if (!LN.tipped) { const u = G.S.v2 && G.S.v2.ux; if (u && u.ft && !u.ft.lens) { u.ft.lens = 1; toast('🔍 Look at anything to learn what it is. Hold Alt for more detail.', 'good'); LN.tips++; } LN.tipped = 1; } }
+  else if (!c && el) el.style.opacity = '0';
+  LN.ms = performance.now() - t0; });
+LN.peek = () => { const hb = rayBlock(8), he = rayEnt(hb ? hb.t + 0.4 : 12); const c = he ? cardEnt(he.e) : hb ? cardBlock(hb) : null; return c ? { key: c.key, text: c.html.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim() } : null; };
+LN.state = () => ({ shows: LN.shows, ms: +LN.ms.toFixed(3), visible: !!(el && el.style.opacity !== '0'), text: el ? el.textContent : '' });
+}
+// Settings: a "Living Currents and the Lens" block (moving water and lava visuals, the Look-At Lens, drops flying to you)
+if (G.ui && typeof G.ui.p_settings === 'function') { const _pS = G.ui.p_settings; G.ui.p_settings = function () { let h = _pS.apply(this, arguments); const s = G.settings; if (typeof s.lens !== 'boolean') s.lens = true; if (typeof s.lootMagnet !== 'boolean') s.lootMagnet = true;
+  const g = G.tw && G.tw.gfx ? G.tw.gfx() : null; const tog = k => '<label><input type="checkbox" data-set="' + k + '"' + (s[k] ? ' checked' : '') + '> ' + (s[k] ? 'On' : 'Off') + '</label>';
+  return h + '<h3 style="margin-top:12px">🌊 Living Currents and the Lens</h3>' + (g ? '<div class="set"><span>Moving water and lava (ripples, foam, waterfalls, crusting lava)</span><label><input type="checkbox" data-vo2="lcFlow"' + (g.lcFlow !== false ? ' checked' : '') + '> ' + (g.lcFlow !== false ? 'On' : 'Off') + '</label><span></span></div>' : '')
+    + '<div class="set"><span>Look-At Lens (card by the crosshair)</span>' + tog('lens') + '<span></span></div><div class="set"><span>Drops fly to you when close</span>' + tog('lootMagnet') + '<span></span></div>'; }; }
+
+// ==== 830_bx_core.js
+// ===== v2.9.1 MP-82 Bestiary · 830 the mob kit =====
+// New hostile species built on the live mob entity (hitMob, Guard tells, Spoils): hand-made models with their own animation, a custom
+// brain per species, a readable 250–600 ms tell (a glow ramp plus a "!" over the head and the Guard tone), dispersal on knockout (glowing
+// motes and a chime, never a body), and habitat spawning near fluids, at night and in the dark. Solo/host only; in a net session they
+// don't spawn yet. Kill switch G.FLAGS.bx.
+{
+const FL = G.FLAGS; if (FL.bx === undefined) FL.bx = true;
+const BX = G.bx = { SPEC: {}, stats: { spawned: 0, ko: 0, splits: 0, tells: 0, byKind: {} }, live: () => ENTS.filter(e => e.bx) };
+G.migrate_bx = S => { S.v2 = S.v2 || {}; const o = S.v2.bx; S.v2.bx = Object.assign({ v: 1, seen: {}, ko: {} }, o && typeof o === 'object' ? o : {}); return S.v2.bx; };
+G.hook('load', S => G.migrate_bx(S || G.S)); G.hook('newGame', S => G.migrate_bx(S || G.S));
+{ const gn = genomeName; genomeName = function (g) { return g && g.bxName ? g.bxName : gn.apply(this, arguments); }; }
+BX.B = B; BX.def = (k, spec) => { BX.SPEC[k] = spec; return spec; };
+// ---- model helpers (every entity gets its own geometry/materials: removeEnt disposes them) ----
+BX.box = (par, w, h, d, col, x, y, z, glow) => { const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), glow ? new THREE.MeshBasicMaterial({ color: col }) : new THREE.MeshLambertMaterial({ color: col })); m.position.set(x, y, z); par.add(m); return m; };
+BX.piv = (par, x, y, z) => { const o = new THREE.Group(); o.position.set(x, y, z); par.add(o); return o; };
+const DUMMY = [new THREE.Object3D(), new THREE.Object3D()];
+BX.spawn = function (k, x, y, z, o) { const S = BX.SPEC[k]; if (!S || !G.world) return null; o = o || {}; const D = G.S.director || { difficulty: 1 };
+  const g = Object.assign({ hue: 0, eye: 0, size: 1, hp: 10, speed: 3, aggro: 14, dmg: 2, jump: 8, armor: 0, n: 0, fit: 0 }, S.g, o.g || {}, { bxName: S.name });
+  const e = spawnMob(x, y, z, g); // reuse the live mob entity, then swap in our model
+  for (const c of e.grp.children.slice()) { e.grp.remove(c); if (c.geometry) c.geometry.dispose(); if (c.material) c.material.dispose(); }
+  const root = new THREE.Group(); e.grp.add(root); const sc = o.scale || 1; root.scale.setScalar(sc); const M = S.build(root, e, o) || {}; e.parts = M; e.mats = M.mats || []; e.glows = M.glows || [];
+  const tell = nameSprite('!', '#ff6a3a'); tell.position.y = (S.h || 1.6) * sc + 0.5; tell.scale.multiplyScalar(0.8); tell.visible = false; e.grp.add(tell); e.tellS = tell;
+  e.legs = DUMMY; e.body = root; e.bx = k; e.rigNo = 1; e.h = (S.h || 1.6) * sc; e.hw = (S.hw || 0.35) * Math.max(0.6, sc); e.noBurn = !!S.noBurn; e.swim = !!S.swim; e.fly = !!S.fly; if (S.fly) e.grav = 0;
+  e.hp = g.hp * (0.7 + D.difficulty * 0.3) * (o.hpK || 1); e.maxHp = e.hp; e.ai = BX.ai; e.bxT = Math.random() * 10; e.bxO = o; e.dfSlow = !!S.slowTell;
+  BX.stats.spawned++; BX.stats.byKind[k] = (BX.stats.byKind[k] || 0) + 1; if (S.init) S.init(e, o); BX.saw(k); return e; };
+BX.saw = k => { const S = G.S; if (!S || !S.v2) return; const b = S.v2.bx || G.migrate_bx(S); if (b.seen[k]) return; b.seen[k] = G.S.day || 1; const sp = BX.SPEC[k]; if (sp && sp.first) toast(sp.icon + ' New creature: ' + sp.name + ' — ' + sp.first, 'warn'); if (G.atlas && G.atlas.mark) G.atlas.mark('bx_' + k); };
+const lookDot = (e) => { const cp = Math.cos(G.pitch); const lx = -Math.sin(G.yaw) * cp, lz = -Math.cos(G.yaw) * cp; const p = G.S.player; const dx = e.pos.x - p.x, dz = e.pos.z - p.z, d = Math.hypot(dx, dz) || 1; return (lx * dx + lz * dz) / d; };
+BX.lookDot = lookDot;
+BX.inFluid = (e, dy) => { const b = G.world.get(Math.floor(e.pos.x), Math.floor(e.pos.y + (dy || 0.3)), Math.floor(e.pos.z)); return b === B.WATER ? 'water' : b === B.LAVA ? 'lava' : (G.ww && G.ww.isFluid(b)) ? 'fluid' : null; };
+// a melee strike that goes through the live Guard telegraph (parry/block/dodge), or a plain hit if Guard is off
+BX.melee = function (e, dist, dx, dz, reach) { const p = G.S.player; const dy = Math.abs((p.y + 0.9) - (e.pos.y + e.h / 2)); if (dist > (reach || 1.6) || dy > 1.8 || e.atkCd > 0 || G.dead) return false; const tx = dx / (dist || 1), tz = dz / (dist || 1);
+  if (G.dfMelee && G.dfMelee(e, tx, tz)) { e.atkCd = 1.1; BX.stats.tells++; return true; }
+  e.atkCd = 1.2; const D = G.S.director || { difficulty: 1 }; damagePlayer(e.g.dmg * (0.6 + D.difficulty * 0.4), 'a ' + e.g.bxName); p.vx = tx * 5; p.vz = tz * 5; return true; };
+BX.disperse = function (e, col) { const c = col || (BX.SPEC[e.bx] && BX.SPEC[e.bx].mote) || '#c8b8ff'; if (G.glowP) G.glowP.spawn(e.pos.x, e.pos.y + e.h * 0.5, e.pos.z, c, 26, 3.2, 1.3, 0, 0.5); if (G.particles) G.particles.spawn(e.pos.x, e.pos.y + e.h * 0.5, e.pos.z, c, 18, 4, 1);
+  if (G.audio && G.audio.tone) { G.audio.tone(880, 0.18, 'sine', 0.04, 220); G.audio.tone(1320, 0.22, 'sine', 0.025, 0, 0.08); } if (G.subtitle) G.subtitle('[' + (BX.SPEC[e.bx] ? BX.SPEC[e.bx].name : 'creature') + ' disperses with a chime]', 'fx'); };
+BX.ai = function (e, dt, dist, dx, dz) { if (G.netGuest) { e.grp.position.set(e.pos.x, e.pos.y, e.pos.z); return false; } const S = BX.SPEC[e.bx]; e.age += dt; e.atkCd -= dt; e.hurt -= dt; e.bxT += dt;
+  if (!BX.pose && (dist > 80 || (!e.noBurn && G.daylight > 0.55))) { BX.disperse(e); removeEnt(e); return false; }
+  if (BX.pose) { e.vel.x = e.vel.z = 0; if (e.fly || e.swim) e.vel.y = 0; e.tellS.visible = !!BX.poseTell; if (S.anim) safe('bxAnim', () => S.anim(e, dt, !!BX.poseTell)); return [0, 0, 0]; } // screenshots / probes only
+  const telling = e.dfWind > 0 || e.bxTell > 0; if (e.bxTell > 0) { e.bxTell -= dt; if (e.bxTell <= 0) { e.bxTell = 0; if (e.bxAct) { const f = e.bxAct; e.bxAct = null; safe('bxAct', () => f(e)); } } }
+  e.tellS.visible = telling; const tk = telling ? 1 : 0; for (const m of e.glows) { m.userData.base0 = m.userData.base0 || m.color.clone(); m.color.copy(m.userData.base0).multiplyScalar(1 + tk * (0.8 + Math.sin(e.bxT * 30) * 0.4)); }
+  let r; if (e.dfStag > 0 || e.dfKo > 0) r = [0, 0, 0]; else if (e.dfFlee > 0) r = [-(dx / (dist || 1)), -(dz / (dist || 1)), e.g.speed * 1.2]; else if (e.dfWind > 0) r = [0, 0, 0]; else r = S.ai(e, dt, dist, dx, dz) || [0, 0, 0];
+  if (S.anim) safe('bxAnim', () => S.anim(e, dt, telling)); return r; };
+BX.tellThen = (e, dur, fn, cap) => { e.bxTell = dur; e.bxAct = fn; BX.stats.tells++; if (G.audio && G.audio.tone) G.audio.tone(380, 0.1, 'sawtooth', 0.035, 260); if (cap && G.subtitle) G.subtitle(cap, 'fx'); };
+// ---- knockout: disperse, maybe split; spoils come from 482/483 ----
+{ const hm0 = hitMob; hitMob = function (e, dmgOv, src) { const alive = e && e.bx && e.hp > 0; const r = hm0.apply(this, arguments);
+    if (alive && e.hp <= 0 && !G.netGuest) { BX.stats.ko++; const S = BX.SPEC[e.bx]; BX.disperse(e); const b = G.S.v2 && G.S.v2.bx; if (b) b.ko[e.bx] = (b.ko[e.bx] || 0) + 1; if (S && S.onKO) safe('bxKO', () => S.onKO(e)); }
+    else if (alive && e.hp > 0) { const S = BX.SPEC[e.bx]; if (S && S.onHit) safe('bxHit', () => S.onHit(e, src)); }
+    return r; }; }
+// ---- habitat spawning (every mob spawn tick, ~3 s) ----
+BX.CAP = 4;
+function site(want) { const p = G.S.player, w = G.world; for (let t = 0; t < 10; t++) { const a = Math.random() * 6.283, r = 14 + Math.random() * 18; const x = Math.floor(p.x + Math.cos(a) * r), z = Math.floor(p.z + Math.sin(a) * r); if (!w.isLoaded(x, z)) continue;
+    if (G.claimAt && G.claimAt(x, z)) continue; if (G.S.village && Math.hypot(x - G.S.village.x, z - G.S.village.z) < VILLAGE_SAFE_R + 6) continue; const y = w.surfaceY(x, z); const top = w.get(x, y, z);
+    if (want === 'water') { if (top === B.WATER && w.get(x, y - 1, z) === B.WATER && w.get(x, y - 2, z) === B.WATER) return [x + 0.5, y - 1.5, z + 0.5]; continue; }
+    if (want === 'lava') { if (top === B.LAVA) return [x + 0.5, y + 3, z + 0.5]; continue; }
+    if (want === 'lavaedge') { if (top !== B.LAVA && top && !w.get(x, y + 1, z) && !w.get(x, y + 2, z) && !w.get(x, y + 3, z)) { for (let d = 1; d <= 4; d++) if (w.get(x + d, y, z) === B.LAVA || w.get(x - d, y, z) === B.LAVA || w.get(x, y, z + d) === B.LAVA || w.get(x, y, z - d) === B.LAVA) return [x + 0.5, y + 1, z + 0.5]; } continue; }
+    if (top && top !== B.WATER && top !== B.LAVA && !w.get(x, y + 1, z) && !w.get(x, y + 2, z)) return [x + 0.5, y + 1, z + 0.5]; }
+  return null; }
+BX.site = site;
+BX.trySpawn = function (force) { if (!FL.bx || G.netGuest || (G.net && G.net.active) || !G.world || !['over', 'ember'].includes(G.world.dim)) return null; const live = BX.live(); if (!force && live.filter(e => !e.bxSwarmKid).length >= BX.CAP) return null;
+  const night = G.daylight < 0.35; const opts = []; for (const k in BX.SPEC) { const S = BX.SPEC[k]; if (!S.where || (S.night && !night)) continue; opts.push(k); } if (!opts.length) return null;
+  const k = force || opts[Math.floor(Math.random() * opts.length)]; const S = BX.SPEC[k]; const at = site(S.where); if (!at) return null; return BX.spawn(k, at[0], at[1], at[2]); };
+{ const ms0 = mobSpawnTick; mobSpawnTick = function () { const r = ms0.apply(this, arguments); if (FL.bx && Math.random() < 0.3) safe('bxSpawn', () => BX.trySpawn()); return r; }; }
+BX.state = () => ({ on: !!FL.bx, live: BX.live().map(e => e.bx), stats: JSON.parse(JSON.stringify(BX.stats)), specs: Object.keys(BX.SPEC) });
+}
+
+// ==== 831_bx_wave1.js
+// ===== v2.9.1 MP-82 Bestiary · 831 wave 1: six new hostiles =====
+// Gloamstalker (long-limbed shadow hunter: hunts by sound, freezes when you look at it or hold a light), Sludgeback (gel blob that rides
+// currents and splits when knocked out), Cinderling Swarm (sparking flyers from lava; water scatters them), Brinejaw (3 m river lurker
+// that lunges at swimmers), Clockwork Scuttler (brass wind-up spider that climbs and throws a tangle-thread), Slag Golem (3.2 m molten
+// construct with a ground slam; water quenches its armor). All disperse on knockout — nothing dies.
+{
+const BX = G.bx; const box = BX.box, piv = BX.piv;
+const LIGHTS = new Set(['torch', 'lamp', 'lantern', 'glowstone', 'sea_lantern', 'candle']);
+const holdingLight = () => { const k = G.S.hotbar && G.S.hotbar[G.S.sel]; return !!k && (LIGHTS.has(k) || /torch|lamp|lantern/.test(k)); };
+const chase = (e, dist, dx, dz, k) => [dx / (dist || 1), dz / (dist || 1), e.g.speed * (k || 1)];
+function wander(e, dt, k) { e.wander = (e.wander || 0) - dt; if (e.wander <= 0) { e.wander = 2 + Math.random() * 3; e.wdir = Math.random() * 6.28; } return [Math.cos(e.wdir), Math.sin(e.wdir), e.g.speed * (k || 0.35)]; }
+const walkAnim = (e, legs, amp, rate) => { const v = Math.hypot(e.vel.x, e.vel.z); e.bxW = (e.bxW || 0) + v * rate * 0.016 * 60 * (1 / 60) * 3; for (let i = 0; i < legs.length; i++) legs[i].rotation.x = Math.sin(e.bxW + (i % 2 ? Math.PI : 0) + (i > 1 ? Math.PI / 2 : 0)) * amp * Math.min(1, v / 2); };
+G.hook('brk', () => { BX.noiseT = G.t || 0; });
+
+// 1 ── Gloamstalker ─────────────────────────────────────────────────────────────
+BX.def('gloamstalker', { name: 'Gloamstalker', icon: '🌑', h: 2.4, hw: 0.45, night: true, where: 'land', mote: '#9a7cff', slowTell: false,
+  first: 'It hunts by sound. Look at it, or hold a light, and it freezes.',
+  g: { hue: 0.75, size: 1.5, hp: 26, speed: 4.6, aggro: 22, dmg: 4, armor: 0.1, jump: 9 },
+  build(R, e) { const skin = 0x231a33, dark = 0x150f20, glow = 0x7ff6ff, ridge = 0xc05cff; const mats = [], glows = [];
+    const body = box(R, 0.62, 0.5, 1.55, skin, 0, 1.55, 0.05); mats.push(body.material); const hip = box(R, 0.5, 0.42, 0.5, dark, 0, 1.5, 0.62); mats.push(hip.material);
+    const legs = []; for (const [x, z] of [[-0.26, -0.55], [0.26, -0.55], [-0.24, 0.62], [0.24, 0.62]]) { const P = piv(R, x, 1.4, z); const up = box(P, 0.13, 0.8, 0.13, skin, 0, -0.4, 0); const lo = box(P, 0.1, 0.75, 0.1, dark, 0, -1.05, -0.06); mats.push(up.material, lo.material); legs.push(P); }
+    const neck = piv(R, 0, 1.7, -0.7); neck.rotation.x = -0.55; const nk = box(neck, 0.24, 0.24, 0.75, skin, 0, 0, -0.35); mats.push(nk.material);
+    const head = box(neck, 0.34, 0.26, 0.5, dark, 0, 0.02, -0.85); mats.push(head.material); const snout = box(neck, 0.2, 0.14, 0.26, skin, 0, -0.04, -1.18); mats.push(snout.material);
+    for (const x of [-0.12, 0.12]) { const ey = box(neck, 0.08, 0.05, 0.04, glow, x, 0.07, -1.1, true); glows.push(ey.material); }
+    const ridges = []; for (let i = 0; i < 5; i++) { const r = box(R, 0.05, 0.22 - i * 0.02, 0.18, ridge, 0, 1.88, -0.55 + i * 0.28, true); ridges.push(r); glows.push(r.material); }
+    const tail = piv(R, 0, 1.6, 0.85); const tl = box(tail, 0.1, 0.1, 0.9, dark, 0, 0, 0.45); mats.push(tl.material);
+    return { mats, glows, legs, neck, ridges, tail }; },
+  ai(e, dt, dist, dx, dz) { const loud = G.sprinting || ((G.t || 0) - (BX.noiseT || -99) < 4); const aggro = loud ? 30 : 13; const look = BX.lookDot(e) < -0.82 && dist < 26;
+    // lookDot is from the player to the mob (negative = the player faces it); hold a light and it backs off
+    e.bxFrozen = false; if (holdingLight() && dist < 10) { e.bxFrozen = true; return [-(dx / (dist || 1)), -(dz / (dist || 1)), e.g.speed * 0.4]; }
+    if (dist < aggro && !G.dead) { if (look) { e.bxFrozen = true; if (!e.bxCap) { e.bxCap = 1; if (G.subtitle) G.subtitle('[the Gloamstalker freezes mid-stride]', 'fx'); } return [0, 0, 0]; }
+      if (BX.melee(e, dist, dx, dz, 2.2)) return [0, 0, 0]; return chase(e, dist, dx, dz, dist < 4 ? 0.8 : 1); } return wander(e, dt, 0.3); },
+  anim(e, dt, telling) { const P = e.parts; if (!e.bxFrozen) walkAnim(e, P.legs, 0.7, 1); P.neck.rotation.x = -0.55 + (telling ? -0.25 : 0) + Math.sin(e.bxT * 1.3) * 0.05; P.tail.rotation.y = Math.sin(e.bxT * 2) * 0.35; P.tail.rotation.x = -0.2;
+    for (const r of P.ridges) r.scale.y = telling ? 1.7 : 1; } });
+
+// 2 ── Sludgeback ───────────────────────────────────────────────────────────────
+BX.def('sludgeback', { name: 'Sludgeback', icon: '🟢', h: 1.2, hw: 0.55, night: false, noBurn: true, where: 'land', mote: '#8fdc6a',
+  first: 'Knock it out and it splits. Flowing water washes the pieces away.',
+  g: { hue: 0.28, size: 1.2, hp: 18, speed: 2.3, aggro: 12, dmg: 2.5, armor: 0, jump: 6 },
+  build(R, e) { const mats = [], glows = []; const gel = 0x5a8a34, shell = 0x3d4a22, dark = 0x2c3818;
+    const base = box(R, 1.25, 0.42, 1.35, gel, 0, 0.22, 0); mats.push(base.material); const mid = box(R, 1.0, 0.36, 1.1, gel, 0, 0.6, 0.02); mats.push(mid.material); const top = box(R, 0.66, 0.26, 0.74, gel, 0, 0.88, 0.05); mats.push(top.material);
+    for (const [x, z, s] of [[-0.3, 0.2, 0.3], [0.28, -0.15, 0.26], [0.05, 0.42, 0.22], [-0.1, -0.35, 0.2]]) { const b = box(R, s, s * 0.6, s, shell, x, 0.82 + s * 0.2, z); mats.push(b.material); }
+    const skirt = new THREE.Mesh(new THREE.BoxGeometry(1.45, 0.14, 1.55), new THREE.MeshBasicMaterial({ color: 0x9adf6a, transparent: true, opacity: 0.55, depthWrite: false })); skirt.position.y = 0.06; R.add(skirt);
+    const stalks = []; for (const x of [-0.22, 0.22]) { const P = piv(R, x, 0.9, -0.42); box(P, 0.07, 0.34, 0.07, dark, 0, 0.17, 0); const ey = box(P, 0.15, 0.15, 0.15, 0xf4ffb0, 0, 0.38, 0, true); glows.push(ey.material); const pu = box(P, 0.06, 0.06, 0.03, 0x111111, 0, 0.38, -0.08, true); void pu; stalks.push(P); }
+    return { mats, glows, stalks, mid, top }; },
+  init(e, o) { e.bxGen = o.gen || 0; },
+  ai(e, dt, dist, dx, dz) { const fl = BX.inFluid(e); if (fl === 'water' && G.lc && G.lc.flowAt) { const f = G.lc.flowAt(e.pos.x, e.pos.y + 0.3, e.pos.z); if (f && f.s > 0.15) { e.bxRide = 1; return [f.fx, f.fz, 2.5 + f.s * 2]; } }
+    if (dist < e.g.aggro && !G.dead) { if (BX.melee(e, dist, dx, dz, 1.5 + e.g.size * 0.3)) return [0, 0, 0]; return chase(e, dist, dx, dz); } return wander(e, dt, 0.3); },
+  anim(e, dt, telling) { const P = e.parts; const v = Math.hypot(e.vel.x, e.vel.z); const sq = 1 + Math.sin(e.bxT * (3 + v * 2)) * 0.06; const bulge = telling ? 1.22 + Math.sin(e.bxT * 25) * 0.04 : 1;
+    e.body.scale.set(e.bxO.scale * bulge / sq || bulge / sq, (e.bxO.scale || 1) * sq * (telling ? 1.1 : 1), (e.bxO.scale || 1) * bulge / sq); for (let i = 0; i < 2; i++) P.stalks[i].rotation.z = Math.sin(e.bxT * 2 + i) * 0.25; },
+  onKO(e) { const gen = e.bxGen || 0; if (gen >= 2) return; BX.stats.splits++; const sc = gen === 0 ? 0.66 : 0.45; for (let i = 0; i < 2; i++) { const a = Math.random() * 6.28; const k = BX.spawn('sludgeback', e.pos.x + Math.cos(a) * 0.6, e.pos.y + 0.3, e.pos.z + Math.sin(a) * 0.6, { gen: gen + 1, scale: sc, hpK: gen === 0 ? 0.45 : 0.25, g: { size: 1.2 * sc, dmg: 2.5 * sc + 0.5 } }); if (k) { k.vel.x = Math.cos(a) * 4; k.vel.z = Math.sin(a) * 4; k.vel.y = 5; k.bxSplit = 1; } }
+    if (G.subtitle) G.subtitle('[the Sludgeback splits in two]', 'fx'); if (gen === 0 && G.lc && G.lc.tip) G.lc.tip('sludge', '🟢 It split! Knock the pieces into flowing water to wash them away.'); } });
+// spoil table for small splits
+{ const tf = G.sp && G.sp.tableFor; if (tf) G.sp.tableFor = e => e && e.bx === 'sludgeback' && e.bxGen ? G.sp.roll(G.sp.tables.sludgelet) : tf(e); }
+// washed away: a split piece carried by flowing water disperses after a few seconds in the current
+G.hook('tick', function bxWash(dt) { for (const e of ENTS) if (e.bx === 'sludgeback' && e.bxGen && e.bxRide) { e.bxWashT = (e.bxWashT || 0) + dt; e.bxRide = 0; if (e.bxWashT > 3) { BX.disperse(e, '#8fdc6a'); removeEnt(e); break; } } });
+
+// 3 ── Cinderling Swarm ─────────────────────────────────────────────────────────
+BX.def('cinderling', { name: 'Cinderling', icon: '🔥', h: 0.45, hw: 0.2, noBurn: true, fly: true, where: 'lava', mote: '#ffb04a',
+  first: 'They pour out of lava as a swarm. One splash of water scatters them all.',
+  g: { hue: 0.06, size: 0.4, hp: 3, speed: 6, aggro: 20, dmg: 1.2, armor: 0, jump: 0 },
+  build(R, e) { const mats = [], glows = []; const core = box(R, 0.26, 0.22, 0.3, 0xff7a1a, 0, 0.22, 0, true); glows.push(core.material); const hot = box(R, 0.14, 0.12, 0.14, 0xffe27a, 0, 0.3, -0.06, true); glows.push(hot.material);
+    const shell = box(R, 0.3, 0.08, 0.34, 0x3a2018, 0, 0.36, 0.02); mats.push(shell.material); const wings = []; for (const s of [-1, 1]) { const P = piv(R, s * 0.13, 0.3, 0); const wg = box(P, 0.36, 0.03, 0.2, 0xffa040, s * 0.18, 0, 0, true); glows.push(wg.material); wings.push(P); }
+    return { mats, glows, wings }; },
+  init(e, o) { e.bxSw = o.sw || { id: Math.random(), cx: e.pos.x, cy: e.pos.y, cz: e.pos.z, t: 0, kids: [] }; e.bxSw.kids.push(e); e.bxSwarmKid = !!o.sw; e.bxA = Math.random() * 6.28; e.bxR = 2 + Math.random() * 2;
+    if (!o.sw) for (let i = 0; i < 6; i++) BX.spawn('cinderling', e.pos.x + Math.random() - 0.5, e.pos.y + Math.random(), e.pos.z + Math.random() - 0.5, { sw: e.bxSw }); },
+  ai(e, dt, dist, dx, dz) { const sw = e.bxSw, p = G.S.player; if (BX.inFluid(e, 0.2) === 'water') { for (const k of sw.kids.slice()) if (ENTS.includes(k)) { BX.disperse(k, '#9adfff'); removeEnt(k); } if (G.subtitle) G.subtitle('[hiss — the swarm scatters]', 'fx'); return [0, 0, 0]; }
+    if (sw.lead === undefined || !ENTS.includes(sw.lead)) sw.lead = e; if (sw.lead === e) { sw.t += dt; const near = dist < e.g.aggro && !G.dead; const tx = near ? p.x : sw.cx, tz = near ? p.z : sw.cz; sw.cx += (tx - sw.cx) * Math.min(1, dt * 0.8); sw.cz += (tz - sw.cz) * Math.min(1, dt * 0.8); sw.cy = (near ? p.y + 3.2 : sw.cy);
+      if (near && !sw.dive && (sw.t % 7) > 5.5) { sw.dive = 1; BX.tellThen(e, 0.5, () => { sw.dive = 2; sw.diveT = 1.1; }, '[the swarm tightens and brightens]'); } if (sw.dive === 2) { sw.diveT -= dt; if (sw.diveT <= 0) sw.dive = 0; } }
+    const tight = sw.dive === 1 ? 0.45 : 1; e.bxA += dt * (2.2 + (sw.dive ? 2 : 0)); let tx = sw.cx + Math.cos(e.bxA) * e.bxR * tight, tz = sw.cz + Math.sin(e.bxA) * e.bxR * tight, ty = sw.cy + Math.sin(e.bxA * 1.7) * 0.6;
+    if (sw.dive === 2) { tx = p.x; tz = p.z; ty = p.y + 0.9; if (dist < 1.1 && e.atkCd <= 0) { e.atkCd = 1.4; const D = G.S.director || { difficulty: 1 }; damagePlayer(e.g.dmg * (0.6 + D.difficulty * 0.4), 'a Cinderling Swarm'); } }
+    if (sw.dive === 1) e.bxTell = Math.max(e.bxTell || 0, 0.02);
+    const ddx = tx - e.pos.x, ddz = tz - e.pos.z, dd = Math.hypot(ddx, ddz); e.vel.y += ((ty - e.pos.y) * 4 - e.vel.y) * Math.min(1, dt * 4); if (Math.random() < dt * 6 && G.glowP) G.glowP.spawn(e.pos.x, e.pos.y + 0.2, e.pos.z, '#ffb04a', 1, 0.4, 0.6, 0, 0.05);
+    return [ddx / (dd || 1), ddz / (dd || 1), Math.min(e.g.speed * (sw.dive === 2 ? 1.6 : 1), dd * 3)]; },
+  anim(e) { const P = e.parts; const f = Math.sin(e.bxT * 38) * 0.7; P.wings[0].rotation.z = f; P.wings[1].rotation.z = -f; } });
+
+// 4 ── Brinejaw ─────────────────────────────────────────────────────────────────
+BX.def('brinejaw', { name: 'Brinejaw', icon: '🦈', h: 0.9, hw: 0.6, noBurn: true, swim: true, where: 'water', mote: '#7fd8e8',
+  first: 'It lurks under fast water. Watch for the V-wake; when the wake stops, it lunges. A parry stuns it.',
+  g: { hue: 0.5, size: 1.6, hp: 30, speed: 4.4, aggro: 16, dmg: 4.5, armor: 0.15, jump: 0 },
+  build(R, e) { const mats = [], glows = []; const top = 0x2f6f7a, belly = 0xbfe3d8, fin = 0x1f4f58; const segs = [];
+    let z = -1.1; const W = [0.62, 0.72, 0.66, 0.5, 0.34, 0.2]; for (let i = 0; i < W.length; i++) { const P = piv(R, 0, 0.45, z); const s = box(P, W[i], W[i] * 0.72, 0.5, top, 0, 0, 0.25); const b = box(P, W[i] * 0.86, W[i] * 0.22, 0.48, belly, 0, -W[i] * 0.3, 0.25); mats.push(s.material, b.material); segs.push(P); z += 0.48; }
+    const fluke = box(segs[5], 0.08, 0.6, 0.34, fin, 0, 0.08, 0.6); mats.push(fluke.material); const dors = box(segs[1], 0.07, 0.46, 0.36, fin, 0, 0.42, 0.2); mats.push(dors.material);
+    const jawU = piv(R, 0, 0.55, -1.1); const ju = box(jawU, 0.56, 0.2, 0.62, top, 0, 0, -0.3); mats.push(ju.material); const jawL = piv(R, 0, 0.36, -1.1); const jl = box(jawL, 0.5, 0.14, 0.58, belly, 0, 0, -0.28); mats.push(jl.material);
+    for (let i = 0; i < 5; i++) box(jawU, 0.05, 0.07, 0.05, 0xf4f4ea, -0.2 + i * 0.1, -0.12, -0.55);
+    for (const x of [-0.24, 0.24]) { const ey = box(jawU, 0.08, 0.08, 0.08, 0xfff08a, x, 0.08, -0.32, true); glows.push(ey.material); }
+    return { mats, glows, segs, jawU, jawL }; },
+  ai(e, dt, dist, dx, dz) { const p = G.S.player; const inW = BX.inFluid(e, 0.45) === 'water'; e.grav = inW ? 0 : 1; e.bxIn = inW;
+    if (!inW) { e.armorK = 0; e.g.armor = 0; e.vel.y = Math.min(e.vel.y, 2); if (Math.random() < dt * 2 && G.subtitle) G.subtitle('[a stranded Brinejaw flops]', 'fx'); return [Math.cos(e.bxT * 3), Math.sin(e.bxT * 3), 0.8]; }
+    e.g.armor = 0.15; const pIn = (() => { const b = G.world.get(Math.floor(p.x), Math.floor(p.y + 0.3), Math.floor(p.z)); return b === B.WATER; })();
+    // hold ~1 block under the surface; lunge at swimmers and waders
+    let surf = Math.floor(e.pos.y); while (surf < WH - 1 && G.world.get(Math.floor(e.pos.x), surf + 1, Math.floor(e.pos.z)) === B.WATER) surf++; const ty = e.bxLunge > 0 ? p.y + 0.4 : surf - 0.9; e.vel.y += ((ty - e.pos.y) * 3 - e.vel.y) * Math.min(1, dt * 3);
+    if (e.bxLunge > 0) { e.bxLunge -= dt; if (dist < 2.4 && e.atkCd <= 0) { e.atkCd = 1.6; const D = G.S.director || { difficulty: 1 }; damagePlayer(e.g.dmg * (0.6 + D.difficulty * 0.4), 'a Brinejaw'); p.vx = dx / (dist || 1) * 6; p.vz = dz / (dist || 1) * 6; } return chase(e, dist, dx, dz, 2.1); }
+    if (pIn && dist < e.g.aggro && !G.dead && !e.bxTell && e.atkCd <= 0) { if (dist < 7) { BX.tellThen(e, 0.55, x => { x.bxLunge = 1.0; }, '[the wake stops…]'); return [0, 0, 0]; } return chase(e, dist, dx, dz); }
+    if (e.bxTell > 0) return [0, 0, 0]; return wander(e, dt, 0.45); },
+  anim(e, dt, telling) { const P = e.parts; const v = Math.hypot(e.vel.x, e.vel.z); const k = 0.25 + v * 0.06; for (let i = 0; i < P.segs.length; i++) P.segs[i].rotation.y = Math.sin(e.bxT * (4 + v) - i * 0.8) * k * (i / P.segs.length);
+    const open = e.bxLunge > 0 || telling ? 0.5 : 0.08 + Math.sin(e.bxT * 1.5) * 0.04; P.jawU.rotation.x = -open * 0.5; P.jawL.rotation.x = open;
+    if (e.bxIn && v > 1.2 && !telling && Math.random() < dt * 14 && G.particles) { let sy = Math.floor(e.pos.y); while (sy < WH - 1 && G.world.get(Math.floor(e.pos.x), sy + 1, Math.floor(e.pos.z)) === B.WATER) sy++; const a = Math.atan2(e.vel.x, e.vel.z); for (const s of [-1, 1]) G.particles.spawn(e.pos.x + Math.cos(a) * s * 0.5, sy + 1.02, e.pos.z - Math.sin(a) * s * 0.5, '#f2fbff', 1, 0.8, 0.9); } } });
+
+// 5 ── Clockwork Scuttler ───────────────────────────────────────────────────────
+BX.def('scuttler', { name: 'Clockwork Scuttler', icon: '⚙️', h: 0.8, hw: 0.45, noBurn: true, night: true, where: 'land', mote: '#ffd77a',
+  first: 'A rogue wind-up guardian. Its key winds faster before it throws a tangle-thread. Counter it to jam the spring.',
+  g: { hue: 0.12, size: 1, hp: 16, speed: 4.2, aggro: 18, dmg: 2.5, armor: 0.35, jump: 7 },
+  build(R, e) { const mats = [], glows = []; const brass = 0xc8962e, dark = 0x6a4a1a, steel = 0x8a8f98;
+    const body = box(R, 0.72, 0.36, 0.82, brass, 0, 0.55, 0.08); mats.push(body.material); const plate = box(R, 0.56, 0.08, 0.66, dark, 0, 0.76, 0.08); mats.push(plate.material); const head = box(R, 0.44, 0.28, 0.32, brass, 0, 0.55, -0.45); mats.push(head.material);
+    for (const [x, y] of [[-0.11, 0.6], [0.11, 0.6], [-0.06, 0.5], [0.06, 0.5]]) { const ey = box(R, 0.07, 0.07, 0.03, 0xff3a2a, x, y, -0.62, true); glows.push(ey.material); }
+    const legs = []; for (let i = 0; i < 4; i++) for (const s of [-1, 1]) { const P = piv(R, s * 0.34, 0.55, -0.22 + i * 0.2); P.rotation.y = s * (0.5 - i * 0.33); const up = box(P, 0.5, 0.06, 0.06, steel, s * 0.25, 0.12, 0); up.rotation.z = s * 0.5; const lo = box(P, 0.06, 0.55, 0.06, dark, s * 0.52, -0.08, 0); mats.push(up.material, lo.material); legs.push(P); }
+    const key = piv(R, 0, 0.82, 0.25); box(key, 0.06, 0.28, 0.06, steel, 0, 0.14, 0); const kb = box(key, 0.36, 0.14, 0.04, brass, 0, 0.32, 0); mats.push(kb.material); const gl = box(R, 0.14, 0.14, 0.14, 0xffd77a, 0, 0.76, 0.42, true); glows.push(gl.material);
+    return { mats, glows, legs, key }; },
+  ai(e, dt, dist, dx, dz) { if (e.hitWall && e.onGround !== true) e.vel.y = Math.max(e.vel.y, 4.5); else if (e.hitWall) e.vel.y = 6; // climbs walls
+    if (dist < e.g.aggro && !G.dead) { e.bxShot = (e.bxShot || 3) - dt; if (dist > 4.5 && dist < 13 && e.bxShot <= 0 && !e.bxTell) { e.bxShot = 6; BX.tellThen(e, 0.5, x => thread(x), '[a key winds faster]'); return [0, 0, 0]; }
+      if (e.bxTell > 0) return [0, 0, 0]; if (BX.melee(e, dist, dx, dz, 1.7)) return [0, 0, 0]; return chase(e, dist, dx, dz); } return wander(e, dt, 0.4); },
+  anim(e, dt, telling) { const P = e.parts; P.key.rotation.y += dt * (telling ? 26 : 3); const v = Math.hypot(e.vel.x, e.vel.z); e.bxW = (e.bxW || 0) + dt * v * 6; for (let i = 0; i < P.legs.length; i++) P.legs[i].rotation.x = Math.sin(e.bxW + i * 1.3) * 0.35 * Math.min(1, v); } });
+function thread(e) { const p = G.S.player; const dx = p.x - e.pos.x, dy = (p.y + 1) - (e.pos.y + 0.6), dz = p.z - e.pos.z, d = Math.hypot(dx, dy, dz); if (d > 14) return;
+  for (let i = 0; i <= 14; i++) { const t = i / 14; G.particles.spawn(e.pos.x + dx * t, e.pos.y + 0.6 + dy * t, e.pos.z + dz * t, '#f4f0e0', 1, 0.2, 0.9); }
+  const blocked = G.dfGuard && G.dfGuard.blocking; if (blocked) { toast('🛡 Blocked the tangle-thread', 'good'); return; }
+  const D = G.S.director || { difficulty: 1 }; damagePlayer(1 + D.difficulty * 0.3, 'a Clockwork Scuttler'); p.vx = -dx / d * 7; p.vz = -dz / d * 7; toast('🕸 Tangled! The Scuttler yanks you in.', 'warn'); }
+
+// 6 ── Slag Golem ───────────────────────────────────────────────────────────────
+BX.def('slaggolem', { name: 'Slag Golem', icon: '🗿', h: 3.2, hw: 0.8, noBurn: true, where: 'lavaedge', mote: '#ff8a3a', slowTell: true,
+  first: 'Slow and heavily armored. Its cracks glow before it slams. Water quenches its armor.',
+  g: { hue: 0.04, size: 2.2, hp: 60, speed: 1.6, aggro: 16, dmg: 6, armor: 0.55, jump: 6 },
+  build(R, e) { const mats = [], glows = []; const rock = 0x3b3431, rock2 = 0x2a2422, hot = 0xff7a2a;
+    const legs = []; for (const x of [-0.42, 0.42]) { const P = piv(R, x, 1.15, 0); const l = box(P, 0.55, 1.15, 0.6, rock2, 0, -0.58, 0); mats.push(l.material); legs.push(P); }
+    const torso = box(R, 1.6, 1.25, 0.95, rock, 0, 1.85, 0); mats.push(torso.material); const chest = box(R, 1.2, 0.5, 0.2, rock2, 0, 2.15, -0.52); mats.push(chest.material);
+    const cracks = []; for (const [x, y, w, h] of [[-0.35, 1.9, 0.08, 0.8], [0.25, 1.7, 0.6, 0.07], [0.45, 2.1, 0.07, 0.45], [-0.1, 2.3, 0.4, 0.06], [0, 1.45, 0.9, 0.06]]) { const c = box(R, w, h, 0.04, hot, x, y, -0.49, true); cracks.push(c); glows.push(c.material); }
+    const core = box(R, 0.34, 0.34, 0.1, 0xffc04a, 0, 2.15, -0.63, true); glows.push(core.material); cracks.push(core);
+    const head = box(R, 0.62, 0.5, 0.6, rock2, 0, 2.75, -0.08); mats.push(head.material); for (const x of [-0.15, 0.15]) { const ey = box(R, 0.12, 0.07, 0.04, 0xffb03a, x, 2.8, -0.39, true); glows.push(ey.material); }
+    const arms = []; for (const s of [-1, 1]) { const P = piv(R, s * 0.98, 2.3, 0); const a = box(P, 0.5, 1.4, 0.55, rock, 0, -0.65, 0); const f = box(P, 0.62, 0.5, 0.65, rock2, 0, -1.45, 0); mats.push(a.material, f.material); const ac = box(P, 0.05, 0.6, 0.04, hot, s * 0.1, -0.7, -0.29, true); glows.push(ac.material); arms.push(P); }
+    return { mats, glows, legs, arms, cracks }; },
+  ai(e, dt, dist, dx, dz) { const inW = BX.inFluid(e, 0.5) === 'water'; e.g.armor = inW ? 0.1 : 0.55; if (inW && Math.random() < dt * 8 && G.particles) G.particles.spawn(e.pos.x, e.pos.y + 1.5, e.pos.z, '#e8e8e8', 2, 1.5, 1.2);
+    if (inW && !e.bxQ) { e.bxQ = 1; if (G.subtitle) G.subtitle('[steam — the Slag Golem is quenched]', 'fx'); }
+    if (dist < e.g.aggro && !G.dead) { if (e.bxTell > 0) return [0, 0, 0]; if (dist < 3.6 && e.atkCd <= 0) { e.atkCd = 3; BX.tellThen(e, 0.6, x => slam(x), '[cracks glow brighter — slam incoming]'); return [0, 0, 0]; } return chase(e, dist, dx, dz); } return wander(e, dt, 0.25); },
+  anim(e, dt, telling) { const P = e.parts; walkAnim(e, P.legs, 0.35, 0.6); const up = telling ? -2.4 : Math.sin(e.bxSw2 = (e.bxSw2 || 0) + dt * Math.hypot(e.vel.x, e.vel.z) * 2) * 0.25; P.arms[0].rotation.x = up; P.arms[1].rotation.x = telling ? up : -up;
+    const k = 0.75 + Math.sin(e.bxT * 3) * 0.25; for (const c of P.cracks) c.scale.set(1, 1, 1 + k); } });
+function slam(e) { const p = G.S.player; const d = Math.hypot(p.x - e.pos.x, p.z - e.pos.z); if (G.particles) for (let i = 0; i < 24; i++) { const a = i / 24 * 6.283; G.particles.spawn(e.pos.x + Math.cos(a) * 2.2, e.pos.y + 0.2, e.pos.z + Math.sin(a) * 2.2, i % 2 ? '#ff8a3a' : '#5a4a44', 2, 4, 0.7); }
+  if (G.shake) G.shake(0.2); else if (typeof shake === 'function') shake(0.2); if (G.audio && G.audio.hit) G.audio.hit('stone');
+  if (d < 4.6 && Math.abs(p.y - e.pos.y) < 1.6 && !G.dead) { const D = G.S.director || { difficulty: 1 }; const blocked = G.dfGuard && G.dfGuard.blocking; damagePlayer(e.g.dmg * (0.6 + D.difficulty * 0.4) * (blocked ? 0.4 : 1), 'a Slag Golem'); p.vx = (p.x - e.pos.x) / (d || 1) * 9; p.vz = (p.z - e.pos.z) / (d || 1) * 9; if (G.pe && G.pe.vel) G.pe.vel.y = 6; } }
+}
 
 // ==== 910_tw_core.js
 // ===== v2.9 MP-76 True World · 4.0 core (+ the shader side of 4.1 colored light and 4.2 sky occlusion / sun mask) =====
