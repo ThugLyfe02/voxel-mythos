@@ -1,11 +1,13 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.7.1 “Fellowship”)
-===========================================================
+VOXEL MYTHOS — a living voxel sandbox (v2.8 “Bedrock”)
+=======================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.7 saves (including v2.7 hotfix 1) load in v2.7.1 unchanged (same storage keys;
-v2.7.1 only adds small new sections for shared waypoints, travel cooldowns, the multiplayer home record, voting-bloc history,
-duo-tamed companions and the party Codex record, plus backups kept separately in the browser). A v2.7.1 world still opens in v2.7 and older: the new sections are kept but ignored. Existing worlds keep
-their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update. In v2.6 and older, the v2.7 blocks
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.7.1 saves (including v2.7 hotfix 1) load in v2.8 unchanged (same storage keys;
+v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+(a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
+their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
+the farthest place you have built. In v2.6 and older, the v2.7 blocks
 (deepstone, ores, ancient bricks, plinths) appear as a familiar stand-in such as stone, bricks, cobble or dirt instead of disappearing.
 
 FIRST STEPS: click the game view ("🖱 Click to play") to capture the mouse, then move the mouse to look around.
@@ -34,7 +36,13 @@ CONTROLS — desktop (most keys can be rebound in Esc → Settings → Accessibi
     .  (period) Celestial Almanac — while looking up at the night sky it toggles star & planet labels instead
     ;  (semicolon) or middle-click: ping the spot you look at for your party (Shift: everyone) — multiplayer, v2.7.1
     ' (apostrophe) quick-chat wheel   [ emote wheel — hold, steer with the mouse, let go — multiplayer, v2.7.1
-    L spellbook   I journal   Z blueprints   K save now   Esc pause   F3 performance overlay
+    L spellbook   I journal   Z blueprints   K save now   Esc pause   F3 performance overlay (v2.8: also the slowest tick hooks)
+    Shift+F8 ......... 🩺 Report a problem (also /report, or Esc → 🩺 Report a problem) — v2.8
+  Guard (v2.8)
+    Right mouse (hold) with a weapon or bare hands: block (less damage, uses stamina). Start the block just before a hit to
+                       parry: the attacker staggers; hit a staggered foe to counter (it is knocked out, never killed).
+    Left Alt ......... dodge: a quick sidestep with a moment of safety
+    ; (hold) ......... ping wheel: Threat, Trap, Help, Look, Loot, Dig, Danger, Ring the nearest bell (a quick tap still pings)
     E while facing a villager, worker, mage or caravan: Kindred talk menu    Bard's Lute in hand: 1-9 play notes
 
 CONTROLS — phones & tablets (on-screen controls appear automatically)
@@ -66,7 +74,56 @@ USEFUL COMMANDS (T or /)
   New in v2.7: /realm [council|vote N|found <name>|stance <choice>]  /banner (Banner tab)  /strata (Field Journal)  /friends (where your friends are)
   New in v2.7.1: /party [invite <name>|accept|leave] (Esc → 👥 Party)  /ping [look|danger|loot|dig|help] [all]  /wp [add <name>|list|del <name>]
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
+  New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.8 — BEDROCK
+  🛡 SAFER SAVES: every save is now also kept in a second browser store (IndexedDB), with the last 6 versions of each world
+    and a short journal of your latest edits. A crash, a closed tab or a full disk loses a few seconds at most; if the quick-save
+    copy is ever damaged, the game opens the safety copy and tells you. Esc → 🛡 Save safety shows what is kept, restores an
+    earlier version, and exports or imports a .vmworld file. A .vmworld file carries a checksum for every part, so a damaged or
+    edited file is refused instead of half-loading. Plain .json backups from older versions still import.
+  🌍 ENDLESS WORLDS: new worlds no longer repeat as you travel. Land keeps generating out to the World's Rim, 30 million blocks
+    from the center in every direction (about a year of walking; flying gets you there sooner). Past the heartland, the Frontier
+    holds hamlets, ruins and faction outposts, grouped into named Marches with discovery notes and distance milestones. Only
+    the chunks you change are saved, so a long journey doesn't grow your save, and the view stays steady far out (the renderer
+    re-centers itself as you travel). Older worlds keep their land; a world that was built on past 20,000 blocks keeps its
+    classic terrain everywhere.
+    Why a Rim at all: positions are checked and sent to friends in a compact form that tops out just past 30 million blocks,
+    and the game's numbers lose precision beyond that. At the Rim the land ends in a soft edge and the game tells you.
+  🎞 A NEW LOOK: a color grade with a mood per biome on every quality level, ores, lava and lanterns that glow at
+    night, rain that wets the ground with ripples and splashes, and photo-mode depth of field; on High also a filmic tone
+    curve, soft bloom, height fog and light shafts. Settings → Graphics → 🎞 Look & light.
+  ☀️ TRUE LIGHT: puddles that form in rain, gusts that sweep across fields, and water that stays clear and green in the
+    shallows and turns deep blue further out, with foam on the shore (Medium and up); plus sun glints on wet and smooth
+    surfaces and grass that bends as you walk through it (High). Low is unchanged. Settings → Graphics → ☀️ True Light.
+  🔔 WATCH BELLS: place a Watch Bell with Tripwires or Pressure Plates nearby. When something crosses, the bell rings a code:
+    1 ring for a beast, 2 for raiders, 3 for something big (ring it by hand for 4: a call to arms). Everyone in your party
+    hears it with a caption naming the threat, the bell and its direction. Players and pets never trip wires.
+  🏰 DEFENSE NIGHTS (opt-in, off by default): raiders come for your Raid Chest, and only the Raid Chest: the coins you
+    choose to put in it. Homes are never lost: raiders never break blocks, explosions inside claims are stopped, and anything
+    else that changes inside a claim during the night is put back at dawn. Dying to a raider costs no coins; knock a raider out
+    and what it carried drops back. /firstnight starts a gentle first night with a guide.
+  🗡 GUARD: creatures now show a short wind-up (a red glint and a warning tone) before they swing. Hold right mouse to block,
+    block just before the hit to parry, then strike the staggered foe to counter. Left Alt dodges. Guard works at any frame rate.
+  💥 COMBAT FEEL: a brief hit-stop on solid hits (30-70 ms, on screen only, so a multiplayer world never pauses or drifts),
+    a short stagger on creatures, a swing trail and clearer hit feedback. Screen shake 0 means no camera kick at all.
+  🎒 INVENTORY AND CRAFTING: a search box, ★ favorites (a favorite can't be sold and quick-stack never moves it), up to 3
+    recipe pins on your screen with a live ingredient checklist, and quick-stack into nearby Site Supply Chests.
+  👥 SMOOTHER MULTIPLAYER: if the host leaves, the world moves to the next player within seconds, now also for a friend who was
+    still loading. New guests can't use TNT, fire or fluids for their first 10 minutes in a world unless the host trusts them.
+    /votekick (a majority of v2.8 players, 30-second vote), /mute, and an optional chat word filter keep games friendly.
+    When a bell rings, nearby friends get a small "Help defend?" card with a marker to follow.
+  ♿ EVERYONE PLAYS: every important sound has a caption with an urgency icon (so color is never the only signal) and a
+    direction when the game knows where it happened; a high-contrast option; color-blind palettes for the new interface; and
+    comfort settings that really turn things off: screen shake at 0 means no shake at all, and "Limit flashing lights" caps
+    lightning, blasts and fireworks.
+  🩺 REPORT A PROBLEM: Esc → 🩺 Report a problem (Shift+F8, /report) shows recent errors with the part of the game they came
+    from, the frame rate, settings and boot timing, and builds a report you can copy or open as a prefilled issue. Player names
+    are removed. Nothing is sent anywhere unless you choose to.
+  ⚙️ STEADIER FRAME RATE: on Auto quality the game measures your display and picks a target (30, 50, 60 or 72 fps). It steps down
+    within about 2 seconds when the game struggles (view distance first when the processor is the bottleneck, otherwise
+    resolution, then the quality level) and steps back up after 15 calm seconds.
 
 WHAT'S NEW IN v2.7.1 — FELLOWSHIP
   👥 PARTIES OF UP TO 8: in a multiplayer world, Esc → 👥 Party (or /party) invites friends. Quests a party member accepts
@@ -386,8 +443,16 @@ SAVING
   Autosave every 30 s, on dimension change, and when you close or hide the tab ("saved Ns ago" chip top-right).
   Esc → Worlds & backups: 4 named world slots + the Daily slot, Export (.json backup file), Import, rename, delete.
   v2.7.1: 🛟 Backups per world (last 6 snapshots + one per day for 7 days), restore from that list or from the damaged-save prompt.
+  v2.8: 🛡 Save safety (Esc menu): a second copy of every world in IndexedDB with 6 earlier versions and a journal of recent
+    edits; restore any of them, or export/import a checked .vmworld file. Safari can clear website data after a week without a
+    visit, so on Safari the game reminds you to export now and then.
 
 PLAYING WITH FRIENDS (peer-to-peer, free, no accounts)
+  v2.8 plays with v2.7.1 and older (v2.8 guests and hosts use the same connection). Watch Bell alerts, the ping wheel, "Help
+  defend?", block states and vote-kicks need v2.8 on both sides; v2.7.1 guests at a v2.8 host get alarms and defense news as
+  chat lines and play normally. In an endless v2.8 world a v2.7.1 guest sees the same land near the center but different
+  land beyond about 27,000 blocks, and no Frontier sites; they are told so when they join.
+  A friend who is still loading when the host leaves now follows the new host automatically.
   v2.1 through v2.7.1 play together (v2 still connects too). Parties, pings, waypoints, travel, digging together and host
   hand-over need v2.7.1 on both sides: v2.7 and older guests still join a v2.7.1 host and play normally, see "everyone" pings as
   chat lines, and are left out of parties; if the host leaves, they are disconnected and rejoin with the new room code the new host
@@ -448,5 +513,15 @@ TECH NOTES
   one host's upload carries 8 players in testing (bigger groups are not yet tested). The host keeps a ranked successor list; on a host loss the successor reopens the
   room (code rooms) or takes over pre-opened standby links (manual invites). Backups live in IndexedDB, separate from the save.
   Frame rate vs v2.7 (v2.7 hotfix 1 has identical rendering code) on the same machine and seeds (alternating runs): idle 99 %, crowd 98 %, night sky 98 %, flooding water 100 %, deep-layer room 98 %.
+  v2.8: Bedrock writes each save to IndexedDB as gzip with a SHA-256 per generation and keeps localStorage as a mirror for
+  older versions; a 200-kill crash test lost no saves. The renderer keeps a floating origin (re-centered every 4,096 blocks),
+  so precision stays under 0.002 blocks even at the Rim. Block states (a sparse per-chunk channel) and the world's memory
+  (16 events per 32-block cell, about 0.002 ms per record, a summary under 4 KB) are small and saved with the world.
+  Frame rate vs v2.7.1 on the same machine and seeds (6 alternating runs): Low idle 95 %, crowd 103 %, night sky 102 %, flooding water 98 %,
+  deep-layer room 95 %; Medium idle 97 %, crowd 99 %, night sky 100 %, flooding water 98 %, deep-layer room 99 %.
+  Known limits in v2.8: block ids stay 8-bit (block states carry the extra detail instead); True Light derives roughness from
+  the texture instead of a material map; Auto quality adjusts view distance, resolution and the quality level but not each
+  effect separately; the settings panel has no search or presets yet; the world's memory of events is kept by the host,
+  and blocks that guests place or break are not part of it yet.
   Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites), STUN, and PeerJS's
   public TURN relays as a fallback.

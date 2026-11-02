@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2.7.1 “Fellowship”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.7 saves (including v2.7 hotfix 1) load in v2.7.1 unchanged. The join fix from hotfix 1 is kept. A v2.7.1 world still opens in v2.7 and older: the new sections are kept but ignored.
+A living voxel sandbox (v2.8 “Bedrock”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.7.1 saves (including v2.7 hotfix 1) load in v2.8 unchanged. The join fix from hotfix 1 is kept. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe).
 
 ## Play
 
@@ -44,6 +44,8 @@ Most keys can be rebound in **Esc → Settings → Accessibility → Key binding
 - **.** (period) Celestial Almanac — while looking up at the night sky it toggles star and planet labels instead
 - **;** (semicolon) or middle-click: ping the spot you look at for your party (Shift: everyone)
 - **'** (apostrophe) quick-chat wheel · **[** emote wheel — hold, steer with the mouse, let go
+- **Guard (v2.8):** hold right mouse to block; block just before a hit to parry, then strike to counter. **Left Alt** dodges. Hold **;** for the ping wheel.
+- **Shift+F8** Report a problem (also `/report`)
 - **L** spellbook · **I** journal · **Z** blueprints · **K** save now · **Esc** pause · **F3** performance overlay
 - **E** while facing a villager, worker, mage or caravan: Kindred talk menu
 - **Bard's Lute** in hand: **1–9** play notes
@@ -94,7 +96,20 @@ New in v2.7: `/realm [council|vote N|found <name>|stance <choice>]` `/banner` `/
 
 New in v2.7.1: `/party [invite <name>|accept|leave]` `/ping [look|danger|loot|dig|help] [all]` `/wp [add <name>|list|del <name>]` `/travel <name>` `/emote <name>|stop` `/qc 1-8` `/fellow social on|off`
 
+New in v2.8: `/report` `/diag` `/firstnight` `/votekick <name>` `/mute <name>`
+
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
+
+## What's new in v2.8 — Bedrock
+
+- **Endless Worlds:** land keeps generating out to the World's Rim at ±30 million blocks. Past the heartland, the Frontier holds hamlets, ruins, faction outposts, and named Marches. Only the chunks you change are saved.
+- **Safer saves:** every save is also kept in IndexedDB, with the last 6 versions of each world. Esc → Save safety restores an earlier version and exports or imports a `.vmworld` file. Older `.json` backups still import.
+- **A new look:** a filmic grade on High and a lite grade on Low and Medium, glowing ores and lanterns, rain wetness and ripples, and True Light water, glints, and grass on higher settings. Settings → Graphics → Look & light and True Light.
+- **Watch Bells, tripwires, and opt-in Defense Nights:** a bell rings a code for what crossed a wire. Defense Nights are off by default; raiders come only for the coins you put in the Raid Chest. `/firstnight` starts a gentle first night.
+- **Guard:** hold right mouse to block, parry just before a hit, then counter. Left Alt dodges. Hits have a short on-screen hit-stop, a stagger, and a swing trail.
+- **Inventory:** search, star favorites, and up to 3 recipe pins with a live ingredient checklist.
+- **Smoother multiplayer:** if the host leaves, the world moves to the next player, including a friend who was still loading. New guests have a 10-minute grace period before TNT, fire, or fluids unless the host trusts them. `/votekick`, `/mute`, and a Help-defend card when a bell rings.
+- **Everyone Plays:** captions for important sounds, high contrast, color-blind palettes, and comfort settings. Screen shake at 0 means no shake at all, and "Limit flashing lights" caps lightning, blasts, and fireworks.
 
 ## What's new in v2.7.1 — Fellowship
 
@@ -222,7 +237,7 @@ Autosave every 30 s, on dimension change, and when you close or hide the tab ("s
 
 ## Playing with friends (peer-to-peer, free, no accounts)
 
-v2.1 through v2.7.1 play together (v2 still connects too). The v2.7-hotfix1 join fix is kept in v2.7.1. Parties, pings, waypoints, and travel need a v2.7.1 host. The realm and the dig record need a v2.7 host; v2.7 players at the same host see the same ruins and the same politics. v2.6 and older guests join a v2.7 game and just don't see these features. A v2.7 guest at an older host is told that world has no Strata. In a v2.6+ game the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.7 games (or host for them): the game refuses politely and explains who should update.
+v2.1 through v2.8 play together (v2 still connects too). Watch Bells, Defense Nights, and the Frontier need a v2.8 host. The v2.7-hotfix1 join fix is kept in v2.7.1. Parties, pings, waypoints, and travel need a v2.7.1 host. The realm and the dig record need a v2.7 host; v2.7 players at the same host see the same ruins and the same politics. v2.6 and older guests join a v2.7 game and just don't see these features. A v2.7 guest at an older host is told that world has no Strata. In a v2.6+ game the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.7 games (or host for them): the game refuses politely and explains who should update.
 
 Kindred memories, the Chronicler, quests, the market, the ecology, water, structures, the realm, the dig record and the music are run by the host and saved in the host's world.
 
