@@ -2,7 +2,7 @@
 
 **[Play now](https://thuglyfe02.github.io/voxel-mythos/)**
 
-A living voxel sandbox (v2.8 “Bedrock”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.7.1 saves (including v2.7 hotfix 1) load in v2.8 unchanged. The join fix from hotfix 1 is kept. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe).
+A living voxel sandbox (v2.9 “True World”). One self-contained file, no install, and no internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9 unchanged. The join fix from hotfix 1 is kept. v2.9 adds only a few True World settings. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe).
 
 ## Play
 
@@ -99,6 +99,18 @@ New in v2.7.1: `/party [invite <name>|accept|leave]` `/ping [look|danger|loot|di
 New in v2.8: `/report` `/diag` `/firstnight` `/votekick <name>` `/mute <name>`
 
 Creative only: `/dim ember|canopy|tidal|void|over` `/boss` `/give` `/time` `/weather` `/fly`
+
+## What's new in v2.9 — True World
+
+Every part has a switch in **Settings → Graphics → True World**.
+
+- **Deeper lighting:** the sky lights the world the way it looks, on every quality level. Land under a floating island is softly shaded instead of turning black. Overhangs and cave mouths fade into shadow, and the sun leaves shade on the sides of hills and buildings that face away from it. Lanterns, lava, crystals, and glowing ores give off their own colored light. On Medium and up, that light bounces off nearby walls.
+- **Sky:** a real gradient, blue overhead at noon and deep violet over an orange horizon at sunset. Distant ridges fade into blue-gray haze instead of a flat band of fog.
+- **Exposure:** step into a dark cave and your eyes adjust over a few seconds; step back into daylight and the glare fades.
+- **Wind:** gusts travel across fields. Plants, leaves, rain, and banners feel the same wind as each gust passes.
+- **TAA and cloth:** on High, temporal anti-aliasing smooths jagged edges on blocks, fences, and leaves, and the sun casts soft shadows. On Medium and up, realm banners are real cloth: limp in calm air, streaming in a storm, and swinging when the wind turns. Reduced motion keeps them still.
+- **Fixes:** dark land under sky islands, dawn artifacts, and gold and lava tones.
+- If the host's computer freezes for a few seconds, friends wait for it instead of dropping and rejoining.
 
 ## What's new in v2.8 — Bedrock
 
@@ -237,7 +249,7 @@ Autosave every 30 s, on dimension change, and when you close or hide the tab ("s
 
 ## Playing with friends (peer-to-peer, free, no accounts)
 
-v2.1 through v2.8 play together (v2 still connects too). Watch Bells, Defense Nights, and the Frontier need a v2.8 host. The v2.7-hotfix1 join fix is kept in v2.7.1. Parties, pings, waypoints, and travel need a v2.7.1 host. The realm and the dig record need a v2.7 host; v2.7 players at the same host see the same ruins and the same politics. v2.6 and older guests join a v2.7 game and just don't see these features. A v2.7 guest at an older host is told that world has no Strata. In a v2.6+ game the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.7 games (or host for them): the game refuses politely and explains who should update.
+v2.1 through v2.9 play together (v2 still connects too). True World lighting follows each player's own graphics settings. Watch Bells, Defense Nights, and the Frontier need a v2.8 host. The v2.7-hotfix1 join fix is kept in v2.7.1. Parties, pings, waypoints, and travel need a v2.7.1 host. The realm and the dig record need a v2.7 host; v2.7 players at the same host see the same ruins and the same politics. v2.6 and older guests join a v2.7 game and just don't see these features. A v2.7 guest at an older host is told that world has no Strata. In a v2.6+ game the host runs the water and decides what collapses. v2.6 guests see water levels change smoothly and watch the same falling debris, because every peer computes it from the same seed. Guests on v2.5 or older see the result as ordinary blocks, with familiar stand-ins for the new v2.6 blocks. The living ecology, Ecology Lens and star naming need a v2.5 or later host (a v2.5 guest at an older host is told so). The sky itself is computed from the world seed, so v2.5 and v2.6 guests see the almanac sky at any host. Guests see the host's creatures, pets and helpers with v2.3 bodies, and see friends seated on their mounts. Party quests and the living Market need a v2.4 host. Everyone in a party gets the full reward, and members who are offline are paid when they come back. Older guests just don't see these features. Story, score and Kindred talk turn on when the host runs v2.2 or later (a newer guest at an older host just plays without them); v2.1-only features such as claims, duels and Codex sharing switch off for v2 players. v1 can't join v2–v2.7 games (or host for them): the game refuses politely and explains who should update.
 
 Kindred memories, the Chronicler, quests, the market, the ecology, water, structures, the realm, the dig record and the music are run by the host and saved in the host's world.
 

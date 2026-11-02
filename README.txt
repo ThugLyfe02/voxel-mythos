@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.8 “Bedrock”)
-=======================================================
+VOXEL MYTHOS — a living voxel sandbox (v2.9 “True World”)
+==========================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.7.1 saves (including v2.7 hotfix 1) load in v2.8 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -76,6 +76,26 @@ USEFUL COMMANDS (T or /)
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9 — TRUE WORLD
+  🌍 TRUE WORLD LIGHTING (every quality level): the sky now lights the world the way it looks. Land under a floating island
+    is softly shaded instead of turning black, overhangs and cave mouths fade gradually into shadow, and the sun leaves
+    shade on the side of hills and buildings that face away from it. Lanterns, lava, crystals and glowing ores give off
+    their own colored light, and on Medium and up that light bounces off nearby walls (a lantern in a red room fills it
+    with a warm red glow). Rooms full of lanterns now light up properly even near a big lava sea.
+  🌅 A REAL SKY: the sky is a gradient now, blue overhead at noon and deep violet over an orange horizon at sunset, and
+    distant ridges fade into blue-gray haze toward the sky instead of a flat band of fog.
+  👁 EYE ADAPTATION: step into a dark cave and your eyes adjust over a few seconds; step back into daylight and the
+    glare fades.
+  🌬 WIND: gusts now travel across fields. Plants, leaves, rain and banners all feel the same wind as each gust passes.
+  ☀️ SOFT SUN SHADOWS (High): real shadows from the sun on High (they used to be Ultra only), crisp where an object
+    touches the ground and softer further away, like real sunlight. Ultra's shadows get the same soft edges.
+  ✨ SMOOTHER EDGES (High): temporal anti-aliasing smooths jagged edges on blocks, fences and leaves.
+  🚩 CLOTH BANNERS (Medium and up): realm banners are real cloth now. They hang limp in calm air, stream out in a
+    storm and swing when the wind turns. Reduced motion keeps them still.
+  👥 STEADIER MULTIPLAYER: if the host's computer freezes for a few seconds (for example while saving or loading a new
+    area), friends now wait for it instead of dropping and rejoining.
+  Every part has a switch in Settings → Graphics → 🌍 True World.
 
 WHAT'S NEW IN v2.8 — BEDROCK
   🛡 SAFER SAVES: every save is now also kept in a second browser store (IndexedDB), with the last 6 versions of each world
@@ -523,5 +543,17 @@ TECH NOTES
   the texture instead of a material map; Auto quality adjusts view distance, resolution and the quality level but not each
   effect separately; the settings panel has no search or presets yet; the world's memory of events is kept by the host,
   and blocks that guests place or break are not part of it yet.
+  v2.9: True World bakes sky visibility (12 soft rays, so a floating island no longer acts as a roof), a sun-direction mask
+  and colored block light with one bounce into each chunk's mesh in the meshing workers; the shaders only decode it, so Low
+  costs about the same as before. High's soft shadows reuse Ultra's two shadow cascades at 1024 pixels with a percentage-closer
+  soft-shadow filter; anti-aliasing reprojects the previous frame through the depth buffer. Cloth runs on a small deterministic
+  position-based physics solver (the same seed and inputs give the same result on every computer).
+  Frame rate vs v2.7.1 on Low (same machine and seeds, 12 alternating runs, software rendering): idle 123 %, crowd 95 %,
+  night sky 95 %, flooding water 97 %, deep-layer room 97 %; Medium vs v2.8 (3 alternating runs): idle 105 %, crowd 100 %,
+  night sky 97 %, flooding water 94 %, deep-layer room 97 %.
+  Known limits in v2.9: knocked-out creatures do not go limp with physics yet (ragdoll knockouts are planned for v2.10); cloth
+  banners use smaller grids than planned (8×12 on Medium, 12×18 on High, 16×24 on Ultra) to keep the frame budget;
+  temporal anti-aliasing is High only (Ultra keeps its own anti-aliasing); light does not yet tint through colored glass
+  and sunlight does not bounce (only block light does); wind does not yet slow down behind walls or hills.
   Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites), STUN, and PeerJS's
   public TURN relays as a fallback.
