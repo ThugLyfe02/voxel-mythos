@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.8 “The Families”)
+VOXEL MYTHOS — a living voxel sandbox (v2.9.9 “Gilded Office A”)
 ========================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.8 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.9 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). v2.9.8 adds one small section for The Families (a v2.9.8 world still opens in v2.9.7, and your family, rank, respect, Favors, turfs and signature weapon are still there when you come back to v2.9.8). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). v2.9.8 adds one small section for The Families (a v2.9.8 world still opens in v2.9.7, and your family, rank, respect, Favors, turfs and signature weapon are still there when you come back to v2.9.8). v2.9.9 adds one small section for the Gilded Office (a v2.9.9 world still opens in v2.9.8, and your approval, Trust, Favor Marks, Orders and questline step are still there when you come back to v2.9.9). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -75,9 +75,44 @@ USEFUL COMMANDS (T or /)
   New in v2.7.1: /party [invite <name>|accept|leave] (Esc → 👥 Party)  /ping [look|danger|loot|dig|help] [all]  /wp [add <name>|list|del <name>]
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
+  New in v2.9.9: /office [where] (also /gildmore), /ferry [island|home] · see WHAT'S NEW below
   New in v2.9.8: /fam [where|walk|raid|favor] (also /families), /favor · see WHAT'S NEW below
   New in v2.9.7: /nm [where|auction|beasts] (also /market) · see WHAT'S NEW below
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.9 — GILDED OFFICE A
+  President Augustus Gildmore governs your world from Verdance Key, an island palace resort out at sea. He is a made-up
+  character: a silver pompadour, a walrus mustache, a fresh spray tan (“Ferry-Bronze, every Tuesday”) and an emerald
+  three-piece suit with gold pinstripes. He loves applause, boats and bread. A chip at the top of the screen and
+  /office where point the way.
+  🏝 VERDANCE KEY: the Gilded Palace has emerald domes with gold rings, a fountain plaza with gilded sardines, a Rotunda
+    under a glass skylight and a gold chandelier, the Emerald Study with its ferry-wheel desk, the Emerald Ferry pier and a
+    helipad with the Gilded Wren. Captain Rowena Vale and the Emerald Guard keep the door, and Quill Gildmore (Chief of
+    Staff), Seraphine Lark (Press Secretary), Chef Basil Thornbury and Odile Marsh (Ferrymaster) work there.
+  ⛴ GETTING THERE: an engraved invitation arrives after a few minutes of play. Ride the Emerald Ferry with /ferry or from
+    the office panel. It is free with the invitation (12 coins otherwise), and /ferry home brings you back.
+  🛡 THE QUESTLINE: get your peace-bond stamped by Captain Vale (she turns you away while your Heat is 60 or more), help
+    someone in the Audience Queue in the Rotunda, have an audience with the President, do him a favor, then petition an
+    Executive Order. The chip shows your next step.
+  💬 THE GILDED CONVERSATION: an audience is three rounds of cards: Candor, Flattery, a Story or Ask. Candor builds
+    Trust, Flattery costs a little Trust, and a good boat story goes a long way. One audience a day. Audiences can earn
+    Favor Marks (up to 5).
+  🎖 FAVORS FOR THE PRESIDENT: the Mustache Comb Caper (question the suspects, then name who borrowed his golden comb),
+    the Ribbon-cutting at the Pier (calm down Custard Carl, or knock him out cold for a few seconds; he wakes up fine)
+    and the Gilded Lanterns' Gift (broker the courier's gift for coins and Heat, or turn it over to Captain Vale).
+  📜 EXECUTIVE ORDERS: spend a Favor Mark to petition one of four Orders, each lasting 6 days (up to 3 at once).
+    Golden Harvest: farm output +20%, so food is a little cheaper in your village. Storm Readiness: lumber and stone
+    demand +25%, so wood and stone sell for more, and the Stormwrights like it. Open Stalls: crafted gear and potions get
+    15% more buyers. Lantern Guard Budget: Heat cools 4 extra points a day, but the families grumble.
+  📊 APPROVAL AND TRUST: the President's approval (starting at 62%) drifts with missions, Orders and food prices. Above 70%
+    it is a Golden Age and the ferry is free. Trust 20 unlocks a Heat pardon once every 7 days, and Trust 40
+    unlocks one endorsement (family respect, or coins).
+  🤝 CO-OP: friends on v2.9.9 see the palace, the people and the President's approval and Orders, and can tour the palace
+    and ride the ferry. Audiences and missions run on the world host. Friends on v2.9.8 can still join and see the palace
+    people as helpers.
+  📖 ATLAS: a Gilded Office tab in the Feature Atlas.
+  🏷 Name tags now shrink when you stand close to someone, and long names fit instead of being cut off.
+  New commands: /office [where] (also /gildmore), /ferry [island|home]
 
 WHAT'S NEW IN v2.9.8 — THE FAMILIES
   Two rival crime families, both made up for the game, hold turf districts out past your village. A chip at the top of
@@ -837,5 +872,9 @@ TECH NOTES
   Frame rate vs v2.9.7 on the same machine and seeds: Medium (4 alternating runs) idle 105 %, crowd 92 %, night sky 108 %, flooding water 101 %, deep-layer room 95 %; Low (6 alternating runs) idle 98 %, crowd 103 %, night sky 98 %, flooding water 99 %, deep-layer room 94 %.
   Known limits in v2.9.8: only the world host joins a family, takes jobs, buys tips, starts takedowns and cashes Favors
   (friends fight alongside and can accept a Spring); turmoil events start only near a turf, at most once a day.
+  v2.9.9: the palace people reuse the helper snapshot, and the host sends one small office message every 8 seconds.
+  Frame rate vs v2.9.8 on the same machine and seeds: Medium (4 alternating runs) idle 104 %, crowd 102 %, night sky 103 %, flooding water 100 %, deep-layer room 102 %; Low (6 alternating runs) idle 98 %, crowd 99 %, night sky 95 %, flooding water 98 %, deep-layer room 99 %.
+  Known limits in v2.9.9: only the world host has audiences, runs missions and petitions Orders (friends tour and watch);
+  this is part A of the Gilded Office, so later chapters from the design notes are not in this version.
   Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites), STUN, and PeerJS's
   public TURN relays as a fallback.
