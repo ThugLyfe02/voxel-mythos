@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.7 “Night Market”)
+VOXEL MYTHOS — a living voxel sandbox (v2.9.8 “The Families”)
 ========================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.7 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.8 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). v2.9.8 adds one small section for The Families (a v2.9.8 world still opens in v2.9.7, and your family, rank, respect, Favors, turfs and signature weapon are still there when you come back to v2.9.8). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -75,8 +75,52 @@ USEFUL COMMANDS (T or /)
   New in v2.7.1: /party [invite <name>|accept|leave] (Esc → 👥 Party)  /ping [look|danger|loot|dig|help] [all]  /wp [add <name>|list|del <name>]
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
+  New in v2.9.8: /fam [where|walk|raid|favor] (also /families), /favor · see WHAT'S NEW below
   New in v2.9.7: /nm [where|auction|beasts] (also /market) · see WHAT'S NEW below
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.8 — THE FAMILIES
+  Two rival crime families, both made up for the game, hold turf districts out past your village. A chip at the top of
+  the screen and /fam where point the way.
+  🏮 THE GILDED LANTERNS: gold bandanas over black coats. Their code is “A debt is a vow.” Their racket is counterfeit
+    coin and forged papers, run from the GILT & LEDGER counting house under lit lanterns. The boss is Auntie Saffron
+    Gilt, with lieutenants Tobias Brasswick and Juniper Coyle, and Old Nessa is the fixer at the gate. Their signature
+    weapon is the Gilded Coin-Chakram, a returning throw.
+  ⛈ THE STORMWRIGHTS: blue bandanas over storm-blue coats with copper trim. Their code is “Every storm has an owner.”
+    Their racket is storm insurance and contraband crystals, run from the THUNDERWELL office under a lightning tower. The
+    boss is Captain Cassia Thunderwell, with lieutenants Ivo Galecrest and Mira Stillwater, and Rook Ashby is the fixer.
+    Their signature weapon is the Stormwright Arc Knuckles, a smashing fist weapon.
+    Bosses wear a sash, cape and collar, lieutenants wear a sash, and enforcers wear a kerchief.
+  🤝 JOIN AND RISE: talk to a family's fixer (F) to join. Take jobs at the table: Deliver a sealed letter, Collect dues
+    (fence one item at the Night Market), Turf scuffle (knock out three rival enforcers) or Lay low (keep your Heat
+    under 20 for 90 seconds). Jobs pay coins and respect. The ranks are Associate, Soldier, Captain, Lieutenant and
+    Underboss. At Soldier you get the family's signature weapon, and at Captain the boss owes you a Godfather's Favor.
+    Associates and Soldiers can walk away; from Captain up you need a Favor to leave clean. Hitting a member of a family
+    that is not after you draws a warning, and a second hit makes them hostile until the next day. If you join one
+    family, the other family's enforcers will chase you off their turf.
+  🏛 BRING ONE DOWN: buy a tip from the family's Canary (60 coins). Lift the three glinting ledgers from the crates on
+    their turf (each one adds Heat), then start the takedown (/fam raid) and knock out the boss and both lieutenants
+    within 150 seconds. Win and the family is broken for three days, you take 250 coins from their treasury, and the
+    rival boss owes you a Favor. Do it solo or with friends. Everything is knockout only: enforcers shove you, and when
+    you get too low they toss you out past the gate, which ends a takedown (in Creative they only shove).
+  👑 TURMOIL, LIVE: about once a day, when you are near a turf, the family can fall into trouble.
+    · Succession Crisis: the boss steps back and both lieutenants want the chair. Back one, buy support with coins, or
+      claim the chair yourself if you are a Lieutenant or higher. The winner is decided when the 150 seconds run out.
+    · The Mole: someone is talking. Question the three suspects and compare their alibis (the two loyal ones vouch for
+      each other), then accuse one. A right accusation exiles the mole, cools your Heat and earns a Favor; a wrong one
+      costs respect and brings Lamplighter Heat.
+  🎩 GODFATHER'S FAVOR: you can hold up to three. Cash one in (/favor) to Clear my Heat, Call off a raid (on Lantern
+    Row), Open the rival vault (300 coins), End the feud (a five-day truce), Spring a friend (a co-op friend can accept a
+    ride to your side) or Walk away clean. Every Favor comes back around: a few minutes later the boss calls one in
+    (deliver a letter, stand watch at the gate, or pay 80 coins). Answer for respect, or refuse and the family's
+    enforcers come after you until tomorrow.
+  🌙 NIGHT MARKET AND HEAT: dues come from fencing at Lantern Row, ledgers and takedowns add Heat, a family job asks you
+    to lay low, and a Favor can clear your Heat or call off a Lamplighter raid.
+  🤝 CO-OP: friends on v2.9.8 see both turfs and the family members in their colors, can knock out hostile members
+    (the host checks every hit), see a takedown in progress and can accept a Spring. Friends on v2.9.7 can still join
+    and see the members as helpers without the bandanas. Player-versus-player fighting is still only the opt-in duel.
+  📖 ATLAS: a Families tab in the Feature Atlas.
+  New commands: /fam [where|walk|raid|favor] (also /families), /favor
 
 WHAT'S NEW IN v2.9.7 — NIGHT MARKET
   🏮 LANTERN ROW: after dark, a hidden lane of lantern-lit stalls sets up in a clearing outside your village and
@@ -789,5 +833,9 @@ TECH NOTES
   deep-layer room 99 %.
   Known limits in v2.9.7: only the world host trades, bids and rehomes (friends watch along); the Floating Market from the
   design notes is not in this version.
+  v2.9.8: family members reuse the helper snapshot, and the host sends one small family message every 6 seconds.
+  Frame rate vs v2.9.7 on the same machine and seeds: Medium (4 alternating runs) idle 105 %, crowd 92 %, night sky 108 %, flooding water 101 %, deep-layer room 95 %; Low (6 alternating runs) idle 98 %, crowd 103 %, night sky 98 %, flooding water 99 %, deep-layer room 94 %.
+  Known limits in v2.9.8: only the world host joins a family, takes jobs, buys tips, starts takedowns and cashes Favors
+  (friends fight alongside and can accept a Spring); turmoil events start only near a turf, at most once a day.
   Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites), STUN, and PeerJS's
   public TURN relays as a fallback.
