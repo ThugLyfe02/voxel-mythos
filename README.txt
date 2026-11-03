@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.4 “Tides & Tails”)
-=============================================================
+VOXEL MYTHOS — a living voxel sandbox (v2.9.5 “Forge & Field”)
+==============================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.4 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.5 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -76,6 +76,34 @@ USEFUL COMMANDS (T or /)
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.5 — FORGE & FIELD
+  🛠 SMITHING BENCH AND TRIMS: an Upgrade Plate plus material raises armor, swords, axes and tools one tier in place
+    (enchants, trim and history stay). Trims decorate worn armor: 16 patterns found in Old Realm ruins, in 10 materials.
+  🔨 REPAIR AND DURABILITY: armor and tools now wear as you use them; small pips on the HUD turn red when a piece is
+    nearly broken. Repair at the Anvil, or combine two worn copies.
+  ✨ ARMOR AND TOOL ENCHANTS: at the Enchanting Altar (Armor & Tools): Ward, Fireward, Blastward, Arrowward, Bramble,
+    Soft Landing, Hush Step, Quickdig, Gentle Touch, Rich Vein, Unbreaking and Wellspring, plus two curses. A Bargain
+    option halves the cost but binds a curse.
+  ⚙ SALVAGE WHETWHEEL: grinds every enchant and curse off a piece and gives back half the materials.
+  🛡 ARMOR YOU CAN SEE: worn armor and trims are drawn on you (F5 for third person), on co-op friends and on Armor
+    Stands. Right-click a stand holding armor to hang it, or with an empty hand to swap your whole set. Settings can hide it.
+  ⛏ THE FULL TOOL SET: shovels in eight tiers, a hoe ladder (Copper, Iron, Gilded and Aether hoes till 3×3 or 5×5
+    patches; Gilded and Aether also plant seeds from your off-hand), and Shears (they clip leaves, vines and grass; right-click a ram
+    or yak to shear it: wool, freely given, grows back). Swords and axes now come in eight tiers from Wood to Mythic.
+  🎆 CROSSBOWS AND FESTIVAL ROCKETS: hold to crank, click to loose; a loaded crossbow stays loaded. Festival Rockets
+    (from Paper and Blast Meal) fire a knockout burst of color. Quickload and Multishot work on crossbows.
+  🍗 FOOD, SATIETY AND CAMPFIRES: a satiety bar empties as you play; when full you heal, when empty only your stamina
+    slows. Cook on a Campfire (Campfire Roast, Baked Roots); try Berry Pie and the Sunapple. /food shows where you stand.
+  🔱 SPEARS: jab with left click (quicker, lighter thrusts). Hold right click and run or ride to charge: damage grows
+    with your speed. The Lunge enchant carries a jab 1.5 / 2.5 / 3.5 blocks forward. At night some foes ride steeds as
+    Outriders; a mounted or fast charge knocks them off (they sit stunned and the steed bolts). In a duel, a lance charge
+    can knock a mounted opponent off their mount.
+  🗄 GUN RACKS AND GUN SAFES: hang up to six firearms on a rack and swap your loadout in one click, or keep guns, ammo and
+    valuables in a 24-slot, blast-proof Gun Safe. Safes are yours alone unless you set a 4-digit code to share them.
+  📖 ATLAS: a Forge & Field tab in the Feature Atlas.
+  🤝 CO-OP: friends on v2.9.5 see your armor and can use your racks and safes (code rules apply; friends on probation
+    can't open them). Friends on v2.9.4 can still join; they see the new blocks as familiar stand-ins.
 
 WHAT'S NEW IN v2.9.4 — TIDES & TAILS
   🧜 MOONWELL LAGOON: every Overworld has a merfolk lagoon within about 700 blocks of spawn: a ring of coral spires, a
