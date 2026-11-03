@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.1 “Living Currents”)
-==================================================================
+VOXEL MYTHOS — a living voxel sandbox (v2.9.2 “Wild Works”)
+=============================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.1 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.2 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -76,6 +76,39 @@ USEFUL COMMANDS (T or /)
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.2 — WILD WORKS
+  🎒 12 NEW CUSTOM ITEMS, crafted from Spoils (C to craft):
+    Current Compass (points to the nearest flowing water, which way it runs, and its spring) · Bottled Rapids (throw
+    it: a stream bursts out for 60 s, washes creatures back, then drains and leaves no water) · Lava Lamp (a warm
+    light block with rising blobs) · Lantern Wick Torch (a blue flame that stays lit in rain and underwater) ·
+    Brine Pearl Diving Helm (swim 50% faster, a headlamp, current arrows underwater) · Gloam Silk Cloak (creatures
+    notice you from half as far) · Sludge Boots (hold Jump against a wall to climb) · Spring Coil Boots (hold Shift
+    to wind, then jump up to 4 blocks; short falls never knock you out) · Slag Skillet (cooks Wild Meat by lava or a
+    fire) · Frost Bristle Brush (groom a pet, or cool yourself down) · Echo Shell (calls your pets within 64 m) ·
+    Ember Jar (a glowing jar for 30 s that keeps you warm and lures Cinderling swarms away).
+    Worn items (helm, cloak, boots) show in a small strip beside the hotbar; right-click a worn item again to take it off.
+  🌊 RIVER CRAFTING: hold River Grit, Cobblestone, Sludge Gel, a Log or Amber and right-click moving water to toss
+    some in. After 15 s in the current they come out tumbled: sand and flint, planks, Clean Gel, Polished Amber.
+    Hold Iron, Glass or a Slag Core beside lava for 3 s to heat it, then toss it into a waterfall: it quenches in a
+    burst of steam into Tempered Steel, Toughened Glass or Basalt Glass. Tempered Steel makes an Iron Pickaxe.
+  🏰 BASTION DEFENSES, built from Spoils:
+    Current Pump (place it in water: it drives a strong current 16 blocks the way you face, a Moat Current that sweeps
+    hostile creatures along) · Holding Eddy (a whirlpool that catches swept creatures and holds them until dawn,
+    when they disperse) · Waterfall Gate (a glass water curtain that shoves hostile creatures back; right-click to
+    open or close a whole gate; gates close themselves at dusk) · Gale Fan (blows creatures, swarms and drops away
+    for 6 blocks; powered by a nearby Water Wheel or cranked by hand for up to 3 minutes).
+  ⚡ WILD RECIPES:
+    Thunder-in-a-Bottle (throw it: a storm cloud rains for 40 s and its lightning dazes hostile creatures and turns
+    sand to glass; it never strikes near a player or in a claim that isn't yours, and Flash Limit softens the flashes) ·
+    Lava Surfboard (stand on or beside lava and use it: surf the lava for 30 s without being burned; when the ride ends
+    it bounces you onto safe ground) · Rainbow Bridge (lays a glowing bridge 24 blocks long the way you face; it fades
+    after 10 minutes and puts back what was there).
+  📖 CODEX: the six new creatures now have Living Codex pages with a turning 3D model, where they live, when they are
+    active, health and damage, how many you've knocked out, and the Spoils they can drop.
+  🤝 CO-OP: friends on v2.9.2 now see the new creatures with their real look, and when a friend knocks one out, its
+    Spoils burst out where it fell for them to collect. Friends on older versions see a plain stand-in creature, still
+    get coins as before, and see a familiar stand-in block for the new blocks.
 
 WHAT'S NEW IN v2.9.1 — LIVING CURRENTS
   🌊 FLOWING WATER: Rill Springs on hillsides feed streams that run downhill. Moving water shows ripples that travel
