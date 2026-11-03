@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.6 “Command”)
+VOXEL MYTHOS — a living voxel sandbox (v2.9.7 “Night Market”)
 ========================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.6 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.7 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -75,7 +75,37 @@ USEFUL COMMANDS (T or /)
   New in v2.7.1: /party [invite <name>|accept|leave] (Esc → 👥 Party)  /ping [look|danger|loot|dig|help] [all]  /wp [add <name>|list|del <name>]
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
+  New in v2.9.7: /nm [where|auction|beasts] (also /market) · see WHAT'S NEW below
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.7 — NIGHT MARKET
+  🏮 LANTERN ROW: after dark, a hidden lane of lantern-lit stalls sets up in a clearing outside your village and
+    folds away at dawn. A chip at the top of the screen says when it is open, how far away it is and which way to go
+    (/nm where points the way). Walk in and press F on anyone to talk. Everything is fictional: the vendors are Old Tansy
+    Brightmoor (Curios & Charms), Corvin Ashlock (Paper & Ink), Sister Wren Halloway (Bottled Weather) and Pell the Silkman.
+  🎒 CONTRABAND AND THE FENCE: buy oddities with coins (Hexed Lockets, Storm-in-a-Jar, Smuggled Blueprints, Whisper Silk,
+    Ghostglass Lenses, Untaxed Starsalt, Forged Guild Seals) and sell them for more to Mags Quillfeather, the Fence, in the
+    back alley. Her mood changes every night (Greedy, Cautious, Chatty, Sentimental or Collector); one haggle per sale:
+    Flatter, Wait or Push. Pick the one that suits her mood and she pays more; pick wrong and the offer drops. Loyal regulars
+    get a little more. Your satchel (/nm) shows what you carry and what you have earned.
+  🔨 THE GAVEL: under the striped tent, auctioneer Barnaby Gavelwright sells three lots a night. Four bidders bid live
+    against you (Lady Marrowind, Gus Tallow, Professor Nimble Quoin and The Velvet Glove, a house shill who only pushes
+    your price up). A late bid adds a few seconds; going once, going twice, SOLD.
+  🦅 THE BEAST TRADE AND THE RANGERS' LODGE: Dorrit Vane's Menagerie sells young non-sapient beasts out of cages (lantern
+    frogs, leaf gliders, seals, cranes, hippogriffs, griffins, pegasi, unicorns, phoenixes, star jellies). Each one is yours
+    to look after: keep it as a companion, sell it on to Dorrit's collector (adds Heat), or lead it to the Rangers' Lodge
+    grove where Warden Ivy Fernsby rehomes it. The Lodge pays best (one and a half times what you paid, plus a grant).
+    Merfolk, sirens and anyone who can talk or riddle are people: they are never sold, caged, hurt, recruited or looted.
+  🔥 HEAT AND THE LAMPLIGHTER WATCH: dealing raises Heat, a lot more when a grey-coated Watcher can see you. Heat cools off
+    slowly at night and faster by day, or tip a Watcher for the lamp-oil fund. At 75 Heat the Watch raids the lane.
+  📣 RAIDS: the Watch storms the gate, the cages burst open and beasts get loose. Run 55 m from the lane, or daze Watchers
+    (three blows knock one out for a bit), and calm loose beasts with F for coins and Lodge trust. If a Watcher catches you,
+    you are knocked out and wake by the gate without your contraband and with a small fine in coins. Nobody is ever hurt
+    worse than knocked out.
+  🤝 CO-OP: friends on v2.9.7 see the lane, the vendors, the bidders, the Watch and the raid;
+    the world host does the trading in this version. Friends on v2.9.6 can still join and see the market folk as helpers.
+  📖 ATLAS: a Night Market tab in the Feature Atlas.
+  New commands: /nm [where|auction|beasts] (also /market and /nightmarket)
 
 WHAT'S NEW IN v2.9.6 — COMMAND
   🪖 HIRE YOUR OWN COMPANY: walk into a village and open /company → Hire. Up to twelve troopers sign on for a daily
@@ -753,5 +783,11 @@ TECH NOTES
   Low (6 alternating runs) idle 100 %, crowd 96 %, night sky 96 %, flooding water 95 %, deep-layer room 99 %.
   Known limits in v2.9.6: only the world host hires, commands and flies (friends ride along); the lagoon quest talks for
   friends run on the host, so they work only while the host is in the game.
+  v2.9.7: the market folk reuse the helper snapshot, and the host sends one small market message when the lane opens,
+  closes or is raided (and every 8 seconds while open). Frame rate vs v2.9.6 on the same machine and seeds: Medium (4 alternating runs) idle 106 %, crowd 98 %, night sky 91 %,
+  flooding water 98 %, deep-layer room 99 %; Low (6 alternating runs) idle 102 %, crowd 99 %, night sky 97 %, flooding water 102 %,
+  deep-layer room 99 %.
+  Known limits in v2.9.7: only the world host trades, bids and rehomes (friends watch along); the Floating Market from the
+  design notes is not in this version.
   Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites), STUN, and PeerJS's
   public TURN relays as a fallback.
