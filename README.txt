@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.5 “Forge & Field”)
-==============================================================
+VOXEL MYTHOS — a living voxel sandbox (v2.9.6 “Command”)
+========================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.5 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.6 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -76,6 +76,37 @@ USEFUL COMMANDS (T or /)
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.6 — COMMAND
+  🪖 HIRE YOUR OWN COMPANY: walk into a village and open /company → Hire. Up to twelve troopers sign on for a daily
+    wage in coins (a village must be near). Each has a name, a face, a trait (Steady, Keen-eyed, Quick, Hardy, Kind or Cheerful) and a rank that grows from
+    Recruit to Marshal as they serve. Pay them from your coins; if you can't, their morale falls, and a trooper
+    who loses heart resigns.
+  🎒 EQUIP THEM: in /company → Roster give each trooper a weapon (Warden's Baton, Quarterstaff, Blunt Bow), armor
+    (Padded Jack, Ring Mail, Half Plate), a Kite Shield and a kit (Field Satchel medics wake knocked-out squadmates
+    sooner; Ration Packs keep morale up). All gear comes from fictional makers, and every blow knocks a foe out:
+    nobody is ever killed. The Pocket Warden sidearm can only be issued when Firearms are switched on in Settings.
+  ⚔ ORDERS AND SQUADS: press Tab for the Command wheel: Follow, Move Here, Hold, Guard, Take Cover, Fall Back, Board
+    and Dismount, for everyone or for Squad A, B or C, in six formations (Line, Column, Wedge, File, Ring, Spread).
+    Simple Command shows only the basics. Troopers bark short replies, and a HUD chip shows the current order.
+  🚁 THE OXBOW: a twin-rotor transport from Halvard Rotorworks (2,400 coins in /company → Hangar). Walk to the cockpit
+    door and press R. W/S fly, A/D slide, Space/Shift climb and descend, Q/E turn; with Flight Assist on it turns toward
+    where you look and hovers when you let go. Order Board and your squad runs up the rear ramp and takes its seats
+    (twelve inside); land and press X or order Dismount to send them down the ramp, or press X in a low hover (under
+    about 16 m) to fast-rope them down. F (talk) raises or lowers the ramp. A flight panel shows airspeed, height, a horizon,
+    climb rate, rotor speed, fuel and who is aboard. Refuel in the Hangar (coins only). Bumping terrain never crashes it:
+    the rotors brush and it backs off, and an empty aircraft settles gently to the ground.
+  🛩 THE MAYFLY: a quick two-seat scout helicopter with a bubble canopy (900 coins), for one passenger.
+  🧜 LAGOON QUESTS WITH FRIENDS: friends in your world can now talk to merfolk and sirens, light the Drift lantern posts
+    with their own Glow Gel and help finish the lagoon quests; what they earn lands in their own pack. Merfolk and sirens
+    stay people: never traded, hurt, recruited or looted.
+  🤝 CO-OP: friends on v2.9.6 see your troopers in their kit and your aircraft in flight, and can ride along: stand by
+    the ramp or door and press R to take a seat, R again to climb out after landing. The world host hires, commands and
+    flies; friends ride. Friends on v2.9.5 can still join; they see the troopers as
+    helpers but don't see the aircraft.
+  📖 ATLAS: a Command tab in the Feature Atlas.
+  New commands: /company  /recruit  /order <follow|move|hold|guard|cover|fallback|board|dismount> [A|B|C]
+    /formation <line|column|wedge|file|ring|spread>  /oxbow  /mayfly  /assist (Flight Assist on or off)
 
 WHAT'S NEW IN v2.9.5 — FORGE & FIELD
   🛠 SMITHING BENCH AND TRIMS: an Upgrade Plate plus material raises armor, swords, axes and tools one tier in place
@@ -716,5 +747,11 @@ TECH NOTES
   banners use smaller grids than planned (8×12 on Medium, 12×18 on High, 16×24 on Ultra) to keep the frame budget;
   temporal anti-aliasing is High only (Ultra keeps its own anti-aliasing); light does not yet tint through colored glass
   and sunlight does not bounce (only block light does); wind does not yet slow down behind walls or hills.
+  v2.9.6: troopers reuse the helper snapshot (a few extra fields each), aircraft send a small state message 10 times a
+  second while flying, and the host runs the guests' lagoon quest talks for them. Frame rate vs v2.9.5 on the same machine
+  and seeds: Medium (4 alternating runs) idle 100 %, crowd 100 %, night sky 105 %, flooding water 100 %, deep-layer room 100 %;
+  Low (6 alternating runs) idle 100 %, crowd 96 %, night sky 96 %, flooding water 95 %, deep-layer room 99 %.
+  Known limits in v2.9.6: only the world host hires, commands and flies (friends ride along); the lagoon quest talks for
+  friends run on the host, so they work only while the host is in the game.
   Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites), STUN, and PeerJS's
   public TURN relays as a fallback.
