@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.2 “Wild Works”)
+VOXEL MYTHOS — a living voxel sandbox (v2.9.3 “Arsenal”)
 =============================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.2 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.3 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -76,6 +76,46 @@ USEFUL COMMANDS (T or /)
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.3 — ARSENAL
+  🗡 SWING METER: a small arc under the crosshair refills after every melee swing. A full swing hits hardest; swinging
+    early hits for less, and holding the button swings again only when the meter is full. A full swing while you are
+    falling onto a foe is a critical hit (sparks and a bigger number). A full swing with a blade on the ground also
+    sweeps foes right beside your target. Axes knock a foe's shield aside for 5 s. A hammer or mace swung after a fall
+    of more than 1.5 blocks smashes the ground around you. Settings → Arsenal → "Classic combat" turns the meter off.
+  🎯 TRAINING DUMMY: a new block (3 planks and 4 wheat) that shows the damage of every hit, to learn the meter.
+  🛡 OFF-HAND: press F with a shield, charm or throwable selected (and nobody nearby to talk to) to put it in your
+    off-hand; it shows at the left of the view. The ROUND SHIELD (6 planks and 1 iron) blocks hits from the front
+    while you hold right-click.
+  🏹 BOWS DRAW AND USE ARROWS: hold attack to draw (the meter shows the pull and the view zooms a little), let go to
+    loose. A full draw is a critical shot with a sparkle trail. Arrows (flint and a stick make 4) fly in an arc, drift
+    with the wind, stick where they land and can be picked back up. Every bow owner gets a starter quiver of 32 arrows.
+    Settings → Arsenal → "Infinite plain arrows" if you'd rather not carry any.
+  🥾 ARMOR: six sets for head, chest, legs and feet — Hide, Copper, Iron, Gilded, Aether and Voidsteel (Aether and
+    Voidsteel add toughness; Voidsteel shrugs off knockback). Right-click a piece to wear it. Armor cuts the damage of
+    each hit (falls, hunger, drowning and the void ignore it). Your armor shows next to your health, and the Armory (B)
+    lists what you wear with buttons to take pieces off.
+  ❄ THROWABLES: Snowballs (a snow block makes 4) shove a foe back without hurting it. A Blink Pearl (an Abyss Pearl
+    and essence make 2) teleports you to where it lands for 2 health, and won't land you in someone else's claim.
+  💫 SECOND WIND CHARM (4 gold, 2 essence, 1 aether): carried in your inventory, it is used up to stop a knockout,
+    bringing you back with 8 health and a short regeneration.
+  🔫 FIREARM BASICS — OPT-IN PER WORLD (Settings → Arsenal → Firearms: Off by default, Less-lethal only, or On;
+    in co-op the host decides). Four fictional firearms: the Brassjaw Works "Pocket Warden" pistol (12-round magazine),
+    the Kettle & Crow "Six-Bell" revolver (6 rounds, loaded one at a time), the Ironmoss Armory "Hearthguard" pump
+    shotgun (6 shells) and the Cinderline "Skylark" flare gun. R reloads; hold right-click to aim down the sights.
+    The Kin Rule holds: every round only knocks out or drives off — nothing dies or bleeds. Rubber rounds can never take
+    a foe below a knockout, beanbag shells stagger and shove, tranquilizer darts put a foe to sleep for 20 s after 2 to
+    4 darts, and flares light the ground for 25 s and drive night creatures back. Villagers, pets and passive creatures
+    are never targets: a round thunks off them and they run. Shots are loud and draw creatures in. Guns wear with use
+    and can jam below half condition; a Cleaning Kit restores them. A friend still on probation can't fire.
+  🔭 SIGHTS, LASERS AND LIGHTS: iron sights on every gun, plus the Quillfeather "Ember Dot" red-dot sight and the
+    Ninefold "Halo" ring sight (both zoom a little when you aim). The Beam Module laser puts a true dot where the shot
+    will land and tightens hip fire by 30%; friends see your beam too. The Lantern Rail lights the way ahead at night.
+    Right-click an attachment to fit it to the gun you last held; the Armory (B) lists your guns and what is fitted.
+  🌬 WIND: arrows, thrown items and rounds now drift with the wind, so long shots need a little lead.
+  ⛈ POLISH: the Thunder-in-a-Bottle storm cloud now has a dark, flat belly and pale tops so it reads against the sky,
+    and its bolts are easy to see. Friends can now use Thunder-in-a-Bottle and the Rainbow Bridge in a host's world (the
+    host makes the storm or bridge and everyone sees it). Usable items such as the wild items and worn gear can now be put on the hotbar from the inventory.
 
 WHAT'S NEW IN v2.9.2 — WILD WORKS
   🎒 12 NEW CUSTOM ITEMS, crafted from Spoils (C to craft):
