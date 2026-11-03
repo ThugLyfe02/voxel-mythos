@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.3 “Arsenal”)
+VOXEL MYTHOS — a living voxel sandbox (v2.9.4 “Tides & Tails”)
 =============================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.3 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.4 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -76,6 +76,37 @@ USEFUL COMMANDS (T or /)
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.4 — TIDES & TAILS
+  🧜 MOONWELL LAGOON: every Overworld has a merfolk lagoon within about 700 blocks of spawn: a ring of coral spires, a
+    kelp bridge, a pier with the Shell Counter, grottos, lounging rocks and a moonwell in the middle. Merfolk are people,
+    from three Houses (Pearlwake, Saltglass and Lanternfin), each with its own scale pattern. They swim the plaza, lounge
+    on the rocks, greet you ("Tides keep you") and talk with E. Their freckles glow softly at night.
+  🐚 THE SHELL COUNTER: Pell Saltglass sells Wax Earplugs, Pearl Lanterns, rose and teal Coral Stone, Kelp Bundles, Sea
+    Glass, Bubble Charms and Empty Bottles for coins, and buys sea finds. Prices follow the live market.
+  📜 QUESTS: A Shell Letter (carry Tavi's letter to Grandmother Nerys: 40 coins, a Bubble Charm, 2 Wax Earplugs) and
+    Lanterns for the Drift (Glow Gel lights the four lantern posts on the boardwalk: 60 coins and the Pearl Lantern recipe).
+    A small card at the right of the screen shows the step you're on.
+  🪶 THE CHORUS CLIFFS AND THE STOLEN SONG: four sirens sing from the Chorus Stones above the Gullwing Lane, a buoy-marked
+    sea lane. Sirens are people too. Their song was stolen in a music box, and while it's gone a storm sits over the lane
+    (lightning never strikes near a player or inside a claim) and the choir's grief pulls swimmers toward the Song Pool.
+    Wax Earplugs (use them to put them in) stop the pull. Captions show where the song comes from.
+  🏴 THE MUSIC BOX QUEST: Choir Mother Halcyra asks you to recover the box from the Brine Runners, fictional bootleggers
+    at Runner's Cove. Knock out Bosun Quill's crew (they sit dazed and row away; nothing dies) or slip in at night while
+    they sleep. The box can't be sold or traded, and if you're knocked out while carrying it, it falls as a drop that
+    never despawns. Bring it back for 120 coins, Choir's Favor (+15% swim speed in the calm lane) and the Song Shell recipe; the storm clears and the lane
+    goes calm. After that, Pell also sells the Song Shell, a curio that draws passive sea creatures closer while you hold it.
+  🪼 SEA CREATURES: Moon Jellies drift and glow at night (an Empty Bottle collects Glow Gel, once per jelly per day; a
+    touch stings with a short slow, no damage). Trinket Crabs guard their reef with a raised-pincer warning and, knocked
+    out, give up the sea glass and driftwood they hoard. Krakenlings are playful: they circle swimmers, puff ink when
+    startled (an Empty Bottle catches it), can't be hurt, and 3 Glow Gel makes one your friend.
+  💙 THE KIN RULE: merfolk and sirens can never be hurt, tamed, traded, caged or sold, and nothing drops from them.
+  📖 CODEX AND ATLAS: a new People tab in the Codex (culture notes and a Kin badge instead of stats), and a Tides & Tails
+    tab in the Feature Atlas whose "Show me" turns you toward the place (it never teleports you into a storm). The
+    Look-At Lens reads "Person" in blue for merfolk and sirens, with no health bar, and shows the sea creatures' temper.
+  🤝 CO-OP: friends on v2.9.4 see the merfolk and sirens as they are; friends on v2.9.3 see simple labeled stand-ins.
+  🧹 LESS CLUTTER: repeated pop-ups now stack as one ("×3"), at most 3 show at once, several new Codex pages share one
+    pop-up, pickups of the same item merge, and damage numbers from quick hits stack instead of overlapping.
 
 WHAT'S NEW IN v2.9.3 — ARSENAL
   🗡 SWING METER: a small arc under the crosshair refills after every melee swing. A full swing hits hardest; swinging
