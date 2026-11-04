@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.10.1 “Living Shaders”)
+VOXEL MYTHOS — a living voxel sandbox (v2.9.11 “Master Builder”)
 ========================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.10.1 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.11 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). v2.9.8 adds one small section for The Families (a v2.9.8 world still opens in v2.9.7, and your family, rank, respect, Favors, turfs and signature weapon are still there when you come back to v2.9.8). v2.9.9 adds one small section for the Gilded Office (a v2.9.9 world still opens in v2.9.8, and your approval, Trust, Favor Marks, Orders and questline step are still there when you come back to v2.9.9). v2.9.10 adds no world data at all, only two display settings (True Looks and Face detail). v2.9.10.1 adds no world data either, only the Living Shaders display settings. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). v2.9.8 adds one small section for The Families (a v2.9.8 world still opens in v2.9.7, and your family, rank, respect, Favors, turfs and signature weapon are still there when you come back to v2.9.8). v2.9.9 adds one small section for the Gilded Office (a v2.9.9 world still opens in v2.9.8, and your approval, Trust, Favor Marks, Orders and questline step are still there when you come back to v2.9.9). v2.9.10 adds no world data at all, only two display settings (True Looks and Face detail). v2.9.10.1 adds no world data either, only the Living Shaders display settings. v2.9.11 adds 496 Master Builder blocks and two small palette lists (favorites and recent); a v2.9.11 world still opens in v2.9.10.1 and older, where each new block appears as a familiar stand-in (marble as white stone, cherry planks as planks, stairs and slabs as their nearest classic block). If you save it there, those stand-ins stay when you come back to v2.9.11. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -35,6 +35,9 @@ CONTROLS — desktop (most keys can be rebound in Esc → Settings → Accessibi
     O Living Codex (Shift+O party)   U Field Journal (Shift+U trophies)   Y gallery   H Hearth claim view (airship camera on a ship)
     .  (period) Celestial Almanac — while looking up at the night sky it toggles star & planet labels instead
     ;  (semicolon) or middle-click: ping the spot you look at for your party (Shift: everyone) — multiplayer, v2.7.1
+    ` (backquote) .... 🏛 Master Builder Palette (also /builder, or the button in Crafting) — v2.9.11
+    \ (backslash) ... cycle the held builder block through its family (Shift+\ goes back; Shift+mouse wheel also cycles)
+    Middle-click ..... pick the block you look at into your hotbar (solo; online, Ctrl+middle-click picks and middle-click pings)
     ' (apostrophe) quick-chat wheel   [ emote wheel — hold, steer with the mouse, let go — multiplayer, v2.7.1
     L spellbook   I journal   Z blueprints   K save now   Esc pause   F3 performance overlay (v2.8: also the slowest tick hooks)
     Shift+F8 ......... 🩺 Report a problem (also /report, or Esc → 🩺 Report a problem) — v2.8
@@ -77,11 +80,40 @@ USEFUL COMMANDS (T or /)
   New in v2.7.1: /party [invite <name>|accept|leave] (Esc → 👥 Party)  /ping [look|danger|loot|dig|help] [all]  /wp [add <name>|list|del <name>]
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
+  New in v2.9.11: /builder (the Master Builder Palette) · see WHAT'S NEW below
   New in v2.9.10.1: /shaders (which Living Shaders effects are on) · see WHAT'S NEW below
   New in v2.9.9: /office [where] (also /gildmore), /ferry [island|home] · see WHAT'S NEW below
   New in v2.9.8: /fam [where|walk|raid|favor] (also /families), /favor · see WHAT'S NEW below
   New in v2.9.7: /nm [where|auction|beasts] (also /market) · see WHAT'S NEW below
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.11 — MASTER BUILDER
+  496 new blocks and pieces for building, in families that match, all drawn in the game's own pixel style:
+  🪨 STONE (185): Marble, Nero Marble, Rose Granite, Limestone, Sandstone, Red Sandstone, Slate, Basalt, Travertine,
+    Blackstone and Mossy Stone, each as raw, polished, bricks, tiles, pillar, chiseled and trim, with stairs, slabs and walls.
+  🪵 WOOD (82): Oak, Spruce, Birch, Walnut, Cherry and Ebony: planks, logs, stripped logs, beams, shingles, lattice, parquet,
+    doors (two blocks tall, open and close), trapdoors, fences, stairs and slabs.
+  ⚙️ METAL (43): copper in four stages (bright, weathered, oxidized, verdigris), bronze, iron grating, plates, catwalks and
+    bars, gold leaf and gilded trim, and industrial steel (diamond plate, hazard stripes, pipes, vents).
+  🪟 GLASS (30): framed glass whose frames join up with their neighbors, frosted, leaded, a skylight slab, obsidian glass,
+    12 colors of Cathedral Glass (opaque, lit stained glass) and glass panes that connect.
+  🧱 CONCRETE & TILE (67): 16 concrete colors, plaster, stucco, 8 wallpapers, 8 tile floors (checkered, terrazzo,
+    herringbone, mosaics, ceramic), 12 terracotta colors, 12 carpets and 4 rugs.
+  🏠 ROOFING (15): red and blue clay tile, slate shingle, thatch and copper roof, each as block, stairs and slab.
+  💡 LIGHTS (11): lantern, wall sconce, chandelier, candles, paper lantern, floor lamp, light panel, and neon tubes in
+    Lantern Amber, Stormwright Blue, rose and mint.
+  🪑 FURNITURE (33): chairs, an armchair, a bar stool, tables, a desk, beds, shelves, crates, a barrel, family banners,
+    potted plants, a clock, a counter, a cabinet, a bench, and three workstations.
+  🏛 THEME SETS (30): Gilded Office gold-and-marble, speakeasy, merfolk coral and pearl, temple ruins and a military bunker.
+  Stairs face away from you (click the upper half of a block side for upside-down stairs); slabs go in the lower or upper
+  half (two matching slabs join into a full block); walls, panes and fences connect to their neighbors; you walk on stairs,
+  slabs and carpets at their real height.
+  THE PALETTE (` key): categories, live search, ⭐ favorites and recently used, with each block's family name and how it
+  is placed. Pick a block to put it in your hotbar. While you hold a builder block, a strip above the hotbar shows its
+  family; \ or Shift+wheel switches to the next shape. A soft preview shows where (and which way) the block will go.
+  WORKSTATIONS: the Stonecutter, Woodworking Bench and Builder's Forge are crafted from classic materials. In survival,
+  stand within 6 blocks of the right station and use Make in the palette to turn base materials into family pieces.
+  🤝 CO-OP: blocks you place reach friends on v2.9.11 as they are; friends on older versions see the stand-in blocks.
 
 WHAT'S NEW IN v2.9.10.1 — LIVING SHADERS
   Small shader effects that make the world move and shine. Esc → Settings → ✨ Living Shaders has one control per effect:
@@ -929,5 +961,12 @@ TECH NOTES
   Known limits in v2.9.10.1: Low shows only the wind by default; caustics, rain-wet gloss, heat haze, eye-shine, weapon
   shine and enchant shimmer are High and Ultra only (Low and Medium stay within the frame-rate budget); lamp glow and
   god rays are off by default; water seen from below shows no reflection (no Snell window).
+  v2.9.11: builder blocks use new ids from 256 up (each with a classic stand-in for older versions and older co-op
+  friends); their textures are painted into the same block atlas (now 32 x 32 tiles), and palette icons are drawn the first
+  time they are shown. Frame rate vs v2.9.10.1 on the same machine and seeds (alternating runs, pooled mean): Low 101.5 %
+  (6 runs), Medium 99.2 % (4 runs), every scene at least 95.9 %. Start-up time is the same as v2.9.10.1 (within 4 %).
+  Known limits in v2.9.11: Cathedral Glass is opaque (lit, not see-through); stairs, slabs and furniture use the block's
+  own light without corner shading; only framed glass joins its frames; doors, trapdoors and furniture appear as air or a
+  classic block in older versions, and a world saved there keeps those stand-ins.
   Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites), STUN, and PeerJS's
   public TURN relays as a fallback.
