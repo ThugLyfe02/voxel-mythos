@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.9 “Gilded Office A”)
+VOXEL MYTHOS — a living voxel sandbox (v2.9.10 “True Looks”)
 ========================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.9 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.10 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). v2.9.8 adds one small section for The Families (a v2.9.8 world still opens in v2.9.7, and your family, rank, respect, Favors, turfs and signature weapon are still there when you come back to v2.9.8). v2.9.9 adds one small section for the Gilded Office (a v2.9.9 world still opens in v2.9.8, and your approval, Trust, Favor Marks, Orders and questline step are still there when you come back to v2.9.9). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). v2.9.8 adds one small section for The Families (a v2.9.8 world still opens in v2.9.7, and your family, rank, respect, Favors, turfs and signature weapon are still there when you come back to v2.9.8). v2.9.9 adds one small section for the Gilded Office (a v2.9.9 world still opens in v2.9.8, and your approval, Trust, Favor Marks, Orders and questline step are still there when you come back to v2.9.9). v2.9.10 adds no world data at all, only two display settings (True Looks and Face detail). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -57,6 +57,7 @@ SETTINGS (Esc → Settings)
      better loot and smarter packs at higher values.
   🐾 Living creatures → Creature detail: High (full rigs, cloth, foot IK) / Medium / Low (impostors start nearer) /
      Classic blocks (the v2.2 look). "Damage numbers" and "Screen shake" toggles are in the main list.
+  🎨 True Looks: True Looks (default) or Classic (exactly the v2.9.9 look). Face detail: Off / Near (default) / All.
   Ultra (desktop GPUs): real-time shadows, planar water reflections, hi-res textures, light shafts, depth of field and
   motion blur in photo mode. If the frame rate stays too low, the game switches itself back to High and tells you.
 
@@ -79,6 +80,28 @@ USEFUL COMMANDS (T or /)
   New in v2.9.8: /fam [where|walk|raid|favor] (also /families), /favor · see WHAT'S NEW below
   New in v2.9.7: /nm [where|auction|beasts] (also /market) · see WHAT'S NEW below
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.10 — TRUE LOOKS
+  People, creatures and blocks look more natural without costing frame rate. Esc → Settings → 🎨 True Looks switches
+  between True Looks (on by default) and Classic, which is exactly the v2.9.9 look. What you get depends on Quality:
+  💡 LIGHT ON CHARACTERS (all tiers): soft wrap lighting with a warm edge where light turns to shadow, a sky-and-ground
+    fill light, gentle baked shading under chins, arms and bellies, a softer warm rim light on skin (no more pale veil on
+    faces), and soft contact shadows under feet on Low and Medium.
+  🙂 FACES (all tiers): painted lids, lashes, soft eye-socket shading, nose shadow, blush and lips, plus freckles,
+    stubble, laugh lines and crow's feet on some folk. Old Nessa, Auntie Saffron Gilt and Captain Cassia Thunderwell have
+    faces of their own. Faces show on the nearest 4 people within 7 m on Low, 6 within 9 m on Medium, and 24 within
+    15 m on High and Ultra. Face detail: Off, Near or All.
+  🧱 BLOCKS (Medium and up): 32 px textures (grass, dirt, stone, sand, snow, planks, cobble, bricks, marble, logs,
+    leaves and more) with mipmaps, so distant ground no longer shimmers. On High, grass, dirt, stone, sand and snow are
+    also turned per block to hide repeating tiles and get a gentle large-scale color drift. Ultra keeps its own hi-res
+    textures.
+  🧵 CLOTHING (High and Ultra): woven and printed patterns drawn on the cloth: twill, denim, knit rib, plaid, pinstripe,
+    paisley, coin and bolt motifs, embroidered hem bands and worn leather. The Gilded Lanterns wear pinstripes and
+    coin-motif sashes, the Stormwrights twill and bolt-motif sashes, and townsfolk dress by trade. Hair has a soft sheen.
+  🐾 COATS (High and Ultra): fur, feathers, scales, shell rings and plates, and an iridescent sheen on some creatures.
+  🏛 FIXES (all tiers): President Gildmore's spray tan keeps its even bronze under warm indoor lamps, and the palace's
+    white marble walls read white instead of sandy.
+  🤝 CO-OP: all of this is drawn on your own screen; friends on any version play together as before.
 
 WHAT'S NEW IN v2.9.9 — GILDED OFFICE A
   President Augustus Gildmore governs your world from Verdance Key, an island palace resort out at sea. He is a made-up
@@ -876,5 +899,11 @@ TECH NOTES
   Frame rate vs v2.9.8 on the same machine and seeds: Medium (4 alternating runs) idle 104 %, crowd 102 %, night sky 103 %, flooding water 100 %, deep-layer room 102 %; Low (6 alternating runs) idle 98 %, crowd 99 %, night sky 95 %, flooding water 98 %, deep-layer room 99 %.
   Known limits in v2.9.9: only the world host has audiences, runs missions and petitions Orders (friends tour and watch);
   this is part A of the Gilded Office, so later chapters from the design notes are not in this version.
+  v2.9.10: True Looks builds its textures in small idle slices after the world loads, and faces only on the nearest people.
+  Frame rate vs v2.9.9 on the same machine and seeds (alternating runs, pooled mean): Low 98.5 %, Medium 97.4 %, every scene at least 93 %;
+  with Looks set to Classic: Low 101.5 %, Medium 100.9 %.
+  Known limits in v2.9.10: clothing patterns, coats, hair sheen and tile hiding are High and Ultra only (Low and Medium
+  stay within the frame-rate budget); Ultra keeps its own block textures; helmeted, skull-faced and glowing-eyed
+  characters keep their plain faces; eyes themselves are unchanged.
   Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites), STUN, and PeerJS's
   public TURN relays as a fallback.
