@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.10 “True Looks”)
+VOXEL MYTHOS — a living voxel sandbox (v2.9.10.1 “Living Shaders”)
 ========================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.10 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.10.1 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). v2.9.8 adds one small section for The Families (a v2.9.8 world still opens in v2.9.7, and your family, rank, respect, Favors, turfs and signature weapon are still there when you come back to v2.9.8). v2.9.9 adds one small section for the Gilded Office (a v2.9.9 world still opens in v2.9.8, and your approval, Trust, Favor Marks, Orders and questline step are still there when you come back to v2.9.9). v2.9.10 adds no world data at all, only two display settings (True Looks and Face detail). A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). v2.9.8 adds one small section for The Families (a v2.9.8 world still opens in v2.9.7, and your family, rank, respect, Favors, turfs and signature weapon are still there when you come back to v2.9.8). v2.9.9 adds one small section for the Gilded Office (a v2.9.9 world still opens in v2.9.8, and your approval, Trust, Favor Marks, Orders and questline step are still there when you come back to v2.9.9). v2.9.10 adds no world data at all, only two display settings (True Looks and Face detail). v2.9.10.1 adds no world data either, only the Living Shaders display settings. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -58,6 +58,7 @@ SETTINGS (Esc → Settings)
   🐾 Living creatures → Creature detail: High (full rigs, cloth, foot IK) / Medium / Low (impostors start nearer) /
      Classic blocks (the v2.2 look). "Damage numbers" and "Screen shake" toggles are in the main list.
   🎨 True Looks: True Looks (default) or Classic (exactly the v2.9.9 look). Face detail: Off / Near (default) / All.
+  ✨ Living Shaders: one control per effect (Auto follows your Quality, or force On / Off) and "Reset to tier default".
   Ultra (desktop GPUs): real-time shadows, planar water reflections, hi-res textures, light shafts, depth of field and
   motion blur in photo mode. If the frame rate stays too low, the game switches itself back to High and tells you.
 
@@ -76,10 +77,27 @@ USEFUL COMMANDS (T or /)
   New in v2.7.1: /party [invite <name>|accept|leave] (Esc → 👥 Party)  /ping [look|danger|loot|dig|help] [all]  /wp [add <name>|list|del <name>]
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
+  New in v2.9.10.1: /shaders (which Living Shaders effects are on) · see WHAT'S NEW below
   New in v2.9.9: /office [where] (also /gildmore), /ferry [island|home] · see WHAT'S NEW below
   New in v2.9.8: /fam [where|walk|raid|favor] (also /families), /favor · see WHAT'S NEW below
   New in v2.9.7: /nm [where|auction|beasts] (also /market) · see WHAT'S NEW below
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.10.1 — LIVING SHADERS
+  Small shader effects that make the world move and shine. Esc → Settings → ✨ Living Shaders has one control per effect:
+  Auto (follows Quality), On or Off. Auto turns on:
+  LOW: 🌾 grass and leaf wind (gust fronts roll across fields, leaves flutter). Everything else stays off on Low so it
+    runs like v2.9.10; any effect can still be switched on by hand.
+  MEDIUM: wind, plus 💧 water waves and sun glitter (moving wave normals, fresnel), water sky and lamp reflections,
+    🌊 the underwater look (red fades first with distance, drifting motes) and 🌫 fog and mist (dawn mist in low ground,
+    height fog, biome-tinted haze, a warm glow toward the sun).
+  HIGH: wind, water waves (with High's own true reflections), fog, plus ✨ caustics on lake beds, 🌧 rain-wet gloss on
+    the ground (sky, sun and nearby lamps), 🔥 heat haze above lava and fires, underwater sway and light shafts, 👁 eye
+    glints and night eye-shine (wolves, cats, deer and owls), ⚔ metal shine on held weapons and enchant shimmer.
+  ULTRA: like High, but Ultra keeps its own water and fog.
+  Off unless you switch them on (any Quality): lamp glow halos, dawn and dusk god rays, and sun sheen on blocks. High
+  already has real bloom and its own light shafts.
+  🤝 CO-OP: all of this is drawn on your own screen; friends on any version play together as before.
 
 WHAT'S NEW IN v2.9.10 — TRUE LOOKS
   People, creatures and blocks look more natural without costing frame rate. Esc → Settings → 🎨 True Looks switches
@@ -905,5 +923,11 @@ TECH NOTES
   Known limits in v2.9.10: clothing patterns, coats, hair sheen and tile hiding are High and Ultra only (Low and Medium
   stay within the frame-rate budget); Ultra keeps its own block textures; helmeted, skull-faced and glowing-eyed
   characters keep their plain faces; eyes themselves are unchanged.
+  v2.9.10.1: Living Shaders patch the world shaders once; each effect only adds its code when it is on.
+  Frame rate vs v2.9.10 on the same machine and seeds (alternating runs, pooled mean): Low 99.0 % (6 runs), Medium 98.1 % (4 runs),
+  every scene at least 94 %; High 90.7 % (2 runs; underwater 79 %).
+  Known limits in v2.9.10.1: Low shows only the wind by default; caustics, rain-wet gloss, heat haze, eye-shine, weapon
+  shine and enchant shimmer are High and Ultra only (Low and Medium stay within the frame-rate budget); lamp glow and
+  god rays are off by default; water seen from below shows no reflection (no Snell window).
   Multiplayer uses WebRTC data channels with PeerJS's public signaling server (or copy-paste invites), STUN, and PeerJS's
   public TURN relays as a fallback.
