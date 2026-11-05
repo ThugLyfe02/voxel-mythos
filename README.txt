@@ -1,10 +1,10 @@
-VOXEL MYTHOS — a living voxel sandbox (v2.9.11 “Master Builder”)
+VOXEL MYTHOS — a living voxel sandbox (v2.9.12 “Living Creatures”)
 ========================================================
 
 PLAY: double-click voxel-sandbox.html (Chrome, Edge, Firefox or Safari). One self-contained file, no install, no
-internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.11 unchanged (same storage keys;
+internet needed to play solo. Worlds save in this browser automatically. v1 through v2.8 saves (including v2.7 hotfix 1) load in v2.9.12 unchanged (same storage keys;
 v2.8 only adds small new sections for block states, the world's memory of what happened where, Watch Bells, Defense Nights,
-Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). v2.9.8 adds one small section for The Families (a v2.9.8 world still opens in v2.9.7, and your family, rank, respect, Favors, turfs and signature weapon are still there when you come back to v2.9.8). v2.9.9 adds one small section for the Gilded Office (a v2.9.9 world still opens in v2.9.8, and your approval, Trust, Favor Marks, Orders and questline step are still there when you come back to v2.9.9). v2.9.10 adds no world data at all, only two display settings (True Looks and Face detail). v2.9.10.1 adds no world data either, only the Living Shaders display settings. v2.9.11 adds 496 Master Builder blocks and two small palette lists (favorites and recent); a v2.9.11 world still opens in v2.9.10.1 and older, where each new block appears as a familiar stand-in (marble as white stone, cherry planks as planks, stairs and slabs as their nearest classic block). If you save it there, those stand-ins stay when you come back to v2.9.11. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
+Guard preferences, favorites and recipe pins, plus safety copies kept separately in the browser). v2.9 adds only a few True World settings; v2.9.1 adds small sections for drops, new creatures seen and the Feature Atlas; v2.9.2 adds small sections for worn items, river crafting, defenses and Rainbow Bridges (a v2.9.2 world still opens in v2.9.1; if you save it there, its defenses come back when you open it in v2.9.2 again, but Lava Lamps and Lantern Wick Torches are not kept). v2.9.3 adds one small section for worn armor, the off-hand, firearm settings and each gun's state (a v2.9.3 world still opens in v2.9.2, and your armor, off-hand and guns are still there when you come back to v2.9.3). v2.9.4 adds one small section for Moonwell Lagoon, the Chorus Cliffs and the sea creatures (a v2.9.4 world still opens in v2.9.3, and your quest progress and Krakenling friends are still there when you come back to v2.9.4). v2.9.5 adds one small section for the forge, satiety, campfires, armor stands, racks and safes (a v2.9.5 world still opens in v2.9.4, and your trims, enchants, wear, racks and safe contents are still there when you come back to v2.9.5). v2.9.6 adds one small section for your company of troopers and one for your aircraft (a v2.9.6 world still opens in v2.9.5, and your troopers, their gear and your aircraft are still there when you come back to v2.9.6). v2.9.7 adds one small section for the Night Market (a v2.9.7 world still opens in v2.9.6, and your Heat, satchel, beasts in your care and Lodge trust are still there when you come back to v2.9.7). v2.9.8 adds one small section for The Families (a v2.9.8 world still opens in v2.9.7, and your family, rank, respect, Favors, turfs and signature weapon are still there when you come back to v2.9.8). v2.9.9 adds one small section for the Gilded Office (a v2.9.9 world still opens in v2.9.8, and your approval, Trust, Favor Marks, Orders and questline step are still there when you come back to v2.9.9). v2.9.10 adds no world data at all, only two display settings (True Looks and Face detail). v2.9.10.1 adds no world data either, only the Living Shaders display settings. v2.9.11 adds 496 Master Builder blocks and two small palette lists (favorites and recent); a v2.9.11 world still opens in v2.9.10.1 and older, where each new block appears as a familiar stand-in (marble as white stone, cherry planks as planks, stairs and slabs as their nearest classic block). If you save it there, those stand-ins stay when you come back to v2.9.11. v2.9.12 adds one small Chaos Pack section (which events have happened and which you switched off) and the Living Creatures display setting; a v2.9.12 world still opens in v2.9.11 and older. A v2.8 world still opens in v2.7.1 and older: the new sections are kept but ignored
 (a world larger than about 1.5 MB opens there as a small placeholder that says it needs v2.8; its full copy stays safe). Existing worlds keep
 their land: ruins and the Strata layers (v2.7) appear only in chunks generated after that update, and the Frontier (v2.8) only begins beyond
 the farthest place you have built. In v2.6 and older, the v2.7 blocks
@@ -80,12 +80,53 @@ USEFUL COMMANDS (T or /)
   New in v2.7.1: /party [invite <name>|accept|leave] (Esc → 👥 Party)  /ping [look|danger|loot|dig|help] [all]  /wp [add <name>|list|del <name>]
     /travel <name>  /netstat (connection health)  /emote <name>|stop  /qc 1-8  /fellow social on|off
   New in v2.8: /report and /diag (Report a problem)  /firstnight (a gentle first Defense Night)  /votekick <name>  /mute <name>
+  New in v2.9.12: /creatures (Living Creatures status)  /chaos [list|on|off|end|<event> (creative)] · see WHAT'S NEW below
   New in v2.9.11: /builder (the Master Builder Palette) · see WHAT'S NEW below
   New in v2.9.10.1: /shaders (which Living Shaders effects are on) · see WHAT'S NEW below
   New in v2.9.9: /office [where] (also /gildmore), /ferry [island|home] · see WHAT'S NEW below
   New in v2.9.8: /fam [where|walk|raid|favor] (also /families), /favor · see WHAT'S NEW below
   New in v2.9.7: /nm [where|auction|beasts] (also /market) · see WHAT'S NEW below
   Creative only: /dim ember|canopy|tidal|void|over /boss /give /time /weather /fly
+
+WHAT'S NEW IN v2.9.12 — LIVING CREATURES
+  Creatures, mobs and people move more like living things, react to hits with real weight, and the world can now
+  throw a few big, chaotic events at you.
+  🦌 BODY LANGUAGE: animals and people look around at whoever is near (a quick glance, then back), breathe harder after
+    running, lean into turns and speed changes, and have idle habits of their own: people shift their weight, stretch and
+    look over a shoulder; four-legged animals sniff the ground, shake their ears, yawn, and shake off water after a swim;
+    birds preen and ruffle their feathers.
+  💥 HITS WITH WEIGHT: knockback now depends on size. A hare flies, a deer stumbles, a yak or a golem barely moves. Every
+    hit gives a quick recoil, and a knocked-out creature or foe tumbles, can bounce once or twice, slides to a stop and
+    sees stars for a moment. No blood and no gore: combat stays knockout-only.
+  🧣 CLOTH IN THE WIND: capes, robes, hair and hat tips stream with the real wind and blow back harder when you run.
+    Bandana wearers now have two knot tails that swing and flap (Medium and up).
+  🐾 TRACKS AND SPLASHES: feet leave prints in sand, snow and mud that fade after a minute or so (Medium and up); creatures
+    kick up dust when they run, splash and leave ripples when they hit water.
+  🦌 HERDS: shy animals (deer, elk, hares, foxes, rams and their kind) get curious when you stand still and come closer, then bolt if you
+    move fast. When one takes fright, the rest of its herd nearby takes off after it.
+  🥁 FEEL: running herds drum with hoofbeats, the ground rumbles (a light screen shake) when a herd thunders past, and a
+    near miss earns a "Close call!". Your first stampede in a world comes with a quick tip on how to stay safe. Screen shake
+    follows your Screen shake and Reduce motion settings.
+  🦌 TRUE-TO-LIFE HERD ANIMALS: deer, elk, bighorn rams, yak and boar are rebuilt from reference photos of the real animals:
+    a deep chest and tucked flank, a separate neck, a wedge-shaped head with a muzzle, jointed legs with split hooves, real
+    tails, branching antlers on bucks and bulls and curled horns on rams, and fur in colors taken from the photos. Fawns are
+    spotted and piglets striped.
+  🌪 CHAOS PACK I: four big events that can happen while you play (in survival worlds, after the first few minutes, with
+    a warning first and at least ten minutes between events; more often with a higher World Chaos setting):
+    🐂 THE GREAT STAMPEDE: a massive herd of deer, elk and yak thunders across the land. Get up high, wave a torch or ride to
+      turn them aside, and each animal you turn pays a few coins. Hay bales and fence props in their way go flying.
+    🦁 MENAGERIE BREAK-OUT: a traveling menagerie wagon overturns and its beasts escape. Feed them to coax them back into
+      their cages, or tame one and keep it. Bringing them all home pays a bonus.
+    🎪 TWISTER CARNIVAL: a twister tears through a carnival. Tents, streamers and prize stalls whirl in the funnel and
+      prize coins rain down around you. The twister lifts the carnival, not your land.
+    💼 VAULT JOB GONE SIDEWAYS: an old counting-house vault collapses with a gang of goons inside. Knock them out, scoop
+      the spilled coins and grab the ledger before the Watch arrives.
+    The events build only temporary props; they never break or change your blocks. Each event can be switched off
+    under Settings → 🌪 Chaos Pack, and /chaos off turns them all off for this world.
+  ⚙️ SETTINGS: 🦌 Living Creatures motion (Auto, On, Off). On Low the extra touches are trimmed (no prints, ripples, knot
+    tails or flying debris), and Reduce motion keeps the dizzy stars off.
+  🤝 CO-OP: the host runs the events and everyone sees them; friends on older versions get the event news in chat.
+    Rewards are paid to each player for what they do.
 
 WHAT'S NEW IN v2.9.11 — MASTER BUILDER
   496 new blocks and pieces for building, in families that match, all drawn in the game's own pixel style:
