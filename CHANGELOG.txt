@@ -1,3 +1,24 @@
+Voxel Mythos v2.9.16 — "Arsenal" (29 new craftable weapons, steadier multiplayer)
+
+NEW: ARSENAL — 29 CRAFTABLE WEAPONS
+- 29 new weapons to forge at a Crafting Table, each with its own sculpted model, rendered icon and stats: spears, a halberd and a glaive; bearded, long and throwing axes; mauls, war hammers, a morningstar and a flanged mace; daggers, a dirk and a stiletto; two katanas and the Starfall Odachi; a shortbow, recurves and a yew warbow; a steel arbalest; two slings; javelins; the Kraken-Tooth Saber and the Deepsworn Trident; the Cedar Pact Club; and the Forgeheart Maul.
+- New ways to fight: bows draw before they loose (longer draw, faster arrow), the arbalest cranks before each shot, slings whirl, and throwing axes and javelins stick where they land so you can pick them back up (or they return to you after 45 s). Katanas have Quickdraw: the first cut after resting 1.5 s is a critical hit.
+- 8 new X abilities, including Hook and Pull, Iai, Ink, Hurl, Stomp, Surge, Forgeburst and Starfall.
+- The Arsenal Book (button on the Crafting Table, or /wp) lists every new weapon; Fill puts its recipe in the crafting grid.
+- Rare materials come from keepsakes and finds (shed kraken teeth, Codex trophies), never from harming cryptids or sea folk.
+- In multiplayer, friends on v2.9.16 see your thrown axes and javelins fly with their real models. Damage still goes through the host as before.
+
+MULTIPLAYER
+- Faster reconnects: when a connection drops, players are back in play in about 7-8 seconds (was about 14-16). A dropped link is noticed within half a second, and the redial tries direct and relay at the same time.
+- Fix: when two players broke the same block or opened the same chest at the same moment, both kept the drop. Now only one does (the host decides; the other player's copy is returned).
+- Smoother movement for other players: their positions are now blended between updates, so they no longer jerk when an update is lost, and they move more smoothly on slow computers.
+- Fix: the relay could merge two identical messages meant for the same player into one, so one of them was lost.
+
+SAVES AND COMPATIBILITY
+- v2.9.15 and older worlds load unchanged. v2.9.16 adds one small section for your new weapons.
+- A v2.9.16 world still opens in v2.9.15, but there the new weapons turn into flint knives; if you save it there, they stay flint knives.
+- Same vm2 wire: v2.9.16 and v2.9.15 players can play together. Older builds don't draw the new weapon models, and the duplicate-loot fix works only when both players are on v2.9.16.
+
 Voxel Mythos v2.9.15 — "Quick Join" (faster multiplayer joins)
 
 - Faster joins on strict networks: the relay now starts 1.5 s after a join begins (was 4 s), so friends on mobile data or school/work Wi-Fi get in a few seconds sooner. Direct play still wins whenever it opens first.
