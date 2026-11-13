@@ -1,0 +1,8 @@
+Voxel Mythos v2.9.14 — "Open Door" (multiplayer join fix)
+
+- Joining works on strict networks: extra STUN plus TURN relays on 80/443 (TCP/TLS), and automatic relay play over secure public relays when a direct connection doesn't open within a few seconds (encrypted with a key from the room code, ordered and resent so nothing is lost).
+- One-click invite links (?join=CODE): open the link and you land in your friend's world.
+- Hosting works even when the room-code server is down; reconnects and host hand-over fall back to the relay.
+- Ping and connection type (direct/relay) shown in the multiplayer bar and panel.
+- Fix: a guest with no saved name no longer appears as "Title".
+- No world data changes; saves from v2.9.13 and older load unchanged. NET_VER stays vm2.
